@@ -1,0 +1,18 @@
+
+#pragma prefix "corba.tid.es"
+
+module Transformer {
+
+  exception CannotProceed
+  {
+    string why;
+  };
+
+  interface Operator {
+    any do_nothing (in any value) raises (CannotProceed);
+    any do_something (in any value) raises (CannotProceed);
+
+    // Para finalizar el servicio
+    void shutdown();
+  };
+};

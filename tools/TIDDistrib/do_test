@@ -1,0 +1,508 @@
+# run_agent           
+#  Agent resolve ChannelFactory [-m (ior | url)] < agent.ior
+#  Agent shutdown < agent.ior
+#  Agent list [-m (ior | url)] < agent.ior
+
+# run_factory
+#Factory create [name] [-t (notification|distribution)] [-m (ior|url)]<factory.ior
+#Factory destroy name < factory.ior
+#Factory find name [-m (ior | url)] < factory.ior
+#Factory list < factory.ior
+#Factory nlist < factory.ior
+
+# run_channel
+#Channel list_suppliers [-global] [-m (ior | url)] < channel.ior
+#Channel list_consumers [-global] [-m (ior | url)] < channel.ior
+#Channel create_supplier [name] [-m (ior | url)] < channel.ior
+#Channel create_consumer [name] [-t type] [-m (ior | url)] < channel.ior
+#Channel find_supplier [name] [-global] [-m (ior | url)] < channel.ior
+#Channel find_consumer [name] [-global] [-m (ior | url)] < channel.ior
+#Channel get "OperationalState" < channel.ior
+#Channel get "AdministrativeState" < channel.ior
+#Channel set "AdministrativeState" <new_state> < channel.ior
+#Channel destroy < channel.ior
+#
+# run_supplier_amin
+#SupplierAdmin create_push_consumer [-m (ior | url)] < supplier_admin.ior
+#SupplierAdmin create_pull_consumer [-m (ior | url)] < supplier_admin.ior
+#SupplierAdmin push_consumers [-m (ior | url)] < supplier_admin.ior
+#SupplierAdmin pull_consumers [-m (ior | url)] < supplier_admin.ior
+#SupplierAdmin create_supplier [name] [-m (ior | url)]<supplier_admin.ior
+#SupplierAdmin list_suppliers [-m (ior | url)] < supplier_admin.ior
+#SupplierAdmin get OperationalState < supplier_admin.ior
+#SupplierAdmin get AdministrativeState < supplier_admin.ior
+#SupplierAdmin get Level < supplier_admin.ior
+#SupplierAdmin get Discriminator [-m (ior | url)] < supplier_admin.ior
+#SupplierAdmin get Operator [-m (ior | url)] < supplier_admin.ior
+#SupplierAdmin get AssociatedCriteria Id < supplier_admin.ior
+#SupplierAdmin get ErrorHandler < supplier_admin.ior
+#SupplierAdmin set AdministrativeState <new_state> < supplier_admin.ior
+#SupplierAdmin set ErrorHandler <ior_file> < supplier_admin.ior
+#SupplierAdmin destroy < supplier_admin.ior
+#
+# run_consumer_amin
+#ConsumerAdmin create_push_supplier [-m (ior | url)] < consumer_admin.ior
+#ConsumerAdmin create_pull_supplier [-m (ior | url)] < consumer_admin.ior
+#ConsumerAdmin push_suppliers [order] [-m (ior | url)] < consumer_admin.ior
+#ConsumerAdmin pull_suppliers [-m (ior | url)] < consumer_admin.ior
+#ConsumerAdmin create_consumer [name] [-p position] [-m (ior|url)]<consumer_admin.ior
+#ConsumerAdmin find_consumers [Id] [-m (ior | url)] < consumer_admin.ior
+#ConsumerAdmin list_consumers [-m (ior | url)] < consumer_admin.ior
+#ConsumerAdmin get Discriminator [-m (ior | url)] < consumer_admin.ior
+#ConsumerAdmin get OperationalState < consumer_admin.ior
+#ConsumerAdmin get AdministrativeState < consumer_admin.ior
+#ConsumerAdmin get AssociatedCriteria Id < supplier_admin.ior
+#ConsumerAdmin get OperationMode < consumer_admin.ior
+#ConsumerAdmin get Order < consumer_admin.ior
+#ConsumerAdmin get OrderGap < consumer_admin.ior
+#ConsumerAdmin get ErrorHandler [-m (ior | url)] < consumer_admin.ior
+#ConsumerAdmin set AdministrativeState <new_state> < consumer_admin.ior
+#ConsumerAdmin set Order <new_order> < consumer_admin.ior
+#ConsumerAdmin set OrderGap <new_order_gap> < consumer_admin.ior
+#ConsumerAdmin set ErrorHandler <fichero> [-m (ior | url)] < consumer_admin.ior
+#ConsumerAdmin destroy < consumer_admin.ior
+#
+#run_proxy_push_consumer
+#ProxyPushConsumer get OperationalState < proxy_push_consumer.ior
+#ProxyPushConsumer get AdministrativeState < proxy_push_consumer.ior
+#ProxyPushConsumer get Discriminator < proxy_push_consumer.ior
+#ProxyPushConsumer get Operator [-m (ior | url)] < proxy_push_consumer.ior
+#ProxyPushConsumer get ErrorHandler < proxy_push_consumer.ior
+#ProxyPushConsumer set AdministrativeState <new_state> < proxy_push_consumer.ior
+#ProxyPushConsumer set ErrorHandler <ior_file> < proxy_push_consumer.ior
+#ProxyPushConsumer disconnect < proxy_push_consumer.ior
+#
+#run_proxy_push_supplier
+#ProxyPushSupplier get OperationalState < proxy_push_supplier.ior
+#ProxyPushSupplier get AdministrativeState < proxy_push_supplier.ior
+#ProxyPushSupplier get Discriminator < proxy_push_supplier.ior
+#ProxyPushSupplier get OperationMode < proxy_push_supplier.ior
+#ProxyPushSupplier get Order < proxy_push_supplier.ior
+#ProxyPushSupplier set AdministrativeState <new_state> < proxy_push_supplier.ior
+#ConsumerAdmin set Order <new_order> < proxy_push_supplier.ior
+#ProxyPushSupplier disconnect < proxy_push_supplier.ior
+#
+
+echo Obtenemos la IOR del ChannelFactory.
+run_agent resolve ChannelFactory -m ior < agent.ior > factory.ior
+echo done.
+
+echo "Creamos un canal: Channel_A (distribution)"
+run_factory create Channel_A -m ior -t distribution < factory.ior > channel_a.ior
+echo done.
+
+echo "Creamos un canal: Channel_B (notification)"
+run_factory create Channel_B -t notification < factory.ior > channel_b.ior
+echo done.
+
+echo Listado de los nombres de los canales.
+run_factory nlist < factory.ior
+echo done.
+
+echo "Destruimos el canal: Channel_B  (notification)"
+run_channel destroy < channel_b.ior
+echo done.
+
+echo "Creamos un ConsumerAdmin: Consumer_A  (distribution)"
+run_channel create_consumer Consumer_A -t distribution < channel_a.ior > consumer_admin_a.ior
+echo done.
+
+echo "Get OperationalState: Consumer_A"
+run_consumer_admin get OperationalState < consumer_admin_a.ior
+echo done.
+
+echo "Get AdministrativeState: Consumer_A"
+run_consumer_admin get AdministrativeState < consumer_admin_a.ior
+echo done.
+
+echo "Get AssociatedCriteria: Consumer_A"
+run_consumer_admin get AssociatedCriteria Id < consumer_admin_a.ior
+echo done.
+
+echo "Get OperationMode: Consumer_A"
+run_consumer_admin get OperationMode < consumer_admin_a.ior
+echo done.
+
+echo "Get Order: Consumer_A"
+run_consumer_admin get Order < consumer_admin_a.ior
+echo done.
+
+echo "Get OrderGap: Consumer_A"
+run_consumer_admin get OrderGap < consumer_admin_a.ior
+echo done.
+
+echo "Creamos un ConsumerAdmin: Consumer_B (notificacion)"
+run_channel create_consumer Consumer_B -t notification < channel_a.ior > consumer_admin_b.ior
+echo done.
+
+echo "Get OperationalState: Consumer_B"
+run_consumer_admin get OperationalState < consumer_admin_b.ior
+echo done.
+
+echo "Get AdministrativeState: Consumer_B"
+run_consumer_admin get AdministrativeState < consumer_admin_b.ior
+echo done.
+
+echo "Get AssociatedCriteria: Consumer_B"
+run_consumer_admin get AssociatedCriteria Id < consumer_admin_b.ior
+echo done.
+
+echo "Get OperationMode: Consumer_B"
+run_consumer_admin get OperationMode < consumer_admin_b.ior
+echo done.
+
+echo "Get Order: Consumer_B"
+run_consumer_admin get Order < consumer_admin_b.ior
+echo done.
+
+echo "Get OrderGap: Consumer_B"
+run_consumer_admin get OrderGap < consumer_admin_b.ior
+echo done.
+
+echo "listado de los ConsumerAdmin del Channel_A"
+run_channel list_consumers -m url < channel_a.ior 
+echo done.
+
+echo "Destruimos el ConsumerAdmin : Consumer_B"
+run_consumer_admin destroy < consumer_admin_b.ior
+echo done.
+
+echo "Creamos un ConsumerAdmin encadenado de A: Consumer_C"
+run_consumer_admin create_consumer Consumer_C < consumer_admin_a.ior > consumer_admin_c.ior
+echo done.
+
+echo "Creamos un ConsumerAdmin encadenado de C: Consumer_D"
+run_consumer_admin create_consumer Consumer_D < consumer_admin_c.ior > consumer_admin_d.ior
+echo done.
+
+echo "Get OperationalState: Consumer_C"
+run_consumer_admin get OperationalState < consumer_admin_c.ior
+echo done.
+
+echo "Get AdministrativeState: Consumer_C"
+run_consumer_admin get AdministrativeState < consumer_admin_c.ior
+echo done.
+
+echo "Get AssociatedCriteria: Consumer_C"
+run_consumer_admin get AssociatedCriteria Id < consumer_admin_c.ior
+echo done.
+
+echo "Get OperationMode: Consumer_C"
+run_consumer_admin get OperationMode < consumer_admin_c.ior
+echo done.
+
+echo "Get Order: Consumer_C"
+run_consumer_admin get Order < consumer_admin_c.ior
+echo done.
+
+echo "Get OrderGap: Consumer_C"
+run_consumer_admin get OrderGap < consumer_admin_c.ior
+echo done.
+
+echo "Get OperationalState: Consumer_D"
+run_consumer_admin get OperationalState < consumer_admin_d.ior
+echo done.
+
+echo "Get AdministrativeState: Consumer_D"
+run_consumer_admin get AdministrativeState < consumer_admin_d.ior
+echo done.
+
+echo "Get AssociatedCriteria: Consumer_D"
+run_consumer_admin get AssociatedCriteria Id < consumer_admin_d.ior
+echo done.
+
+echo "Get OperationMode: Consumer_D"
+run_consumer_admin get OperationMode < consumer_admin_d.ior
+echo done.
+
+echo "Get Order: Consumer_D"
+run_consumer_admin get Order < consumer_admin_d.ior
+echo done.
+
+echo "Get OrderGap: Consumer_D"
+run_consumer_admin get OrderGap < consumer_admin_d.ior
+echo done.
+
+echo "listado GLOBAL de los ConsumerAdmin del Channel_A"
+run_channel list_consumers -global -m url < channel_a.ior 
+echo done.
+
+echo "Creamos un SupplierAdmin: Supplier_A"
+run_channel create_supplier Supplier_A < channel_a.ior > supplier_admin_a.ior
+echo done.
+
+echo "Creamos un SupplierAdmin encadenado del A: Supplier_B"
+run_supplier_admin create_supplier Supplier_B < supplier_admin_a.ior > supplier_admin_b.ior
+echo done.
+
+echo "Creamos un SupplierAdmin encadenado del A: Supplier_C"
+run_supplier_admin create_supplier Supplier_C < supplier_admin_a.ior > supplier_admin_c.ior
+echo done.
+
+echo "Get OperationalState: Supplier_C"
+run_supplier_admin get OperationalState < supplier_admin_c.ior
+echo done.
+
+echo "Get AdministrativeState: Supplier_C"
+run_supplier_admin get AdministrativeState < supplier_admin_c.ior
+echo done.
+
+echo "Get AssociatedCriteria: Supplier_C"
+run_supplier_admin get AssociatedCriteria Id < supplier_admin_c.ior
+echo done.
+
+echo "Get Level: Supplier_C"
+run_supplier_admin get Level < supplier_admin_c.ior
+echo done.
+
+echo "Get OperationalState: Supplier_B"
+run_supplier_admin get OperationalState < supplier_admin_b.ior
+echo done.
+
+echo "Get AdministrativeState: Supplier_B"
+run_supplier_admin get AdministrativeState < supplier_admin_b.ior
+echo done.
+
+echo "Get AssociatedCriteria: Supplier_B"
+run_supplier_admin get AssociatedCriteria Id < supplier_admin_b.ior
+echo done.
+
+echo "Get Level: Supplier_B"
+run_supplier_admin get Level < supplier_admin_b.ior
+echo done.
+
+echo "Get OperationalState: Supplier_A"
+run_supplier_admin get OperationalState < supplier_admin_a.ior
+echo done.
+
+echo "Get AdministrativeState: Supplier_A"
+run_supplier_admin get AdministrativeState < supplier_admin_a.ior
+echo done.
+
+echo "Get AssociatedCriteria: Supplier_A"
+run_supplier_admin get AssociatedCriteria Id < supplier_admin_a.ior
+echo done.
+
+echo "Get Level: Supplier_A"
+run_supplier_admin get Level < supplier_admin_a.ior
+echo done.
+
+echo "listado de los SupplierAdmin del Channel_A"
+run_channel list_suppliers -m url < channel_a.ior 
+echo done.
+
+echo "listado GLOBAL de los SupplierAdmin del Channel_A"
+run_channel list_suppliers -global -m url < channel_a.ior 
+echo done.
+
+echo "Destruimos el ConsumerAdmin encadenado de A: Consumer_C"
+run_consumer_admin destroy < consumer_admin_c.ior
+echo done.
+
+echo "listado de los ConsumerAdmin del Channel_A"
+run_channel list_consumers -m url < channel_a.ior 
+echo done.
+
+echo "listado GLOBAL de los ConsumerAdmin del Channel_A"
+run_channel list_consumers -global -m url < channel_a.ior 
+echo done.
+
+echo "Destruimos el SupplierAdmin encadenado de A: Supplier_C"
+run_supplier_admin destroy < supplier_admin_c.ior
+echo done.
+
+echo "listado de los SupplierAdmin del Channel_A"
+run_channel list_suppliers -m url < channel_a.ior 
+echo done.
+
+echo "listado GLOBAL de los SupplierAdmin del Channel_A"
+run_channel list_suppliers -global -m url < channel_a.ior 
+echo done.
+
+echo "Creamos un ProxyPushSupplier en Consumer_A: ProxyPushSupplier_A"
+run_consumer_admin create_push_supplier ProxyPushSupplier_A -p 300 < consumer_admin_a.ior > proxy_push_supplier_a.ior
+echo done.
+
+echo "Creamos un ProxyPushSupplier en Consumer_A: ProxyPushSupplier_B"
+run_consumer_admin create_push_supplier ProxyPushSupplier_B -p 150 < consumer_admin_a.ior > proxy_push_supplier_b.ior
+echo done.
+
+echo "Creamos un ProxyPushSupplier en Consumer_A: ProxyPushSupplier_C"
+run_consumer_admin create_push_supplier ProxyPushSupplier_C < consumer_admin_a.ior > proxy_push_supplier_c.ior
+echo done.
+
+echo "Get Order: ProxyPushSupplier_A"
+run_proxy_push_supplier get Order < proxy_push_supplier_a.ior 
+echo done.
+
+echo "Get Order: ProxyPushSupplier_B"
+run_proxy_push_supplier get Order < proxy_push_supplier_b.ior 
+echo done.
+
+echo "Get Order: ProxyPushSupplier_C"
+run_proxy_push_supplier get Order < proxy_push_supplier_c.ior 
+echo done.
+
+echo "Listamos los ProxyPushSupplier del Consumer_A"
+run_consumer_admin push_suppliers -m url < consumer_admin_a.ior
+echo done.
+
+echo "Creamos un ProxyPushConsumer en Supplier_B: ProxyPushConsumer_A"
+run_supplier_admin create_push_consumer ProxyPushConsumer_A < supplier_admin_b.ior > proxy_push_consumer_a.ior
+echo done.
+
+echo "Creamos un ProxyPushConsumer en Supplier_B: ProxyPushConsumer_B"
+run_supplier_admin create_push_consumer ProxyPushConsumer_B < supplier_admin_b.ior > proxy_push_consumer_b.ior
+echo done.
+
+echo "Listamos los ProxyPushConsumer del Supplier_B"
+run_supplier_admin push_consumers -m url < supplier_admin_b.ior
+echo done.
+
+echo "Movemos el ProxyPushSupplier_A del Consumer_A al 100"
+run_proxy_push_supplier set Order 100 < proxy_push_supplier_a.ior
+echo done.
+
+echo "Movemos el ProxyPushSupplier_B del Consumer_A al 450"
+run_proxy_push_supplier set Order 450 < proxy_push_supplier_b.ior
+echo done.
+
+echo "Movemos el ProxyPushSupplier_C del Consumer_A al 550"
+run_proxy_push_supplier set Order 550 < proxy_push_supplier_c.ior
+echo done.
+
+echo "Creamos un ProxyPushSupplier en Consumer_A: ProxyPushSupplier_D"
+run_consumer_admin create_push_supplier ProxyPushSupplier_D < consumer_admin_a.ior > proxy_push_supplier_d.ior
+echo done.
+
+echo "Get Order: ProxyPushSupplier_A"
+run_proxy_push_supplier get Order < proxy_push_supplier_a.ior 
+echo done.
+
+echo "Get Order: ProxyPushSupplier_B"
+run_proxy_push_supplier get Order < proxy_push_supplier_b.ior 
+echo done.
+
+echo "Get Order: ProxyPushSupplier_C"
+run_proxy_push_supplier get Order < proxy_push_supplier_c.ior 
+echo done.
+
+echo "Get Order: ProxyPushSupplier_D"
+run_proxy_push_supplier get Order < proxy_push_supplier_d.ior 
+echo done.
+
+echo "Disconnect ProxyPushSupplier_C"
+run_proxy_push_supplier disconnect < proxy_push_supplier_c.ior 
+echo done.
+
+echo "listado de los ProxyPushSupplier del Consumer_A (names)"
+run_consumer_admin nlist_push_suppliers < consumer_admin_a.ior 
+echo done.
+
+echo "listado de los ProxyPushSupplier del Consumer_A (refs)"
+run_consumer_admin push_suppliers -m url < consumer_admin_a.ior 
+echo done.
+
+echo "Disconnect ProxyPushConsumer_B"
+run_proxy_push_consumer disconnect < proxy_push_consumer_b.ior 
+echo done.
+
+echo "listado de los ProxyPushConsumer del Supplier_B (names)"
+run_supplier_admin nlist_push_consumers < supplier_admin_b.ior 
+echo done.
+
+echo "listado de los ProxyPushConsumer del Supplier_B (refs)"
+run_supplier_admin push_consumers -m url < supplier_admin_b.ior 
+echo done.
+
+echo "Creamos un ConsumerAdmin encadenado de A: Consumer_C"
+run_consumer_admin create_consumer Consumer_C < consumer_admin_a.ior > consumer_admin_c.ior
+echo done.
+
+echo "Creamos un ConsumerAdmin encadenado de A: Consumer_D"
+run_consumer_admin create_consumer Consumer_D < consumer_admin_a.ior > consumer_admin_d.ior
+echo done.
+
+echo "Get Order: Consumer_C"
+run_consumer_admin get Order < consumer_admin_c.ior
+echo done.
+
+echo "Get Order: Consumer_D"
+run_consumer_admin get Order < consumer_admin_d.ior
+echo done.
+
+echo "Movemos el Consumer_C del Consumer_A al 850"
+run_consumer_admin set Order 850 < consumer_admin_c.ior
+echo done.
+
+echo "Get Order: Consumer_C"
+run_consumer_admin get Order < consumer_admin_c.ior
+echo done.
+
+echo "listado de los ConsumerAdmin encadenados del Consumer_A (names)"
+run_consumer_admin nlist_consumers < consumer_admin_a.ior 
+echo done.
+
+echo "listado de los ConsumerAdmin encadenados del Consumer_A (refs)"
+run_consumer_admin list_consumers -m url < consumer_admin_a.ior 
+echo done.
+
+echo "Creamos un SupplierAdmin: Supplier_C"
+run_channel create_supplier Supplier_C < channel_a.ior > supplier_admin_c.ior
+echo done.
+
+echo "Creamos un SupplierAdmin encadenado del C: Supplier_CA"
+run_supplier_admin create_supplier Supplier_CA < supplier_admin_c.ior > supplier_admin_ca.ior
+echo done.
+
+echo "Creamos un SupplierAdmin encadenado del CA: Supplier_CB"
+run_supplier_admin create_supplier Supplier_CB < supplier_admin_ca.ior > supplier_admin_cb.ior
+echo done.
+
+echo "Creamos un SupplierAdmin encadenado del CB: Supplier_CC"
+run_supplier_admin create_supplier Supplier_CC < supplier_admin_cb.ior > supplier_admin_cc.ior
+echo done.
+
+echo "listado de los SupplierAdmin Channel_A (names)"
+run_channel nlist_suppliers -global < channel_a.ior 
+echo done.
+
+echo "REMOVE del SupplierAdmin Supplier_CA"
+run_supplier_admin remove < supplier_admin_ca.ior
+echo done.
+
+echo "Get Level: Supplier_C"
+run_supplier_admin get Level < supplier_admin_c.ior
+echo done.
+
+echo "Get Level: Supplier_CB"
+run_supplier_admin get Level < supplier_admin_cb.ior
+echo done.
+
+echo "Get Level: Supplier_CC"
+run_supplier_admin get Level < supplier_admin_cc.ior
+echo done.
+
+echo "listado de los SupplierAdmin Channel_A (names)"
+run_channel nlist_suppliers -global < channel_a.ior 
+echo done.
+
+echo "REMOVE del SupplierAdmin Supplier_C"
+run_supplier_admin remove < supplier_admin_c.ior
+echo done.
+
+echo "Get Level: Supplier_CB"
+run_supplier_admin get Level < supplier_admin_cb.ior
+echo done.
+
+echo "Get Level: Supplier_CC"
+run_supplier_admin get Level < supplier_admin_cc.ior
+echo done.
+
+echo "listado de los SupplierAdmin Channel_A (names)"
+run_channel nlist_suppliers -global < channel_a.ior 
+echo done.
+
+echo Shutdown del Servicio.
+run_agent shutdown < agent.ior
+echo done.

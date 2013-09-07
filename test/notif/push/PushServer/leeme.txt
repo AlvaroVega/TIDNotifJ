@@ -1,0 +1,15 @@
+Ejecucion:
+
+run.ksh <num_suppliers> <num_events> [<ior_file>]
+
+  num_suppliers: numero de clientes suppliers a crear
+  num_events:    numero de eventos enviados por cada cliente
+  ior_file:      fichero con la ior del agente admin
+                 (si no se le da este parametro leere la referencia de la
+                  entrada estandar)
+
+Por defecto:
+
+  num_suppliers: 1
+  num_events:    100
+

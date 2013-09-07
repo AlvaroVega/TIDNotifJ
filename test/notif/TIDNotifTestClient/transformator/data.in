@@ -1,0 +1,147 @@
+insert 
+1400
+PRIMERA 
+$.id > 0
+operator.ior
+do_nothing
+
+insert 
+1300
+SEGUNDA
+$.id > 0
+operator.ior
+do_nothing
+
+insert 
+120
+TERCERA
+$.id > 0
+operator.ior
+do_nothing
+
+insert 
+100
+CUARTA 
+$.id > 0
+operator.ior
+do_nothing
+
+insert 
+1100
+QUINTA
+$.id > 0
+operator.ior
+do_nothing
+
+insert 
+100
+SEXTA
+$.id > 0
+operator.ior
+do_nothing
+
+insert 
+1350
+SEXTA
+$.id > 0
+operator.ior
+do_nothing
+
+insert
+1000 
+SEPTIMA
+$.id > 0
+operator.ior
+do_nothing
+
+insert
+1650 
+SEPTIMA
+$.id > 0
+operator.ior
+do_nothing
+
+get_trs
+
+get_trso
+
+move 
+QUINTA
+10
+
+add 
+OCTAVA
+$.id > 0
+operator.ior
+do_nothing
+
+move
+OCTAVA
+100
+
+move 
+DECIMA
+1000
+
+get_trso
+
+get_tr 
+PRIMERA
+
+get_tr 
+TERCERA
+
+get_tr 
+QUINTA
+
+get_tr 
+SEPTIMA
+
+get_tr 
+DECIMA
+
+get_tro
+PRIMERA
+
+get_tro
+TERCERA
+
+get_tro
+QUINTA
+
+get_tro
+SEPTIMA
+
+get_tro
+DECIMA
+
+delete 
+DECIMA
+
+delete
+QUINTA
+
+delete
+SEPTIMA
+
+replace 
+PRIMERA 
+$.pepe > 35 
+operator.ior 
+do_nothing
+
+replace 
+SEPTIMA 
+$.pepe > 35 
+operator.ior 
+do_nothing
+
+replace 
+PRIMERA 
+$.pepe >
+operator.ior 
+do_nothing
+
+get_trs
+
+get_trso

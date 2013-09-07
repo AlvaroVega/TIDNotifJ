@@ -1,0 +1,115 @@
+#!/bin/sh
+set +u
+
+if [ -z "$JAVA_HOME" ]; then
+	echo "Environment variable JAVA_HOME must be set"
+	exit 1
+fi
+
+if [ -z "$TIDORBJ_HOME" ]; then
+	echo "Environment variable TIDORBJ_HOME must be set"
+	exit 1	
+fi
+
+if [ -z "$TIDNOTIFJ_HOME" ]; then
+	echo "Environment variable TIDNOTIFJ_HOME must be set"
+	exit 1	
+fi
+
+#
+# TIDNotifJ options (default values):
+# 
+#   TIDNotif.database.url jdbc:oracle:thin:@host:port:bbdd
+#   TIDNotif.database.user user
+#   TIDNotif.database.password passwd
+#   TIDNotif.database.poolmaxconns 5  [0, 99]
+#   TIDNotif.database.CacheSize 1000 [0, 99999]
+#
+#   TIDNotif.persistence.db file { none | db | file }
+#   TIDNotif.persistence.load
+#
+#   TIDNotif.consumer.max_disconnected_time
+#   TIDNotif.consumer.max_comm_failures
+#   TIDNotif.consumer.on_comm_failure
+#   TIDNotif.consumer.max_no_response
+#   TIDNotif.consumer.on_no_response
+#
+#   TIDNotif.poa.speedup { true | false }
+#   TIDNotif.corba.calls { true | false }
+#
+#   TIDNotif.trace.level 0 [ 0 | 4 ]
+#   TIDNotif.trace.date true { true | false }
+#   TIDNotif.trace.appname null
+#   TIDNotif.trace.tofile true { true | false }
+#   TIDNotif.trace.filename tidnotif
+#
+#   TIDNotif.orb.port 2002 [1, 65536]
+#   TIDNotif.ior.urlmode false { true | false }
+#   TIDNotif.ior.tofile true
+#   TIDNotif.ior.path ./
+#   TIDNotif.ior.filename agent
+#
+#   TIDNotif.data.path .
+#   TIDNotif.data.root .notif
+#   TIDNotif.objects.path db
+#   TIDNotif.property.filename properties
+#
+#   TIDNotif.channel.poa 1 { 0=global /  1=local }
+#   TIDNotif.supplier.poa  2 { 0=global /  1=local / 2=exclusive }
+#   TIDNotif.consumer.poa  2 { 0=global /  1=local / 2=exclusive }
+#
+#   TIDNotif.contention.active false
+#   TIDNotif.contention.time 25 [10, 1000]
+#   TIDNotif.flood.numevents 10 [1, 10000]
+#   TIDNotif.flood.time 200 [10, 1000]
+#
+#   TIDNotif.constraint.return
+#   TIDNotif.debug.time
+#
+#   TIDNotif.rootpoa.queuesize 25000 [0, 99999]
+#   TIDNotif.rootpoa.maxthreads 45   [-1, 99999]
+#   TIDNotif.rootpoa.minthreads  5   [0, 99999]
+#
+#   TIDNotif.supplier.queuesize 25000 [0, 99999]
+#   TIDNotif.supplier.maxthreads  20 [-1, 99999]
+#   TIDNotif.supplier.minthreads5 -1 [-1, 99999]
+#
+#   TIDNotif.consumer.queuesize  75000 [0, 99999]
+#   TIDNotif.consumer.maxthreads 40 [-1, 99999]
+#   TIDNotif.consumer.minthreads -1 [-1, 99999]
+#
+#   TIDNotif.internal.queuesize 25000 [0, 99999]
+#   TIDNotif.internal.maxthreads 25 [-1, 99999]
+#   TIDNotif.internal.minthreads -1 [-1, 99999]
+#
+#   TIDNotif.format.date dd-MM-yyyy
+#   TIDNotif.format.time HH:mm:ss
+#
+
+#$JAVA_HOME/bin/java -jar $TIDNOTIFJ_HOME/lib/start.jar $*
+JVM=$JDK_HOME/bin/java
+
+START_CLASSPATH=.:$TIDNOTIFJ_HOME/lib/TIDNotifJ.jar:$TIDORBJ_HOME/lib/tidorbj.jar
+
+$JVM -classpath $START_CLASSPATH es.tid.corba.TIDNotif.Server \
+    es.tid.TIDorbj.trace.file tidnotif_orb.log \
+    es.tid.TIDorbj.trace.level 5 \
+    es.tid.TIDorbj.iiop.max_connections 500 \
+    -TIDNotif.orb.port 2002 \
+    -TIDNotif.trace.level 4 \
+    -TIDNotif.persistence.db file \
+    -TIDNotif.channel.poa 0 \
+    -TIDNotif.supplier.poa 2 \
+    -TIDNotif.consumer.poa 2 \
+    -TIDNotif.rootpoa.queuesize 30000 \
+    -TIDNotif.rootpoa.maxthreads 30 \
+    -TIDNotif.rootpoa.minthreads 3 \
+    -TIDNotif.supplier.queuesize 20000 \
+    -TIDNotif.supplier.maxthreads 20 \
+    -TIDNotif.supplier.minthreads 2 \
+    -TIDNotif.consumer.queuesize 40000 \
+    -TIDNotif.consumer.maxthreads 40 \
+    -TIDNotif.consumer.minthreads 4 \
+    -TIDNotif.internal.queuesize 25000 \
+    -TIDNotif.internal.maxthreads 25 \
+    -TIDNotif.internal.minthreads 5 \

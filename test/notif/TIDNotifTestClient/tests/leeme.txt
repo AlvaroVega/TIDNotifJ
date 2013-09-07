@@ -1,0 +1,276 @@
++=======+
+ SCRIPTS
++=======+
+
+do_serie_000.ksh     
+  Script que realiza la ejecucion secuencial de todas las pruebas dentro 
+  de la serie 000.
+
+do_serie_100.ksh     
+  Script que realiza la ejecucion secuencial de todas las pruebas dentro 
+  de la serie 100.
+
+do_serie_200.ksh     
+  Script que realiza la ejecucion secuencial de todas las pruebas dentro 
+  de la serie 200.
+
+do_serie_201.ksh     
+  Script que realiza la ejecucion secuencial de todas las pruebas dentro 
+  de la serie 201.
+
+do_serie_300.ksh     
+  Script que realiza la ejecucion secuencial de todas las pruebas dentro 
+  de la serie 300.
+
+do-000.ksh           
+  Script que ejecuta un test (el que se indica como parametro) dentro de 
+  la serie 000.
+
+do-100.ksh           
+  Script que ejecuta un test (el que se indica como parametro) dentro de 
+  la serie 100.
+
+do-200.ksh           
+  Script que ejecuta un test (el que se indica como parametro) dentro de 
+  la serie 200.
+
+do-201.ksh           
+  Script que ejecuta un test (el que se indica como parametro) dentro de 
+  la serie 201.
+
+do-300.ksh           
+  Script que ejecuta un test (el que se indica como parametro) dentro de 
+  la serie 300.
+
+Scripts internos:
+ ( run-serie-000.ksh, run-serie-100.ksh, run-serie-200.ksh, run-serie-300.ksh,
+   do_test.ksh, test.ksh, test-consumer.ksh, test-supplier.ksh )
+
+comprobar.ksh
+ver-out.ksh
+  Scripts para formatear algunos de los ficheros de salida de las pruebas
+  ( reciben como parametro el numero de test ).
+
+chkserver.ksh        
+  Script que informa de los objetos creados en el Servidor de Notificacion.
+
+destroyAll.ksh       
+  Script que destruye los objetos existentes en el Servidor de Notificacion.
+
+theend.ksh
+  Script que para el servidor.
+
+
+DATA
+  Directorio donde se encuentran los ficheros de configuracion para las 
+  distintas pruebas.
+
+OUT
+  Directorio donde se encuentran los ficheros generados en las distintas 
+  pruebas.
+
+Otros scripts:
+  ( do_test-b.ksh, test-b.ksh, test-consumer-b.ksh, test-supplier-b.ksh )
+
+
++=====+
+ TESTS
++=====+
+
+* Serie 000: Funcionalidad.
+  -------------------------
+
+  Num. Server Threads -> "Supplier: 20 - Internal: 20 - Consumer: 20"
+
+                   Num.     Num.      Num.      Num.      Num.      Num.
+                   Chanels  Supplier  Consumer  Supplier  Consumer  Events
+                            Admin     Admin     Clients   Clients
+                  -------------------------------------------------------
+  test_info.000.IN  1       1+0       1+0       1         1         2500
+  test_info.001.IN  1       1+0       1+0       1         10        250
+  test_info.011.IN  1       1+0       1+0       10        1         250
+  test_info.021.IN  1       1+0       1+9       1         1         250
+  test_info.031.IN  1       1+9       1+0       1         1         250
+  test_info.041.IN  10      1+0       1+0       1         1         25
+  test_info.042.IN  10      1+0       1+0       1         10        25
+  test_info.043.IN  10      1+0       1+0       10        1         25
+  test_info.044.IN  10      1+0       1+9       1         1         25
+  test_info.045.IN  10      1+9       1+0       1         1         25
+  test_info.051.IN  3       1+2       1+2       3         3         75
+
+  + Falta anadir tests para probar con las distintas configuraciones de POA's.
+
+
+* Serie 100: Memoria.
+  -------------------
+
+  Num. Server Threads -> "Supplier: 20 - Internal: 20 - Consumer: 20"
+
+                   Num.     Num.      Num.      Num.      Num.      Num.
+                   Chanels  Supplier  Consumer  Supplier  Consumer  Events
+                            Admin     Admin     Clients   Clients
+                  -------------------------------------------------------
+  test_info.100.IN  1       1+0       1+0       1         1         25
+  test_info.101.IN  1       1+0       1+0       1         10        5
+  test_info.111.IN  1       1+0       1+0       10        1         5
+  test_info.121.IN  1       1+0       1+9       1         1         5
+  test_info.131.IN  1       1+9       1+0       1         1         5
+  test_info.141.IN  10      1+0       1+0       1         1         5
+  test_info.142.IN  10      1+0       1+0       1         10        1
+  test_info.143.IN  10      1+0       1+0       10        1         1
+  test_info.144.IN  10      1+0       1+9       1         1         1
+  test_info.145.IN  10      1+9       1+0       1         1         1
+  test_info.151.IN  3       1+2       1+2       3         3         2
+
+  (igual que el anterior, pero al final de cada test no se manda parar al
+   servidor de notificacion, lo que permite comprobar con el jprobe si se
+   quedan objetos sin liberar.)
+
+  + Falta anadir tests para probar con las distintas configuraciones de POA's.
+
+
+
+* Serie 200: Rendimiento (evento simple).
+  ---------------------------------------
+
+                   Num.     Num.      Num.      Num.      Num.      Num.
+                   Chanels  Supplier  Consumer  Supplier  Consumer  Events
+                            Admin     Admin     Clients   Clients
+                  -------------------------------------------------------
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer:  1"
+  test_info.200.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer: 20"
+  test_info.210.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer:  1"
+  test_info.220.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer: 20"
+  test_info.230.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier: 20 - Internal: 20 - Consumer: 20"
+  test_info.240.IN  1       1+0       1+0       1         1         25000
+
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer:  1"
+  test_info.250.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer: 20"
+  test_info.260.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer:  1"
+  test_info.270.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer: 20"
+  test_info.280.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier: 20 - Internal: 20 - Consumer: 20"
+  test_info.290.IN  3       1+2       1+2       3         3         250
+
+
+* Serie 201: Rendimiento (evento medio/complejo).
+  -----------------------------------------------
+
+                   Num.     Num.      Num.      Num.      Num.      Num.
+                   Chanels  Supplier  Consumer  Supplier  Consumer  Events
+                            Admin     Admin     Clients   Clients
+                  -------------------------------------------------------
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer:  1"
+  test_info.201.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer: 20"
+  test_info.211.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer:  1"
+  test_info.221.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer: 20"
+  test_info.231.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier: 20 - Internal: 20 - Consumer: 20"
+  test_info.241.IN  1       1+0       1+0       1         1         25000
+
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer:  1"
+  test_info.251.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer: 20"
+  test_info.261.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer:  1"
+  test_info.271.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer: 20"
+  test_info.281.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier: 20 - Internal: 20 - Consumer: 20"
+  test_info.291.IN  3       1+2       1+2       3         3         250
+
+
+* Serie 300: Filtros.
+  -------------------
+
+                   Num.     Num.      Num.      Num.      Num.      Num.
+                   Chanels  Supplier  Consumer  Supplier  Consumer  Events
+                            Admin     Admin     Clients   Clients
+                  -------------------------------------------------------
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer:  1"
+  test_info.300.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer: 20"
+  test_info.310.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer:  1"
+  test_info.320.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer: 20"
+  test_info.330.IN  1       1+0       1+0       1         1         25000
+    Num. Server Threads -> "Supplier: 20 - Internal: 20 - Consumer: 20"
+  test_info.340.IN  1       1+0       1+0       1         1         25000
+
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer:  1"
+  test_info.350.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier:  1 - Internal:  1 - Consumer: 20"
+  test_info.360.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer:  1"
+  test_info.370.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier:  1 - Internal: 20 - Consumer: 20"
+  test_info.380.IN  3       1+2       1+2       3         3         250
+    Num. Server Threads -> "Supplier: 20 - Internal: 20 - Consumer: 20"
+  test_info.390.IN  3       1+2       1+2       3         3         250
+
+  Filtros:
+
+  cadm_info.300.FIL
+  sadm_info.300.FIL
+
+  cproxy_info.300.0.0.FIL
+  cproxy_info.300.0.1.FIL
+  cproxy_info.300.0.2.FIL
+  cproxy_info.300.1.0.FIL
+  cproxy_info.300.1.1.FIL
+  cproxy_info.300.1.2.FIL
+  cproxy_info.300.2.0.FIL
+  cproxy_info.300.2.1.FIL
+  cproxy_info.300.2.2.FIL
+
+  sproxy_info.300.0.0.FIL
+  sproxy_info.300.0.1.FIL
+  sproxy_info.300.0.2.FIL
+  sproxy_info.300.1.0.FIL
+  sproxy_info.300.1.1.FIL
+  sproxy_info.300.1.2.FIL
+  sproxy_info.300.2.0.FIL
+  sproxy_info.300.2.1.FIL
+  sproxy_info.300.2.2.FIL
+
+  cadm_info.350.FIL
+  sadm_info.350.FIL
+
+  cproxy_info.350.0.0.FIL
+  cproxy_info.350.0.1.FIL
+  cproxy_info.350.0.2.FIL
+  cproxy_info.350.1.0.FIL
+  cproxy_info.350.1.1.FIL
+  cproxy_info.350.1.2.FIL
+  cproxy_info.350.2.0.FIL
+  cproxy_info.350.2.1.FIL
+  cproxy_info.350.2.2.FIL
+
+  sproxy_info.350.0.0.FIL
+  sproxy_info.350.0.1.FIL
+  sproxy_info.350.0.2.FIL
+  sproxy_info.350.1.0.FIL
+  sproxy_info.350.1.1.FIL
+  sproxy_info.350.1.2.FIL
+  sproxy_info.350.2.0.FIL
+  sproxy_info.350.2.1.FIL
+  sproxy_info.350.2.2.FIL
+
+
+* Serie 400: Carga (ver cuando revienta).
+  ---------------------------------------
+
+* Serie 500: Estress (bajo poca y mucha carga).
+  ---------------------------------------------------
+

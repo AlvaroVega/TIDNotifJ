@@ -1,0 +1,32 @@
+# Num. Channels (n)
+1
+# SupplierAdmin (0/1)
+1
+# Num. New SupplierAdmins (m)
+0
+# Fichero con los filtros a los Suppliers Admin
+DATA/sadm_info.300
+# Fichero con los Operators a los Suppliers Admin
+none
+# ConsumerAdmin (0/1)
+1
+# Num. New ConsumerAdmins (m)
+0
+# Fichero con los filtros a los Consumers Admin
+DATA/cadm_info.300
+# Num. PushSupplier Clients
+1
+# Fichero con los filtros a los PushSuppliers
+DATA/cproxy_info.300
+# Fichero con los Operators a los PushSuppliers
+none
+# Num. PushConsumer Clients
+1
+# Fichero con los filtros a los PushConsumers
+DATA/sproxy_info.300
+# Num eventos
+1000
+# Tipos eventos 0: int / 1: string / 2: medium / 3: complex
+2
+# Rate 
+0

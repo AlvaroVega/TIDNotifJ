@@ -1,0 +1,451 @@
+******************************************************************************
+*                                                                            *
+* Libreria:    TIDNotifTools.jar                                             *
+*                                                                            *
+* Descripcion: Utilizades TIDNotif                                           *
+* Paquete:     es.tid.corba.TIDNotif.tools                                   *
+* Clases:      Agent                                                         *
+*              Factory                                                       *
+*              Channel                                                       *
+*              SupplierAdmin                                                 *
+*              ConsumerAdmin                                                 *
+*              Discriminator                                                 *
+*              ProxyPushSupplier                                             *
+*              ProxyPushConsumer                                             *
+*              ProxyPullSupplier                                             *
+*              ProxyPullConsumer                                             *
+*                                                                            *
+* Scripts:     Agent.bat                                                     *
+*              Factory.bat                                                   *
+*              Channel.bat                                                   *
+*              SupplierAdmin.bat                                             *
+*              ConsumerAdmin.bat                                             *
+*              Discriminator.bat                                             *
+*              ProxyPushSupplier.bat                                         *
+*              ProxyPushConsumer.bat                                         *
+*              ProxyPullSupplier.bat                                         *
+*              ProxyPullConsumer.bat                                         *
+*                                                                            * 
+******************************************************************************
+
+  -----------
+* Agent Class
+  -----------
+
+  + Obtener la referencia del objeto ChannelFactory en formato IOR o URL.
+
+    Agent.bat resolve ChannelFactory [-m (ior | url)] < agent.ior
+
+  + Obtener la lista de canales en formato IOR (por defecto)
+    o URL.
+
+    Agent.bat list [-m (ior | url)] < agent.ior
+
+  + Parar el servicio.
+
+    Agent.bat shutdown < agent.ior
+
+  Los siguientes se mantienen por compatibilidad con version anterior:
+
+  + Crear el canal para el Servicio EventProcessor utilizado en la aplicacion 
+    TWEB con el nombre asociado "EventProcessorChannel", devolviendo su 
+    referencia en formato IOR o URL (por defecto).
+
+    Agent.bat start -fi agent.ior -fo channel.url [-m (ior | url)] 
+
+  + Destruir el canal para el Servicio EventProcessor utilizado en la 
+    aplicacion TWEB (nombre = EventProcessorChannel").
+
+    Agent.bat stop -fi agent.ior
+
+
+  -------------
+* Factory Class
+  -------------
+
+  + Crear un canal. Si se le da un nombre este quedara asociado a su referencia,
+    devolviendo su referencia en formato IOR (por defecto) o URL.
+
+    Factory.bat create [name] [-m (ior | url)] < factory.ior
+
+  + Busca un canal. Si se le da un nombre este quedara asociado a su referencia,
+    devolviendo su referencia en formato IOR (por defecto) o URL.
+
+    Factory.bat find name [-m (ior | url)] < factory.ior
+
+  + Obtener la lista de referencias de los canales existentes en formato IOR 
+    (por defecto) o URL.
+
+    Factory.bat list [-m (ior | url)] < factory.ior
+
+  + Obtener la lista de nombres de los canales existentes junto a su fecha y 
+    hora de creacion.
+
+    Factory.bat nlist < factory.ior
+
+  + Destruir el canal con el nombre asociado.
+
+    Factory.bat destroy name < factory.ior
+
+
+  -------------
+* Channel Class
+  -------------
+
+  + Crear un SupplierAdmin. Si se le da un nombre este se utilizara como 
+    criterio  "Id"  asociandolo tambien a su referencia,  devolviendo su 
+    referencia en formato IOR (por defecto) o URL.
+
+    Channel.bat create_supplier [name] [-m (ior | url)] < channel.ior
+
+  + Crear un ConsumerAdmin. Si se le da un nombre este se utilizara como 
+    criterio  "Id"  asociandolo tambien a su referencia,  devolviendo su 
+    referencia en formato IOR (por defecto) o URL.
+
+    Channel.bat create_consumer [name] [-m (ior | url)] < channel.ior
+
+  + Busca un SupplierAdmin con "Id" igual a nombre, devolviendo su referencia 
+    en formato IOR (por defecto) o URL.
+
+    Channel.bat find_supplier name [-m (ior | url)] < channel.ior
+
+  + Busca un ConsumerAdmin con "Id" igual a nombre, devolviendo su referencia 
+    en formato IOR (por defecto) o URL.
+
+    Channel.bat find_consumer name [-m (ior | url)] < channel.ior
+
+  + Obtener la lista de referencias de los SupplierAdmin existentes en el
+    canal en formato IOR (por defecto) o URL.
+
+    Channel.bat list_suppliers [-m (ior | url)] < channel.ior
+
+  + Obtener la lista de referencias de los ConsumerAdmin existentes en el
+    canal en formato IOR (por defecto) o URL.
+
+    Channel.bat list_consumers [-m (ior | url)] < channel.ior
+
+  + Obtener el valor del atributo OperationalState.
+
+    Channel.bat get "OperationalState" < channel.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    Channel.bat get "AdministrativeState" < channel.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    Channel.bat set "AdministrativeState" <new_state> < channel.ior
+
+  + Destruir el canal.
+
+    Channel.bat destroy < channel.ior
+
+
+  -------------------
+* SupplierAdmin Class
+  -------------------
+
+  + Crear un ProxyPushConsumer. Si se le da un nombre este se asociara a su 
+    referencia CORBA, devolviendola en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat create_push_consumer [name] [-m (ior | url)] 
+                                                           < supplier_admin.ior
+
+  + Crear un ProxyPullConsumer. Si se le da un nombre este se asociara a su 
+    referencia CORBA, devolviendola en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat create_pull_consumer [name] [-m (ior | url)] 
+                                                           < supplier_admin.ior
+
+  + Busca un ProxyPushConsumer por nombre, devolviendo su referencia en 
+    formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat find_push_consumer name [-m (ior | url)]
+                                                           < supplier_admin.ior
+
+  + Busca un ProxyPullConsumer por nombre, devolviendo su referencia en 
+    formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat find_pull_consumer name [-m (ior | url)]
+                                                           < supplier_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPushConsumer existentes en 
+    el SupplierAdmin en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat push_consumers [-m (ior | url)] < supplier_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPullConsumer existentes en 
+    el SupplierAdmin en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat pull_consumers [-m (ior | url)] < supplier_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPushConsumer existentes en el 
+    SupplierAdmin.
+
+    SupplierAdmin.bat nlist_push_consumers < supplier_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPullConsumer existentes en el 
+    SupplierAdmin.
+
+    SupplierAdmin.bat nlist_pull_consumers < supplier_admin.ior
+
+  + Obtener el valor del atributo OperationalState.
+
+    SupplierAdmin.bat get OperationalState < supplier_admin.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    SupplierAdmin.bat get AdministrativeState < supplier_admin.ior
+
+  + Obtener el valor del criterio "Id" del objeto AssociatedCriteria.
+
+    SupplierAdmin.bat get AssociatedCriteria Id < supplier_admin.ior
+
+  + Obtener referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat get Discriminator [-m (ior | url)] < supplier_admin.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    SupplierAdmin.bat set AdministrativeState <new_state> < supplier_admin.ior
+
+  + Destruir el SupplierAdmin.
+
+    SupplierAdmin.bat destroy < supplier_admin.ior
+
+
+  -------------------
+* ConsumerAdmin Class
+  -------------------
+
+  + Crear un ProxyPushSupplier. Si se le da un nombre este se asociara a su 
+    referencia CORBA, devolviendola en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat create_push_supplier [name] [-m (ior | url)] 
+                                                           < consumer_admin.ior
+
+  + Crear un ProxyPullSupplier. Si se le da un nombre este se asociara a su 
+    referencia CORBA, devolviendola en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat create_pull_supplier [name] [-m (ior | url)] 
+                                                           < consumer_admin.ior
+
+  + Busca un ProxyPushSupplier por nombre, devolviendo su referencia en 
+    formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat find_push_supplier name [-m (ior | url)]
+                                                           < consumer_admin.ior
+
+  + Busca un ProxyPullSupplier por nombre, devolviendo su referencia en 
+    formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat find_pull_supplier name [-m (ior | url)] 
+                                                           < consumer_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPushSupplier existentes en 
+    el ConsumerAdmin en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat push_suppliers [-m (ior | url)] < consumer_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPullSupplier existentes en 
+    el ConsumerAdmin en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat pull_suppliers [-m (ior | url)] < consumer_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPushSupplier existentes en el 
+    ConsumerAdmin.
+
+    ConsumerAdmin.bat nlist_push_suppliers < consumer_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPullSupplier existentes en el 
+    ConsumerAdmin.
+
+    ConsumerAdmin.bat nlist_pull_suppliers < consumer_admin.ior
+
+  + Obtener el valor del atributo OperationalState.
+
+    ConsumerAdmin.bat get OperationalState < consumer_admin.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ConsumerAdmin.bat get AdministrativeState < consumer_admin.ior
+
+  + Obtener el valor del criterio "Id" del objeto AssociatedCriteria.
+
+    ConsumerAdmin.bat get AssociatedCriteria Id < consumer_admin.ior
+
+  + Obtener referencia del objeto Discriminator para ese ConsumerAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat get Discriminator [-m (ior | url)] < consumer_admin.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ConsumerAdmin.bat set AdministrativeState <new_state> < consumer_admin.ior
+
+  + Destruir el ConsumerAdmin.
+
+    ConsumerAdmin.bat destroy < consumer_admin.ior
+
+
+  -------------------
+* Discriminator Class
+  -------------------
+
+  + Aniadir una expresion booleana al Discriminator, devolviendo su Id (se
+    trata de un int).
+
+    Discriminator.bat add_constraint "expresion" < discriminator.ior
+
+  + Obtener la expresion booleana asociada al Id dado.
+
+    Discriminator.bat get_constraint Id < discriminator.ior
+
+  + Eliminar la expresion booleana asociada al Id dado.
+
+    Discriminator.bat remove_constraint Id < discriminator.ior
+
+  + Reemplazar la expresion booleana asociada al Id dado.
+
+    Discriminator.bat replace_constraint Id "expresion" < discriminator.ior
+
+  + Obtenemos la lista de expresiones existentes en dicho discriminator junto
+    a su Id asociado.
+
+    Discriminator.bat list_constraints < discriminator.ior
+
+
+  -----------------------
+* ProxyPushSupplier Class
+  -----------------------
+
+  + Obtener el valor del atributo OperationalState.
+
+    ProxyPushSupplier.bat get OperationalState < proxy_push_supplier.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ProxyPushSupplier get AdministrativeState < proxy_push_supplier.ior
+
+  + Obtener la referencia del objeto PushConsumer que esta conectado con el
+    en formato IOR (por defecto) o URL.
+
+    ProxyPushSupplier.bat get PushConsumer [-m (ior|url)] 
+                                                     < proxy_push_supplier.ior
+
+  + Obtener la referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ProxyPushSupplier.bat get Discriminator < proxy_push_supplier.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ProxyPushSupplier.bat set AdministrativeState <new_state> 
+                                                     < proxy_push_supplier.ior
+
+  + Destruir el ProxyPushSupplier.
+
+    ProxyPushSupplier.bat disconnect < proxy_push_supplier.ior
+
+
+  -----------------------
+* ProxyPushConsumer Class
+  -----------------------
+
+  + Obtener el valor del atributo OperationalState.
+
+    ProxyPushConsumer.bat get OperationalState < proxy_push_consumer.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ProxyPushConsumer.bat get AdministrativeState < proxy_push_consumer.ior
+
+  + Obtener la referencia del objeto PushSupplier que esta conectado con el
+    en formato IOR (por defecto) o URL.
+
+    ProxyPushConsumer.bat get PushSupplier [-m (ior|url)] 
+                                                     < proxy_push_consumer.ior
+
+  + Obtener la referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ProxyPushConsumer.bat get Discriminator [-m (ior|url)]
+                                                     < proxy_push_consumer.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ProxyPushConsumer.bat set AdministrativeState <new_state>
+                                                     < proxy_push_consumer.ior
+
+  + Destruir el ProxyPushConsumer.
+
+    ProxyPushConsumer.bat disconnect < proxy_push_consumer.ior
+
+
+  -----------------------
+* ProxyPullSupplier Class
+  -----------------------
+
+  + Obtener el valor del atributo OperationalState.
+
+    ProxyPullSupplier.bat get OperationalState < proxy_pull_supplier.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ProxyPullSupplier.bat get AdministrativeState < proxy_pull_supplier.ior
+
+  + Obtener la referencia del objeto PullConsumer que esta conectado con el
+    en formato IOR (por defecto) o URL.
+
+    ProxyPullSupplier.bat get PullConsumer [-m (ior|url)] 
+                                                     < proxy_pull_supplier.ior
+
+  + Obtener referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ProxyPullSupplier.bat get Discriminator < proxy_pull_supplier.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ProxyPullSupplier.bat set AdministrativeState <new_state> 
+                                                     < proxy_pull_supplier.ior
+
+  + Destruir el ProxyPullSupplier.
+
+    ProxyPullSupplier.bat disconnect < proxy_pull_supplier.ior
+
+
+  -----------------------
+* ProxyPullConsumer Class
+  -----------------------
+
+  + Obtener el valor del atributo OperationalState.
+
+    ProxyPullConsumer.bat get OperationalState < proxy_pull_consumer.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ProxyPullConsumer.bat get AdministrativeState < proxy_pull_consumer.ior
+
+  + Obtener la referencia del objeto PullSupplier que esta conectado con el
+    en formato IOR (por defecto) o URL.
+
+    ProxyPullConsumer.bat get PullSupplier [-m (ior|url)] 
+                                                     < proxy_pull_consumer.ior
+
+  + Obtener referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ProxyPullConsumer.bat get Discriminator [-m (ior|url)] 
+                                                     < proxy_pull_consumer.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ProxyPullConsumer.bat set AdministrativeState <new_state> 
+                                                     < proxy_pull_consumer.ior
+
+  + Destruir el ProxyPullConsumer.
+
+    ProxyPullConsumer.bat disconnect < proxy_pull_consumer.ior
+

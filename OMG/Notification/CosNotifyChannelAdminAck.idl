@@ -1,0 +1,42 @@
+//File: CosNotifyChannelAdminAck.idl
+//Part of the extended Notification Service
+
+#ifndef _COS_NOTIFY_CHANNEL_ADMIN_ACK_IDL_
+#define _COS_NOTIFY_CHANNEL_ADMIN_ACK_IDL_
+
+#include <CosNotifyChannelAdmin.idl>
+
+#pragma prefix "omg.org"
+
+module CosNotifyChannelAdminAck {
+	typedef sequence<long> SequenceNumbers;
+	
+	interface StructuredProxyPushSupplierAck :
+		CosNotifyChannelAdmin::StructuredProxyPushSupplier {
+
+		void acknowledge(in SequenceNumbers sequence_numbers);
+		
+	};//StructuredProxyPushSupplierAck
+
+	interface StructuredProxyPullSupplierAck :
+		CosNotifyChannelAdmin::StructuredProxyPullSupplier {
+	
+		void acknowledge(in SequenceNumbers sequence_numbers);
+		
+	};//StructuredProxyPullSupplierAck 
+	
+	interface SequenceProxyPushSupplierAck :
+		CosNotifyChannelAdmin::SequenceProxyPushSupplier {
+		
+		void acknowledge(in SequenceNumbers sequence_numbers);
+		
+	};//SequenceProxyPushSupplierAck
+	
+	interface SequenceProxyPullSupplierAck :
+		CosNotifyChannelAdmin::SequenceProxyPullSupplier {
+	
+		void acknowledge(in SequenceNumbers sequence_numbers);
+	
+	};//SequenceProxyPullSupplierAck
+};
+#endif /* #ifndef _COS_NOTIFY_CHANNEL_ADMIN_ACK_IDL_ */

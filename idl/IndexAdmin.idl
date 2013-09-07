@@ -1,0 +1,69 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// File          : IndexAdmin.idl
+// Description   : 
+//                 
+// Author/s      : 
+// Project       : 
+// Rel           : 01.00
+// Created       : 18/06/04
+// Revision Date : 
+// Rev. History  : 
+//
+// Copyright 2004 Telefonica, I+D. All Rights Reserved.
+//
+// The copyright of the software program(s) is property of Telefonica.
+// The program(s) may be used, modified and/or copied only with the 
+// express written consent of Telefonica or in acordance with the terms 
+// and conditions stipulated in the agreement/contract under which 
+// the program(s) have been supplied.
+//
+///////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef _IndexAdmin_IDL_
+#define _IndexAdmin_IDL_
+
+#pragma prefix "omg.org"
+
+module IndexAdmin {
+
+  typedef string GrammarId;
+  const GrammarId extended_trader_grammar = "0";
+
+  enum IndexType { string_index_type, long_index_type };
+
+
+  exception InvalidExpression {};
+  //exception InvalidFunction {};
+  exception FieldNotFound {};
+  exception TypeDoesNotMatch {};
+
+
+  interface IndexLocator {
+
+    readonly attribute GrammarId grammar;
+
+    attribute IndexType returned_index_type;
+
+    attribute string default_string_index;
+    attribute long default_int_index;
+
+    void set_event_field_reference( in string new_expression )
+                                         raises (InvalidExpression);
+    string get_event_field_reference();
+
+    //attribute string function_reference; 
+
+    string get_string_index( in any event )
+               raises (InvalidExpression, FieldNotFound, TypeDoesNotMatch);
+
+    long get_int_index( in any event ) 
+             raises (InvalidExpression, FieldNotFound, TypeDoesNotMatch);
+
+  };
+
+};
+
+#endif

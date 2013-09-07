@@ -1,0 +1,32 @@
+# Num. Channels (n)
+3
+# SupplierAdmin (0/1)
+1
+# Num. New SupplierAdmins (m)
+2
+# Fichero con los filtros a los Suppliers Admin
+none
+# Fichero con los Operators a los Suppliers Admin
+none
+# ConsumerAdmin (0/1)
+1
+# Num. New ConsumerAdmins (m)
+2
+# Fichero con los filtros a los Consumers Admin
+none
+# Num. PushSupplier Clients
+3
+# Fichero con los filtros a los PushSuppliers
+none
+# Fichero con los Operators a los PushSuppliers
+none
+# Num. PushConsumer Clients
+3
+# Fichero con los filtros a los PushConsumers
+none
+# Num eventos
+25
+# Tipos eventos 0: int / 1: string / 2: medium / 3: complex
+2
+# Rate 
+0

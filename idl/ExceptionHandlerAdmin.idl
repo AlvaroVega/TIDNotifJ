@@ -1,0 +1,32 @@
+#ifndef _EXCEPTIONHANDLERADMIN_IDL_
+#define _EXCEPTIONHANDLERADMIN_IDL_
+
+//#include <TransformationAdmin.idl>
+
+#pragma prefix "corba.tid.es"
+
+module ExceptionHandlerAdmin {
+
+  typedef string TransformingRuleId;
+
+  exception CannotProceed
+  {
+    string why;
+  };
+
+  interface ExceptionHandler {
+
+    void handle_exception ( in TransformingRuleId id,
+                            in any value, 
+                            in CannotProceed reason);
+  };
+
+  interface DistributionHandler {
+
+    void handle_distribution ( in any value, 
+                               in CannotProceed reason);
+  };
+
+};
+
+#endif

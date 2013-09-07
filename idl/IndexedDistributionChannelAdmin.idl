@@ -1,0 +1,40 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// File          : IndexedDistributionChannelAdmin.idl
+// Description   : 
+//                 
+// Author/s      : 
+// Project       : 
+// Rel           : 01.00
+// Created       : 18/06/04
+// Revision Date : 
+// Rev. History  : 
+//
+// Copyright 2004 Telefonica, I+D. All Rights Reserved.
+//
+// The copyright of the software program(s) is property of Telefonica.
+// The program(s) may be used, modified and/or copied only with the 
+// express written consent of Telefonica or in acordance with the terms 
+// and conditions stipulated in the agreement/contract under which 
+// the program(s) have been supplied.
+//
+///////////////////////////////////////////////////////////////////////////
+
+
+#ifndef _IndexedDistributionChannelAdmin_IDL_
+#define _IndexedDistributionChannelAdmin_IDL_
+
+#include <DistributionChannelAdmin.idl>
+#include <IndexAdmin.idl>
+
+#pragma prefix "omg.org"
+
+module IndexedDistributionChannelAdmin {
+
+  interface ConsumerAdmin : DistributionChannelAdmin::ConsumerAdmin 
+  {
+    attribute IndexAdmin::IndexLocator index_locator;
+  };
+};
+
+#endif

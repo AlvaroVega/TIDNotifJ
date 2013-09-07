@@ -1,0 +1,16 @@
+#
+# Usage: run <n> ClassFile
+#   <n> es el numero de referencia a usar
+#
+LIB_HOME=$EFORCE_HOME/work/CORBAServices/NotificationService_TID
+JARS=$LIB_HOME/lib/TIDNotifTestClient.jar:$LIB_HOME/lib/TIDEvent.jar:$LIB_HOME/lib/TIDNotif.jar:$LIB_HOME/lib/EventData.jar:$LIB_HOME/lib/CosLifeCycle.jar
+
+run-server.ksh 900 &
+
+sleep 5
+
+echo
+java -classpath $TIDORBJ_HOME/lib/tidorbj.jar:$JARS:. es.tid.corba.TIDNotifTestClient.transformator.TheTransformator -f admin.ior -o data.in > salida.out 2>&1
+
+echo
+ps

@@ -1,0 +1,103 @@
+#ifndef _TRANSFORMATIONADMIN_IDL_
+#define _TRANSFORMATIONADMIN_IDL_
+
+#include <CosLifeCycle.idl>
+#include "CosNotifyFilter.idl"
+
+#pragma prefix "omg.org"
+
+module TransformationAdmin 
+{
+  typedef CosNotifyFilter::ConstraintExp Constraint;
+  typedef string GrammarId;
+
+  const GrammarId extended_trader_grammar = "0";
+
+  exception InvalidConstraint {};
+  exception AlreadyDefinedId {};
+  exception AlreadyDefinedOrder {};
+  exception NotFound {};
+
+  // Definir interfaz que debe de implementar el Objeto corba que realiza
+  // la operacion.
+
+  typedef Object Reference;
+  typedef string Operation;
+  typedef long Order;
+
+  struct TransformingRule 
+  {
+    Constraint expression;
+    Reference object_ref;
+    Operation operation;
+  };
+
+  typedef string TransformingRuleId;
+
+  struct AssignedTransformingRule 
+  {
+    TransformingRuleId id;
+    TransformingRule rule;
+  };
+
+  typedef sequence<AssignedTransformingRule> AssignedTransformingRuleSeq;
+
+  struct AssignedRuleOrder 
+  {
+    Order position;
+    TransformingRuleId id;
+  };
+
+  typedef sequence<AssignedRuleOrder> AssignedRuleOrderSeq;
+
+  interface TransformingOperator 
+  {
+    readonly attribute GrammarId grammar;
+
+    Order add_transforming_rule (
+      in TransformingRuleId new_id,
+      in Constraint new_constraint,
+      in Reference new_object_ref,
+      in Operation new_operation
+    )
+    raises (AlreadyDefinedId, InvalidConstraint);
+
+    void insert_transforming_rule (
+      in Order new_position,
+      in TransformingRuleId new_id,
+      in Constraint new_constraint,
+      in Reference new_object_ref,
+      in Operation new_operation
+    )
+    raises (AlreadyDefinedOrder, AlreadyDefinedId, InvalidConstraint);
+
+    TransformingRuleId move_transforming_rule (
+      in TransformingRuleId id,
+      in Order new_position
+    )
+    raises (NotFound, AlreadyDefinedOrder);
+
+    TransformingRule get_transforming_rule ( in TransformingRuleId id )
+                                                             raises (NotFound);
+
+    Order get_transforming_rule_order ( in TransformingRuleId id )
+                                                             raises (NotFound);
+
+    void delete_transforming_rule ( in TransformingRuleId id ) 
+                                                             raises (NotFound);
+
+    TransformingRuleId replace_transforming_rule (
+      in TransformingRuleId id,
+      in Constraint new_constraint,
+      in Reference new_object_ref,
+      in Operation new_operation
+    )
+    raises (NotFound, InvalidConstraint);
+
+    AssignedTransformingRuleSeq get_transforming_rules ();
+    AssignedRuleOrderSeq get_transforming_rules_order ();
+  };
+
+};
+
+#endif

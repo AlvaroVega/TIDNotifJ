@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Class-Path: . ./TIDNotif.jar ./TIDNotifIdl.jar ./shared/TIDNaming.jar 
+ ./shared/TIDNamingIdl.jar ./shared/tidorbj.jar ./shared/TIDUtil.jar
+Created-By: 1.4 (Sun Microsystems Inc.)
+Main-Class: es.tid.corba.TIDNotif.Server
+Implementation-Title: "es.tid.corba.TIDNotif.Server"
+Implementation-Version: "2.0.0"
+Name: "TIDNotification"
+Implementation-Vendor: "Telefonica Investigacion y Desarrollo"
+

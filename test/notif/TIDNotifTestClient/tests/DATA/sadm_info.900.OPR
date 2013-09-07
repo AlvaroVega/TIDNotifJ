@@ -1,0 +1,8 @@
+DO_NOTHING
+$.properties('alarm_id') <= 4
+/export/home/alvaro/e-force/work/CORBAServices/NotificationService_TID/tools/es/tid/corba/TIDNotifTestClient/test6/operator.ior
+do_nothing
+DO_SOMETHING
+$.properties('alarm_id') >= 5
+/export/home/alvaro/e-force/work/CORBAServices/NotificationService_TID/tools/es/tid/corba/TIDNotifTestClient/test6/operator.ior
+do_something_2

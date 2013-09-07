@@ -1,0 +1,1 @@
+$.source_id == 'MOTOR' or $.source_id == 'BATERIA' or $.source_id == 'FRENOS' or $.source_id == 'SUSPENSION' or $.source_id == 'DEPOSITO' or $.source_id == 'ACEITE' or $.source_id == 'PLATINOS' or $.source_id == 'FILTROS' or $.source_id == 'CORREAS' or $.source_id == 'BUJIAS' 

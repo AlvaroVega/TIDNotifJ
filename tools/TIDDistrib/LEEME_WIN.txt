@@ -1,0 +1,590 @@
+******************************************************************************
+*                                                                            *
+* Libreria:    TIDDistribTools.jar                                           *
+*                                                                            *
+* Descripcion: Utilizades TIDDistrib                                         *
+* Paquete:     es.tid.corba.TIDDistrib.tools                                 *
+* Clases:      Agent                                                         *
+*              Factory                                                       *
+*              Channel                                                       *
+*              SupplierAdmin                                                 *
+*              ConsumerAdmin                                                 *
+*              Discriminator                                                 *
+*              Operator                                                      *
+*              ProxyPushSupplier                                             *
+*              ProxyPushConsumer                                             *
+*                                                                            *
+* Scripts:     Agent.bat                                                     *
+*              Factory.bat                                                   *
+*              Channel.bat                                                   *
+*              SupplierAdmin.bat                                             *
+*              ConsumerAdmin.bat                                             *
+*              Discriminator.bat                                             *
+*              Operator.bat                                                  *
+*              ProxyPushSupplier.bat                                         *
+*              ProxyPushConsumer.bat                                         *
+*                                                                            * 
+******************************************************************************
+
+
+  -----------
+* Agent Class
+  -----------
+
+  + Obtener la referencia del objeto ChannelFactory en formato IOR o URL.
+
+    Agent.bat resolve ChannelFactory [-m (ior | url)] < agent.ior
+
+  + Obtener la lista del objeto ChannelFactory en formato IOR (por defecto)
+    o URL.
+
+    Agent.bat list [-m (ior | url)] < agent.ior
+
+  + Parar el servicio.
+
+    Agent.bat shutdown < agent.ior
+
+
+  -------------
+* Factory Class
+  -------------
+
+  + Crear un canal. Si se le da un nombre este quedara asociado a su referencia,
+    devolviendo su referencia en formato IOR (por defecto) o URL. Se puede 
+    especificar el tipo de canal que queremos crear "notificacion" o
+    "distribucion" (por defecto).
+
+    Factory.bat create [name] [-t (notification|distribution)] [-m (ior|url)] 
+                                                                  < factory.ior
+
+  + Busca un canal. Si se le da un nombre este quedara asociado a su referencia,
+    devolviendo su referencia en formato IOR (por defecto) o URL.
+
+    Factory.bat find name [-m (ior | url)] < factory.ior
+
+  + Obtener la lista de referencias de los canales existentes en formato IOR 
+    (por defecto) o URL.
+
+    Factory.bat list [-m (ior | url)] < factory.ior
+
+  + Obtener la lista de nombres de los canales existentes (junto al nombre
+    aparece de que "tipo" es el canal y la fecha y hora de creacion).
+
+    Factory.bat nlist < factory.ior
+
+  + Destruir el canal con el nombre asociado.
+
+    Factory.bat destroy name < factory.ior
+
+
+  -------------
+* Channel Class
+  -------------
+
+  + Crear un SupplierAdmin. Si se le da un nombre este se utilizara como 
+    criterio  "Id"  asociandolo tambien a su referencia,  devolviendo su 
+    referencia en formato IOR (por defecto) o URL.
+
+    Channel.bat create_supplier [name] [-m (ior | url)] < channel.ior
+
+  + Crear un ConsumerAdmin. Si se le da un nombre este se utilizara como 
+    criterio  "Id"  asociandolo tambien a su referencia,  devolviendo su 
+    referencia en formato IOR (por defecto) o URL. Se puede especificar 
+    el tipo de ConsumerAdmin: "notificacion" o "distribucion", siendo
+    por defecto el mismo tipo con el que se creo el canal.
+
+    Channel.bat create_consumer [name] [-t (notification|distribution)] 
+                                                   [-m (ior|url)] < channel.ior
+
+  + Busca un SupplierAdmin con "Id" igual a nombre, devolviendo su referencia 
+    en formato IOR (por defecto) o URL. Si se utiliza el parametro "-global"
+    la busqueda se realiza sobre todos los SuppliersAdmin existentes en el 
+    canal, incluidos los encadenados.
+
+    Channel.bat find_supplier [name] [-golbal] [-m (ior | url)] < channel.ior
+
+  + Busca un ConsumerAdmin con "Id" igual a nombre, devolviendo su referencia 
+    en formato IOR (por defecto) o URL. Si se utiliza el parametro "-global"
+    la busqueda se realiza sobre todos los ConsumersAdmin existentes en el 
+    canal, incluidos los encadenados.
+
+    Channel.bat find_consumer [name] [-golbal] [-m (ior | url)] < channel.ior
+
+  + Obtener la lista de referencias de los SupplierAdmin existentes en el
+    canal en formato IOR (por defecto) o URL. Si se utiliza el parametro 
+    "-global" se devuelve la lista de todos los SupplierAdmin existentes 
+    en el canal, incluidos los encadenados.
+
+    Channel.bat list_suppliers [-global] [-m (ior | url)] < channel.ior
+
+  + Obtener la lista de referencias de los ConsumerAdmin existentes en el
+    canal en formato IOR (por defecto) o URL. Si se utiliza el parametro 
+    "-global" se devuelve la lista de todos los ConsumerAdmin existentes 
+    en el canal, incluidos los encadenados.
+
+    Channel.bat list_consumers [-global] [-m (ior | url)] < channel.ior
+
+  + Obtener la lista de nombres de los SupplierAdmin existentes en el canal. 
+    Si se utiliza el parametro "-global" se devuelve la lista de todos los 
+    SupplierAdmin existentes en el canal, incluidos los encadenados.
+
+    Channel.bat nlist_suppliers [-global] < channel.ior
+
+  + Obtener la lista de nombres de los ConsumerAdmin existentes en el canal.
+    Si se utiliza el parametro "-global" se devuelve la lista de todos los 
+    ConsumerAdmin existentes en el canal, incluidos los encadenados.
+
+    Channel.bat nlist_consumers [-global] < channel.ior
+
+  + Obtener el modo con el que se creo el canal ("notification" o
+    "distribution").
+
+    Channel.bat get OperationMode < channel.ior
+
+  + Obtener el valor del atributo OperationalState.
+
+    Channel.bat get "OperationalState" < channel.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    Channel.bat get "AdministrativeState" < channel.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    Channel.bat set "AdministrativeState" <new_state> < channel.ior
+
+  + Destruir el canal.
+
+    Channel.bat destroy < channel.ior
+
+
+  -------------------
+* SupplierAdmin Class
+  -------------------
+
+  + Crear un ProxyPushConsumer. Si se le da un nombre este se asociara a su
+    referencia CORBA, devolviendola en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat create_push_consumer [name] [-m (ior | url)]
+                                                           < supplier_admin.ior
+
+  + Crear un ProxyPullConsumer (canal en modo notificacion). Si se le da un 
+    nombre este se asociara a su referencia CORBA, devolviendola en formato 
+    IOR (por defecto) o URL.
+
+    SupplierAdmin.bat create_pull_consumer [name] [-m (ior | url)] 
+                                                           < supplier_admin.ior
+
+  + Busca un ProxyPushConsumer por nombre, devolviendo su referencia en
+    formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat find_push_consumer name [-m (ior | url)]
+                                                           < supplier_admin.ior
+
+  + Busca un ProxyPullConsumer por nombre, devolviendo su referencia en
+    formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat find_pull_consumer name [-m (ior | url)]
+                                                           < supplier_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPushConsumer existentes en 
+    el SupplierAdmin en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat push_consumers [-m (ior | url)] < supplier_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPullConsumer existentes en 
+    el SupplierAdmin en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat pull_consumers [-m (ior | url)] < supplier_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPushConsumer existentes en el
+    SupplierAdmin.
+
+    SupplierAdmin.bat nlist_push_consumers < supplier_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPullConsumer existentes en el
+    SupplierAdmin.
+
+    SupplierAdmin.bat nlist_pull_consumers < supplier_admin.ior
+
+  + Crear un SupplierAdmin encadenado. Si se le da un nombre este se 
+    utilizara como criterio  "Id"  asociandolo tambien a su referencia,  
+    devolviendo su referencia en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat create_supplier [name] [-m (ior|url)] < supplier_admin.ior
+
+  + Obtener la referencia del SupplierAdmin dependiente de el en formato 
+    IOR (por defecto) o URL. 
+
+    SupplierAdmin.bat list_suppliers [-m (ior | url)] < supplier_admin.ior
+
+  + Obtener el nombre del SupplierAdmin dependiente de el. 
+
+    SupplierAdmin.bat nlist_suppliers < channel.ior
+
+  + Obtener el valor del atributo OperationalState.
+
+    SupplierAdmin.bat get OperationalState < supplier_admin.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    SupplierAdmin.bat get AdministrativeState < supplier_admin.ior
+
+  + Obtener el valor del criterio "Id" del objeto AssociatedCriteria.
+
+    SupplierAdmin.bat get AssociatedCriteria Id < supplier_admin.ior
+
+  + Obtener el valor del atributo Level (nivel que ocupa el SupplierAdmin,
+    0 significa que cuelga directamente del canal).
+
+    SupplierAdmin.bat get Level < supplier_admin.ior
+
+  + Obtener referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat get Discriminator [-m (ior | url)] < supplier_admin.ior
+
+  + Obtener referencia del objeto TransformingOperator para ese SupplierAdmin 
+    en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat get Operator [-m (ior | url)] < supplier_admin.ior
+
+  + Obtener referencia del objeto ExceptionHandler en las transformaciones
+    para ese SupplierAdmin en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.bat get ErrorHandler [-m (ior | url)] < supplier_admin.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    SupplierAdmin.bat set AdministrativeState <new_state> < supplier_admin.ior
+
+  + Asignar un ExceptionHandler al SupplierAdmin, proporcionandole la
+    referencia a traves de un fichero.
+
+    SupplierAdmin.bat set ErrorHandler <ior_file> < supplier_admin.ior
+
+  + Destruir el SupplierAdmin y eliminarlo de la cadena de SupplierAdmins
+    encadenados sin destruir el resto de admins que cuelguen de el.
+
+    SupplierAdmin.bat remove < supplier_admin.ior
+
+  + Destruir el SupplierAdmin.
+
+    SupplierAdmin.bat destroy < supplier_admin.ior
+
+
+  -------------------
+* ConsumerAdmin Class
+  -------------------
+
+  + Crear un ProxyPushSupplier. Si se le da un nombre este se asociara a su
+    referencia CORBA, devolviendola en formato IOR (por defecto) o URL. Se 
+    le puede asignar un valor al atributo "order" a traves del parametro 
+    "-p position", de lo contrario se le asignara uno mayor a los ya 
+    existentes, es decir, el nuevo ProxyPushSupplier se situara despues de 
+    los ya existentes.
+
+    ConsumerAdmin.bat create_push_supplier [name] [-p position] [-m (ior | url)]
+                                                           < consumer_admin.ior
+
+  + Crear un ProxyPullSupplier (canal en modo notificacion). Si se le da un
+    nombre este se asociara a su referencia CORBA, devolviendola en formato
+    IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat create_pull_supplier [name] [-m (ior | url)] 
+                                                           < consumer_admin.ior
+
+  + Busca un ProxyPushSupplier por nombre, devolviendo su referencia en
+    formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat find_push_supplier name [-m (ior | url)]
+                                                           < consumer_admin.ior
+
+  + Busca un ProxyPullSupplier por nombre, devolviendo su referencia en
+    formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat find_pull_supplier name [-m (ior | url)]
+                                                           < consumer_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPushSupplier existentes en 
+    el ConsumerAdmin en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat push_suppliers [-m (ior | url)] < consumer_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPullSupplier existentes en 
+    el ConsumerAdmin en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat pull_suppliers [-m (ior | url)] < consumer_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPushSupplier existentes en el
+    ConsumerAdmin.
+
+    ConsumerAdmin.bat nlist_push_suppliers < consumer_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPullSupplier existentes en el
+    ConsumerAdmin.
+
+    ConsumerAdmin.bat nlist_pull_suppliers < consumer_admin.ior
+
+  + Crear un ConsumerAdmin anidado. Si se le da un nombre este se utilizara 
+    como criterio  "Id"  asociandolo tambien a su referencia, devolviendo 
+    su referencia en formato IOR (por defecto) o URL.  Se le puede asignar 
+    un valor al atributo "order" a traves del parametro "-p position", de 
+    lo contrario se le asignara uno mayor a los ya existentes, es decir, el 
+    nuevo ConsumerAdmin se situara despues de los ConsumerAdmin y de los 
+    ProxyPushSupplier ya existentes.
+
+    ConsumerAdmin.bat create_consumer [name] [-p position] [-m (ior | url)] 
+                                                          < consumer_admin.ior
+
+  + Busca un ConsumerAdmin entre los hijos de este con "Id" igual a "name", 
+    devolviendo su referencia en formato IOR (por defecto) o URL. 
+
+    ConsumerAdmin.bat find_consumers [name] [-m (ior | url)] <consumer_admin.ior
+
+  + Obtener la lista de referencias de los objetos ConsumerAdmin hijos de 
+    el en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat list_consumers [-m (ior | url)] < consumer_admin.ior
+
+  + Obtener la lista de nombres de los objetos ConsumerAdmin hijos de el.
+
+    ConsumerAdmin.bat nlist_consumers < consumer_admin.ior
+
+  + Obtener referencia del objeto Discriminator para ese ConsumerAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat get Discriminator [-m (ior | url)] < consumer_admin.ior
+
+  + Obtener el valor del atributo OperationalState.
+
+    ConsumerAdmin.bat get OperationalState < consumer_admin.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ConsumerAdmin.bat get AdministrativeState < consumer_admin.ior
+
+  + Obtener el valor del criterio "Id" del objeto AssociatedCriteria.
+
+    ConsumerAdmin.bat get AssociatedCriteria Id < consumer_admin.ior
+
+  + Obtener el modo con el que se creo el ConsumerAdmin ("notification" o
+    "distribution").
+
+    ConsumerAdmin.bat get OperationMode < consumer_admin.ior
+
+  + Obtener el valor del atributo Order (posicion que ocupa el ConsumerAdmin,
+    0 significa que cuelga directamente del canal, donde no se tiene en cuenta
+    la posicion).
+
+    ConsumerAdmin.bat get Order < consumer_admin.ior
+
+  + Obtener el valor del atributo Order_Gap (separacion por defecto entre dos
+    ConsumerAdmin o ProxyPushSupplier creados consecutivamente sin darles una
+    posicion determinada).
+
+    ConsumerAdmin.bat get OrderGap < consumer_admin.ior
+
+  + Obtener referencia del objeto ExceptionHandler de distribucion para ese 
+    ConsumerAdmin en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.bat get ErrorHandler [-m (ior | url)] < consumer_admin.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ConsumerAdmin.bat set AdministrativeState <new_state> < consumer_admin.ior
+
+  + Cambiar el valor del atributo Order, es decir, la posicion que ocupa el 
+    ConsumerAdmin en la lista de los ConsumerAdmin's y los ProxyPushSupplier's 
+    existentes.
+
+    ConsumerAdmin.bat set Order <new_order> < consumer_admin.ior
+
+  + Cambiar el valor del atributo Order_Gap (separacion por defecto entre dos
+    ConsumerAdmin o ProxyPushSupplier creados consecutivamente sin darles una
+    posicion determinada).
+
+    ConsumerAdmin.bat get OrderGap <new_order_gap> < consumer_admin.ior
+
+  + Asignar un ExceptionHandler al ConsumerAdmin, proporcionandole la
+    referencia a traves de un fichero.
+
+    ConsumerAdmin.bat set ErrorHandler <ior_file> < consumer_admin.ior
+
+  + Destruir el ConsumerAdmin.
+
+    ConsumerAdmin.bat destroy < consumer_admin.ior
+
+
+  -------------------
+* Discriminator Class
+  -------------------
+
+  + Aniadir una expresion booleana al Discriminator, devolviendo su Id (se
+    trata de un int).
+
+    Discriminator.bat add_constraint "expresion" < discriminator.ior
+
+  + Obtener la expresion booleana asociada al Id dado.
+
+    Discriminator.bat get_constraint Id < discriminator.ior
+
+  + Eliminar la expresion booleana asociada al Id dado.
+
+    Discriminator.bat remove_constraint Id < discriminator.ior
+
+  + Reemplazar la expresion booleana asociada al Id dado.
+
+    Discriminator.bat replace_constraint Id "expresion" < discriminator.ior
+
+  + Obtenemos la lista de expresiones existentes en dicho discriminator junto
+    a su Id asociado.
+
+    Discriminator.bat list_constraints < discriminator.ior
+
+
+  --------------
+* Operator Class
+  --------------
+
+  + Aniadir una regla de transformacion al TransformingOperator, devolviendo 
+    su posicion ("Order").
+
+    Operator.bat add_rule Id "expresion" ior_file operation < operator.ior
+
+  + Insertar una regla de transformacion al TransformingOperator en una 
+    posicion determinada, devolviendo su "Id".
+
+    Operator.bat insert_rule Id Position "expresion" ior_file operation 
+                                                                < operator.ior
+
+  + Cambia la posicion ocupada por una regla de transformacion.
+
+    Operator.bat move_rule Id Position < operator.ior
+
+  + Actualiza una regla de transformacion con los valores suministrados, 
+    conservando su posicion ("Order").
+
+    Operator.bat replace_rule Id "expresion" ior_file operation < operator.ior
+
+  + Elimina la regla de transformacion con el "Id" dado.
+
+    Operator.bat remove_rule Id < operator.ior
+
+  + Obtiene los datos asociados a la regla de transformacion con el "Id" dado.
+
+    Operator.bat get_rule Id < operator.ior
+
+  + Obtiene la posicion ("Order") ocupada por la regla de transformacion con
+    el "Id" dado.
+
+    Operator.bat get_order Id < operator.ior
+
+  + Obtiene la lista de reglas de transformacion existentes en un objeto 
+    TransformingOperator dado.
+
+    Operator.bat get_rules < operator.ior
+
+  + Obtiene la la lista de posiciones ("Order") ocupadas por las regla de 
+    transformacion de un objeto TransformingOperator dado.
+
+    Operator.bat get_orders < operator.ior
+
+
+  -----------------------
+* ProxyPushSupplier Class
+  -----------------------
+
+  + Obtener el valor del atributo OperationalState.
+
+    ProxyPushSupplier.bat get OperationalState < proxy_push_supplier.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ProxyPushSupplier.bat get AdministrativeState < proxy_push_supplier.ior
+
+  + Obtener la referencia del objeto PushConsumer que esta conectado con el
+    en formato IOR (por defecto) o URL.
+
+    ProxyPushSupplier.bat get PushConsumer [-m (ior|url)]
+                                                     < proxy_push_supplier.ior
+
+  + Obtener la referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ProxyPushSupplier.bat get Discriminator [-m (ior|url)] 
+                                                     < proxy_push_supplier.ior
+
+  + Obtener el modo en el que opera el objeto ProxyPushSupplier (notificacion
+    o distribucion).
+
+    ProxyPushSupplier.bat get OperationMode < proxy_push_supplier.ior
+
+  + Obtener el valor del atributo Order (posicion que ocupa el objeto 
+    ProxyPushSupplier).
+
+    ProxyPushSupplier.bat get Order < proxy_push_supplier.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ProxyPushSupplier.bat set AdministrativeState <new_state> 
+                                                       < proxy_push_supplr.ior
+
+  + Cambiar el valor del atributo Order, es decir, la posicion que ocupa el 
+    ProxyPushSupplier.bat en la lista de los ProxyPushSupplier existentes.
+
+    ProxyPushSupplier.bat set Order <new_order> < proxy_push_supplier.ior
+
+  + Destruir el ProxyPushSupplier.
+
+    ProxyPushSupplier.bat disconnect < proxy_push_supplier.ior
+
+
+  -----------------------
+* ProxyPushConsumer Class
+  -----------------------
+
+  + Obtener el valor del atributo OperationalState.
+
+    ProxyPushConsumer.bat get OperationalState < proxy_push_consumer.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ProxyPushConsumer.bat get AdministrativeState < proxy_push_consumer.ior
+
+  + Obtener la referencia del objeto PushSupplier que esta conectado con el
+    en formato IOR (por defecto) o URL.
+
+    ProxyPushConsumer.bat get PushSupplier [-m (ior|url)]
+                                                     < proxy_push_consumer.ior
+
+  + Obtener la referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ProxyPushConsumer.bat get Discriminator [-m (ior|url)] 
+                                                     < proxy_push_consumer.ior
+
+  + Obtener referencia del objeto TransformingOperator para ese SupplierAdmin 
+    en formato IOR (por defecto) o URL.
+
+    ProxyPushConsumer.bat get Operator [-m (ior|url)] < proxy_push_consumer.ior
+
+  + Obtener referencia del objeto ExceptionHandler en las transformaciones
+    para ese SupplierAdmin en formato IOR (por defecto) o URL.
+
+    ProxyPushConsumer.bat get ErrorHandler < proxy_push_consumer.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ProxyPushConsumer.bat set AdministrativeState <new_state> 
+                                                        < proxy_push_consr.ior
+
+  + Asignar un ExceptionHandler al SupplierAdmin, proporcionandole la
+    referencia a traves de un fichero.
+
+    ProxyPushConsumer.bat set ErrorHandler <ior_file> < proxy_push_consumer.ior
+
+  + Destruir el ProxyPushConsumer.
+
+    ProxyPushConsumer.bat disconnect < proxy_push_consumer.ior
+

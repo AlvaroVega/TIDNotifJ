@@ -1,0 +1,32 @@
+#!/bin/sh
+set +u
+
+if [ -z "$JAVA_HOME" ]; then
+	echo "Environment variable JAVA_HOME must be set"
+	exit 1
+fi
+
+if [ -z "$TIDORBJ_HOME" ]; then
+	echo "Environment variable TIDORBJ_HOME must be set"
+	exit 1	
+fi
+
+if [ -z "$TIDNOTIFJ_HOME" ]; then
+	echo "Environment variable TIDNOTIFJ_HOME must be set"
+	exit 1	
+fi
+
+if [ $# -lt 1 ]; then
+	echo "usage: `basename $0` ior_filename"
+	echo
+	exit 1
+fi
+
+IOR_FILE=$1
+#$JAVA_HOME/bin/java -jar $TIDNOTIFJ_HOME/lib/stop.jar < $IOR_FILE
+
+JVM=$JDK_HOME/bin/java
+
+START_CLASSPATH=.:$TIDNOTIFJ_HOME/lib/TIDNotifJ.jar:$TIDORBJ_HOME/lib/tidorbj.jar
+
+$JVM -classpath $START_CLASSPATH es.tid.corba.TIDNotif.Shutdown < $IOR_FILE

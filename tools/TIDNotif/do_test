@@ -1,0 +1,220 @@
+# run_agent           
+#  Agent resolve ChannelFactory [-m ( ior | url)] < agent.ior
+#  Agent shutdown < agent.ior
+#  Agent list < agent.ior
+
+# run_factory
+#  Factory create [name] [-m ( ior | url)] < factory.ior
+#  Factory destroy name < factory.ior
+#  Factory find [name] [-m ( ior | url)] < factory.ior
+#  Factory list < factory.ior
+#  Factory nlist < factory.ior
+#  Factory start < factory.ior
+#  Factory stop < factory.ior
+
+# run_channel         
+#  Channel list_suppliers [-m ( ior | url)] < channel.ior
+#  Channel list_consumers [-m ( ior | url)] < channel.ior
+#  Channel create_supplier [name] [-m ( ior | url)] < channel.ior
+#  Channel create_consumer [name] [-m ( ior | url)] < channel.ior
+#  Channel find_supplier [name] [-m ( ior | url)] < channel.ior
+#  Channel find_consumer [name] <[-m ( ior | url)]  channel.ior
+#  Channel get "OperationalState" < channel.ior
+#  Channel get "AdministrativeState" < channel.ior
+#  Channel set "AdministrativeState" <new_state> < channel.ior
+#  Channel destroy < channel.ior
+
+# run_supplier_admin
+#  SupplierAdmin create_push_consumer [-m (ior | url)] < supplier_admin.ior
+#  SupplierAdmin create_pull_consumer [-m (ior | url)] < supplier_admin.ior
+#  SupplierAdmin push_consumers [-m (ior | url)] < supplier_admin.ior
+#  SupplierAdmin pull_consumers [-m (ior | url)] < supplier_admin.ior
+#  SupplierAdmin get_distriminator [-m ( ior | url)] < supplier_admin.ior
+#  SupplierAdmin get OperationalState < supplier_admin.ior
+#  SupplierAdmin get AdministrativeState < supplier_admin.ior
+#  SupplierAdmin set AdministrativeState <new_state> < supplier_admin.ior
+#  SupplierAdmin destroy < supplier_admin.ior
+
+# run_consumer_admin  
+#  ConsumerAdmin create_push_supplier [-m (ior | url)] < consumer_admin.ior
+#  ConsumerAdmin create_pull_supplier [-m (ior | url)] < consumer_admin.ior
+#  ConsumerAdmin push_suppliers [-m (ior | url)] < consumer_admin.ior
+#  ConsumerAdmin pull_suppliers [-m (ior | url)] < consumer_admin.ior
+#  ConsumerAdmin get_distriminator [-m ( ior | url)] < consumer_admin.ior
+#  ConsumerAdmin get OperationalState < consumer_admin.ior
+#  ConsumerAdmin get AdministrativeState < consumer_admin.ior
+#  ConsumerAdmin set AdministrativeState <new_state> < consumer_admin.ior
+#  ConsumerAdmin destroy < consumer_admin.ior
+
+echo Obtenemos la IOR del ChannelFactory.
+run_agent resolve ChannelFactory -m ior < agent.ior > factory.ior
+echo done.
+
+echo Listamos los canales desde el agent.
+run_agent list < agent.ior
+echo done.
+
+echo Creamos tres canales: Channel_A, Channel_B y Channel_C.
+run_factory create Channel_A -m ior < factory.ior > channel.ior
+run_factory create Channel_B < factory.ior
+run_factory create Channel_C < factory.ior
+echo done.
+
+echo Listado de los nombres de los canales.
+run_factory nlist < factory.ior
+echo done.
+
+echo Destruimos el Channel_B.
+run_factory destroy Channel_B < factory.ior
+echo done.
+
+echo Listado de los nombres de los canales.
+run_factory nlist < factory.ior
+echo done.
+
+echo Buscamos el Channel_C.
+run_factory find Channel_C < factory.ior
+echo done.
+
+echo Destruimos el Channel_C.
+run_factory destroy Channel_C < factory.ior
+echo done.
+
+echo "Listado de las IOR's de los canales."
+run_factory list < factory.ior
+echo done.
+
+echo Listado de los nombres de los canales.
+run_factory nlist < factory.ior
+echo done.
+
+echo Creamos tres SupplierAdmin: Supplier_A, Supplier_B y Supplier_C.
+run_channel create_supplier Supplier_A < channel.ior > supplier_admin.ior
+run_channel create_supplier Supplier_B < channel.ior
+run_channel create_supplier Supplier_C < channel.ior
+echo done.
+
+echo Listado de los SupplierAdmin del canal.
+run_channel list_suppliers -m url < channel.ior
+echo done.
+
+echo Creamos tres SupplierAdmin: Consumer_A, Consumer_B y Consumer_C.
+run_channel create_consumer Consumer_A < channel.ior > consumer_admin.ior
+run_channel create_consumer Consumer_B < channel.ior
+run_channel create_consumer Consumer_C < channel.ior
+echo done.
+
+echo Listado de los ConsumerAdmin del canal.
+run_channel list_consumers -m url < channel.ior
+echo done.
+
+echo Buscamos el Supplier_B.
+run_channel find_supplier Supplier_B -m url < channel.ior
+echo done.
+
+echo Buscamos el Consumer_B.
+run_channel find_consumer Consumer_B -m url < channel.ior
+echo done.
+
+echo Obtenemos el estado del canal.
+run_channel get "OperationalState" < channel.ior
+run_channel get "AdministrativeState" < channel.ior
+echo done.
+
+#echo Cambiamos el estado del canal.
+#run_channel set "AdministrativeState" <new_state> < channel.ior
+#echo done.
+
+echo Creamos dos ProxyPushConsumers.
+run_supplier_admin create_push_consumer -m url < supplier_admin.ior
+run_supplier_admin create_push_consumer -m url < supplier_admin.ior
+echo done.
+
+echo Listamos los ProxyPushConsumers.
+run_supplier_admin push_consumers -m url < supplier_admin.ior
+echo done.
+
+echo Obtenemos el discriminator del SupplierAdmin.
+run_supplier_admin get Discriminator < supplier_admin.ior > supplier_discriminator.ior
+run_supplier_admin get Discriminator -m url < supplier_admin.ior
+echo done.
+
+echo Obtenemos el estado del Supplier_A.
+run_supplier_admin get OperationalState < supplier_admin.ior
+run_supplier_admin get AdministrativeState < supplier_admin.ior
+echo done.
+
+echo "Destruimos el Supplier_A (desde el mismo)."
+run_supplier_admin destroy < supplier_admin.ior
+echo done.
+
+echo Creamos dos ProxyPushSuppliers.
+run_consumer_admin create_push_supplier -m url < consumer_admin.ior
+run_consumer_admin create_push_supplier -m url < consumer_admin.ior
+echo done.
+
+echo Listamos los ProxyPushSuppliers.
+run_consumer_admin push_suppliers -m url < consumer_admin.ior
+echo done.
+
+echo Obtenemos el discriminator del ConsumerAdmin.
+run_consumer_admin get Discriminator < consumer_admin.ior > consumer_discriminator.ior
+run_consumer_admin get Discriminator -m url < consumer_admin.ior
+echo done.
+
+echo Obtenemos el estado del Consumer_A.
+run_consumer_admin get OperationalState < consumer_admin.ior
+run_consumer_admin get AdministrativeState < consumer_admin.ior
+echo done.
+
+echo Add Constraint 1.
+run_discriminator add_constraint "$.juan < 1" < consumer_discriminator.ior
+echo done.
+
+echo Add Constraint 2.
+run_discriminator add_constraint "$.origen == 'exterior'" < consumer_discriminator.ior
+echo done.
+
+echo Add Constraint 3.
+run_discriminator add_constraint "$.source_id == 'MOTOR' or $.source_id == 'BATERIA' or $.source_id == 'FRENOS' or $.source_id == 'SUSPENSION' or $.source_id == 'DEPOSITO' or $.source_id == 'ACEITE' or $.source_id == 'PLATINOS' or $.source_id == 'FILTROS' or $.source_id == 'CORREAS' or $.source_id == 'BUJIAS'" < consumer_discriminator.ior
+echo done.
+
+echo Get Constraint 1.
+run_discriminator get_constraint 1 < consumer_discriminator.ior
+echo done.
+
+echo Get Constraint 2.
+run_discriminator get_constraint 2 < consumer_discriminator.ior
+echo done.
+
+echo Get Constraint 3.
+run_discriminator get_constraint 3 < consumer_discriminator.ior
+echo done.
+
+echo List Constraints.
+run_discriminator list_constraints < consumer_discriminator.ior
+echo done.
+
+echo Remove Constraint 2.
+run_discriminator remove_constraint 2 < consumer_discriminator.ior
+echo done.
+
+echo Replace Constraint 3.
+run_discriminator replace_constraint 3 "$.source_id == 'MOTOR'" < consumer_discriminator.ior
+echo done.
+
+echo List Constraints.
+run_discriminator list_constraints < consumer_discriminator.ior
+echo done.
+
+echo "Destruimos el Consumer_A (desde el mismo)."
+run_consumer_admin destroy < consumer_admin.ior
+echo done.
+
+echo "Destruimos el Channel_A (desde el mismo)."
+run_channel destroy < channel.ior
+echo done.
+
+echo Shutdown del Servicio.
+run_agent shutdown < agent.ior
+echo done.

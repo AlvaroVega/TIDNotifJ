@@ -1,0 +1,230 @@
+
+//package test.structured;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Properties;
+
+import org.omg.CORBA.Any;
+import org.omg.CORBA.IntHolder;
+import org.omg.CORBA.Object;
+import org.omg.CORBA_2_5.ORB;
+import org.omg.CosEventChannelAdmin.ProxyPushConsumer;
+import org.omg.CosNotification.EventHeader;
+import org.omg.CosNotification.FixedEventHeader;
+import org.omg.CosNotification.Property;
+import org.omg.CosNotification.StructuredEvent;
+import org.omg.CosNotification._EventType;
+import org.omg.CosNotification.StartTime;
+import org.omg.CosNotification.StartTimeSupported;
+import org.omg.CosNotifyChannelAdmin.ClientType;
+import org.omg.CosNotifyChannelAdmin.ConsumerAdmin;
+import org.omg.CosNotifyChannelAdmin.EventChannel;
+import org.omg.CosNotifyChannelAdmin.EventChannelFactory;
+import org.omg.CosNotifyChannelAdmin.ProxyPushConsumerHelper;
+import org.omg.CosNotifyChannelAdmin.StructuredProxyPushConsumer;
+import org.omg.CosNotifyChannelAdmin.StructuredProxyPushConsumerHelper;
+import org.omg.CosNotifyChannelAdmin.SupplierAdmin;
+import org.omg.NotificationService.NotificationAdmin;
+import org.omg.NotificationService.NotificationAdminHelper;
+import org.omg.PortableServer.POA;
+import org.omg.PortableServer.POAHelper;
+
+import org.omg.Messaging.*;
+import org.omg.TimeBase.*;
+
+import es.tid.TIDorbj.util.UTC;
+
+
+public class StructuredPushSupplier
+{
+
+   public static StructuredEvent create_structured_event(ORB orb) {
+
+        double rnd;
+        rnd = Math.random();
+       
+        StructuredEvent event = new StructuredEvent();
+        event.header = new EventHeader();
+        event.header.fixed_header = new FixedEventHeader();
+        
+        // Fill some commons fields
+        event.header.fixed_header.event_name = ( rnd > 0.5 )?"event_name":"other";
+        event.header.fixed_header.event_type = new _EventType();
+        event.header.fixed_header.event_type.domain_name = (  rnd > 0.5 )?"domain_name":"other";
+        event.header.fixed_header.event_type.type_name   = (  rnd > 0.5 )?"type_name":"other";
+
+        // Create a optional field to store 
+        // Leave unfilled
+        event.header.variable_header = null;
+//         event.header.variable_header = new Property[ 2 ];
+//         event.header.variable_header[ 0 ] = new Property();
+//         event.header.variable_header[ 0 ].name = "name 0";
+//         event.header.variable_header[ 0 ].value = orb.create_any();
+//         event.header.variable_header[ 0 ].value.insert_string( "value 0" );
+//         event.header.variable_header[ 1 ] = new Property();
+//         event.header.variable_header[ 1 ].name = "name 1";
+//         event.header.variable_header[ 1 ].value = orb.create_any();
+//         event.header.variable_header[ 1 ].value.insert_string( "value 1" );
+
+
+        event.filterable_data = new Property[ 2 ];
+        event.filterable_data[ 0 ] = new Property();
+        event.filterable_data[ 0 ].name = "int";
+        event.filterable_data[ 0 ].value = orb.create_any();
+        event.filterable_data[ 0 ].value.insert_long( (int)( rnd * 1000 ) );
+        event.filterable_data[ 1 ] = new Property();
+        event.filterable_data[ 1 ].name = "string";
+        event.filterable_data[ 1 ].value = orb.create_any();
+        event.filterable_data[ 1 ].value.insert_string( ( rnd > 0.5)?"greater":"smaller" );
+
+
+        event.remainder_of_body = orb.create_any();
+        event.remainder_of_body.insert_string( "remainder_of_body" );
+        
+        return event;
+    }
+
+
+
+   public static StructuredEvent update_delay_structured_event(ORB orb,
+                                                               StructuredEvent event, 
+                                                               int delay) {
+        // Get current UTC
+        UtcT start_utc = new UtcT(UTC.toTimeT(UTC.currentUtcTimeMillis()), 
+                                  (int)0, (short)0, (short)0);
+        start_utc.time += (delay * 10000000); // now + delay seconds
+        
+        System.out.println("Updaing delay structured_event to " + start_utc.time);
+
+        // Create a optional field to store 
+        event.header.variable_header = new Property[1];
+        event.header.variable_header[ 0 ] = new Property();
+        event.header.variable_header[ 0 ].name = StartTime.value;
+        event.header.variable_header[ 0 ].value = orb.create_any();
+        UtcTHelper.insert(event.header.variable_header[ 0 ].value, start_utc);
+
+        return event;
+    }
+
+
+
+    public static void main(String[] args) {
+        
+        if(args.length < 1) {
+            System.err.println("SetupChannel admin_url");            
+            return;
+        }
+        
+        Properties props = new Properties();
+        
+        props.put(
+        	"org.omg.CORBA.ORBClass",
+        	"es.tid.TIDorbj.core.TIDORB"
+		);
+        System.getProperties().put( 
+        	"org.omg.CORBA.ORBSingletonClass",
+        	"es.tid.TIDorbj.core.SingletonORB" 
+		);
+                
+        ORB orb = null;
+        
+        try {
+            
+            orb = (ORB) ORB.init(args, props);
+            
+            NotificationAdmin agent;  
+            agent = NotificationAdminHelper.narrow(orb.string_to_object( args[0] ) );
+			
+            EventChannelFactory factory; 
+            factory = agent.channel_factory();
+            
+            if ( !factory._non_existent() ) {
+                System.out.println("Factory exists");
+            }
+            
+            org.omg.CosNotifyChannelAdmin.EventChannel channel; 
+            channel = factory.get_event_channel(1);
+            
+            System.out.println("Get channel 1");
+            
+            SupplierAdmin admin = channel.default_supplier_admin();
+            
+            IntHolder supplier_id = new IntHolder();
+            
+            StructuredProxyPushConsumer consumer; 
+			consumer = StructuredProxyPushConsumerHelper.narrow(
+				admin.obtain_notification_push_consumer(
+					ClientType.STRUCTURED_EVENT, 
+					supplier_id
+				)
+			);
+            
+            StructuredPushSupplierImpl supplier; 
+            supplier = new StructuredPushSupplierImpl(orb);
+            
+            POA poa; 
+            poa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
+            poa.the_POAManager().activate();
+            
+            consumer.connect_structured_push_supplier( supplier._this( orb ) );
+            
+
+            Any start_supported_any = orb.create_any();
+            start_supported_any.insert_boolean(true); // { true, false }
+
+            Property[] initial_qos = new Property[1];
+            initial_qos[0] = new Property(StartTimeSupported.value, start_supported_any);
+            
+            consumer.set_qos(initial_qos);
+
+
+            StructuredEvent event = create_structured_event(orb);
+
+            for(int i = 0; i < 10; i++) {
+
+                event = update_delay_structured_event(orb, event, 5);
+
+           	
+            	System.out.println("Message sent " + 
+                                   event.filterable_data[ 0 ].value.extract_long() + ": " +
+                                   event.header.fixed_header.event_type.domain_name + ", " +
+                                   event.header.fixed_header.event_type.type_name 
+                                   );
+                consumer.push_structured_event( event );
+                Thread.sleep( 1000 );
+            }
+            
+           consumer.disconnect_structured_push_consumer();                             
+            
+            
+        }  catch (Throwable th) {
+            th.printStackTrace();            
+        } finally {
+            if (orb != null) {
+                orb.destroy();
+            }
+        }
+    }
+
+    /**
+     * @param string
+     * @param channel
+     */
+    private static void writeFile(String fileName, String ior)
+    {
+        try {
+            FileWriter file = new FileWriter(fileName);
+            file.write(ior);
+            file.close();
+        }
+        catch (IOException e) {            
+            e.printStackTrace();
+        }
+        
+        
+        
+        
+    }
+
+}

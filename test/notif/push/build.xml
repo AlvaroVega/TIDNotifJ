@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ MORFEO Project
+ http://www.morfeo-project.org
+
+ Component: TIDorbJ
+ Programming Language: Java
+
+ File: $Source: /cvsroot/tidorbj/TIDorbJTest/basic/echo//build.xml,v $
+ Version: $Revision: 1.4 $
+ Date: $Date: 2006/10/13 10:35:18 $
+ Last modified by: $Author: iredondo $
+
+ (C) Copyright 2004 Telefónica Investigación y Desarrollo
+     S.A.Unipersonal (Telefónica I+D)
+
+ Info about members and contributors of the MORFEO project
+ is available at:
+
+   http://www.morfeo-project.org/TIDorbJ/CREDITS
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+ If you want to use this software an plan to distribute a
+ proprietary application in any way, and you are not licensing and
+ distributing your source code under GPL, you probably need to
+ purchase a commercial license of the product.  More info about
+ licensing options is available at:
+
+   http://www.morfeo-project.org/TIDorbJ/Licensing
+   
+-->
+
+<project name="push" default="all" basedir=".">
+  
+  <property name="tidnotifj.test.push.debug" value="false"/>
+  <property name="tidorbj.home" location="../../../../TIDorbJ"/>
+  <property name="tididlc.home" location="../../../../TIDIdlc"/>
+  <property name="tidnotifj.home" location="../../../../TIDNotifJ"/>
+  <import file="${tididlc.home}/build/properties.xml"/>
+  <import file="${tididlc.home}/build/tasks.xml"/>
+  
+
+  <target name="debug">
+    <property name="tidorbj.test.push.debug" value="true"/>
+    <antcall target="all" inheritall="true" inheritrefs="true">
+      <param name="tidorbj.test.push.debug" value="true"/>
+    </antcall>
+  </target>
+
+  <target name="compile">
+    <javac debug="${tidorbj.test.push.debug}" 
+           srcdir="common:PushClient:PushServer:PushModule" 
+           destdir="."
+           includes="*.java">
+      <classpath>
+        <pathelement path="."/>
+        <pathelement location="${tidorbj.home}/dist/lib/tidorbj.jar"/>
+        <pathelement location="${tidnotifj.home}/dist/lib/tidNotifJ.jar"/>
+      </classpath>
+    </javac>
+  </target>
+  
+  <target name="PushConsumer" depends="compile">
+    <java classname="PushConsumer">
+      <classpath>
+        <pathelement path="."/>
+        <pathelement location="${tidorbj.home}/dist/lib/tidorbj.jar"/>
+        <pathelement location="${tidnotifj.home}/dist/lib/tidNotifJ.jar"/>
+      </classpath>
+    </java>	
+  </target>
+  
+  <target name="PushSupplier" depends="compile">
+    <java classname="PushSupplier">
+      <classpath>
+        <pathelement path="."/>
+        <pathelement location="${tidorbj.home}/dist/lib/tidorbj.jar"/>
+        <pathelement location="${tidnotifj.home}/dist/lib/tidNotifJ.jar"/>
+      </classpath>
+    </java>
+  </target>
+
+  <target name="SetupChannel" depends="compile">
+    <java classname="SetupChannel">
+      <classpath>
+        <pathelement path="."/>
+        <pathelement location="${tidorbj.home}/dist/lib/tidorbj.jar"/>
+        <pathelement location="${tidnotifj.home}/dist/lib/tidNotifJ.jar"/>
+      </classpath>
+    </java>
+  </target>
+  
+  <target name="all" depends="compile">
+  </target>
+  
+  <target name="clean">	
+    <delete>
+      <fileset dir="." includes="**/*.class"/>
+    </delete>
+    <!-- 
+         <ant target="clean" dir="source" inheritrefs="true" inheritall="true"/>
+    -->
+  </target>
+  
+        
+
+</project>

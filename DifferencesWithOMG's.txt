@@ -1,0 +1,45 @@
+Ficheros a "ignorar" (dependen de los ficheros a revisar):
+	DistributionChannelAdmin
+	DistributionInternalsChannelAdmin
+	EventData
+	ExceptionHandlerAdmin
+	IndexAdmin (extension que quiza pueda rehacerse en base a los 
+				MappingFilters, distribucion)
+	IndexedDistributionChannelAdmin
+	
+Ficheros a revisar:
+	1.- ConstraintAdmin (TID): en OMG es CosNotifyFilter, y cambia bastante...
+	2.- NotificationChannelAdmin:
+			Estructured, typed, QoS, interfaces intermedios, ... buff
+	
+
+
+1.- Constraints Stuff:
+	CosNotifyFilter.idl vs ConstraintAdmin.idl
+	
+	1.1.- Distintos tipos de eventos:
+		ConstraintExp incluye el tipo de evento, ahora es una estructura.
+	1.2.- Definiciones de tipos nuevos
+
+2.- CosNotifyChannelAdmin.idl vs NotificationChannelAdmin.idl
+	2.1.- Inclusion de parametros de QoS en la creacion de canales, y métodos
+		  añadidos para la consulta y modificación de los mismos.
+	2.2.- Nuevos tipos AdminProperties que encapsulan los parámetros que recibe
+		  la versión actual.
+		  
+3.- FilterAdmin, Filter, etc
+	3.1.- Se definen interfaces no existentes en la version implementada, como
+		  son FilterAdmin, Filter, MappingFilter, etc.
+	3.2.- La sintaxis de los filtros cambia para los estructured events, en los
+		  que se indica junto con el filtro el tipo y ambito de los eventos que
+		  se desean filtrar.
+
+4.- CosNotifyComm vs
+	4.1.- Ahora tanto los proveedores de eventos como los consumidores pueden
+		  indicar los "tipos" de eventos --para eventos estructurados-- que 
+		  generan o consumen, de cara a optimizar la gestion de éstos por el 
+		  servicio.
+
+4.- NOTA: 
+	Los eventos se encolan segun llegan, procesandose por un hilo de ejecución
+	independiente?

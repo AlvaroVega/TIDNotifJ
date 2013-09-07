@@ -1,0 +1,189 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// File          : DistributionChannelAdmin.idl
+// Description   : 
+//                 
+// Author/s      : 
+// Project       : 
+// Rel           : 01.00
+// Created       : 18/06/01
+// Revision Date : 19/06/01
+// Rev. History  : 
+//
+// Copyright 2001 Telefonica, I+D. All Rights Reserved.
+//
+// The copyright of the software program(s) is property of Telefonica.
+// The program(s) may be used, modified and/or copied only with the 
+// express written consent of Telefonica or in acordance with the terms 
+// and conditions stipulated in the agreement/contract under which 
+// the program(s) have been supplied.
+//
+///////////////////////////////////////////////////////////////////////////
+
+
+#ifndef _DistributionChannelAdmin_IDL_
+#define _DistributionChannelAdmin_IDL_
+
+#include <NotificationChannelAdmin.idl>
+#include <TransformationAdmin.idl>
+#include <ExceptionHandlerAdmin.idl>
+
+#pragma prefix "omg.org"
+
+module DistributionChannelAdmin {
+
+  typedef long Order;
+  typedef long Level;
+
+  interface ProxyPushConsumer: NotificationChannelAdmin::ProxyPushConsumer {
+    attribute TransformationAdmin::TransformingOperator operator;
+    attribute ExceptionHandlerAdmin::ExceptionHandler transformation_error_handler;
+  };
+
+  interface ProxyPushSupplier: NotificationChannelAdmin::ProxyPushSupplier {
+    readonly attribute ServiceManagement::OperationMode operation_mode;
+    attribute Order order;
+  };
+
+  typedef sequence<ProxyPushConsumer> ProxyPushConsumerSeq;
+  typedef sequence<ProxyPushSupplier> ProxyPushSupplierSeq;
+
+  interface ConsumerAdmin;
+  interface SupplierAdmin;
+
+  typedef sequence<SupplierAdmin> SupplierAdminSeq;
+  typedef sequence<ConsumerAdmin> ConsumerAdminSeq;
+
+  typedef string ConsumerAdminId;
+  typedef string SupplierAdminId;
+
+  typedef sequence<ConsumerAdminId> ConsumerAdminIdSeq;
+  typedef sequence<SupplierAdminId> SupplierAdminIdSeq;
+
+  exception InvalidCriteria { CosLifeCycle::Criteria invalid_criteria; };
+  exception CannotMeetCriteria { CosLifeCycle::Criteria unmet_criteria; };
+  //exception AlreadyExistCriteria { CosLifeCycle::Criteria exist_criteria; };
+
+  interface SupplierAdmin: NotificationChannelAdmin::SupplierAdmin 
+  {
+    readonly attribute Level level;
+    attribute TransformationAdmin::TransformingOperator operator;
+    attribute ExceptionHandlerAdmin::ExceptionHandler transformation_error_handler;
+
+    attribute CosLifeCycle::Criteria extended_criteria;
+
+    SupplierAdmin new_for_suppliers( 
+                    in CosLifeCycle::Criteria the_criteria )
+                                                      raises (InvalidCriteria);
+
+    SupplierAdminSeq find_for_suppliers(
+                       in CosLifeCycle::Criteria the_criteria)
+                                  raises (InvalidCriteria, CannotMeetCriteria);
+
+    SupplierAdminSeq supplier_admins( );
+    SupplierAdminIdSeq supplier_admin_ids( );
+
+    void remove();
+  };
+
+  typedef string ProxyId;
+  exception AlreadyDefinedOrder {};
+  exception ProxyAlreadyExist {};
+
+  interface ConsumerAdmin: NotificationChannelAdmin::ConsumerAdmin 
+  {
+    attribute Order order;
+    attribute unsigned long order_gap;
+    readonly attribute ServiceManagement::OperationMode operation_mode;
+    attribute ExceptionHandlerAdmin::DistributionHandler distribution_error_handler;
+    attribute CosLifeCycle::Criteria extended_criteria;
+
+    ConsumerAdmin new_for_consumers( 
+                    in CosLifeCycle::Criteria the_criteria )
+                                                      raises (InvalidCriteria);
+
+    ConsumerAdmin new_positioned_for_consumers( 
+                    in Order order, 
+                    in CosLifeCycle::Criteria the_criteria )
+                                 raises (AlreadyDefinedOrder, InvalidCriteria);
+
+    ConsumerAdminSeq find_for_consumers (
+                       in CosLifeCycle::Criteria the_criteria)
+                                  raises (InvalidCriteria, CannotMeetCriteria);
+
+    ProxyPushSupplier new_obtain_push_supplier( in Order order )
+                                                  raises (AlreadyDefinedOrder);
+
+    ProxyPushSupplier new_obtain_named_push_supplier( in Order order , 
+                                                      in ProxyId name )
+                              raises (AlreadyDefinedOrder, ProxyAlreadyExist);
+
+    ConsumerAdminSeq consumer_admins( );
+    ConsumerAdminIdSeq consumer_admin_ids( );
+  };
+
+  exception InvalidOperationMode {};
+
+  interface DistributionChannel: NotificationChannelAdmin::NotificationChannel
+  {
+    readonly attribute ServiceManagement::OperationMode operation_mode;
+    readonly attribute string creation_date;
+    readonly attribute string creation_time;
+
+    ConsumerAdmin new_operated_for_consumers (
+                   in CosLifeCycle::Criteria the_criteria,
+                   in ServiceManagement::OperationMode operation_mode )
+                                                      raises (InvalidCriteria);
+
+    SupplierAdminSeq new_find_for_suppliers(
+                       in CosLifeCycle::Criteria the_criteria )
+                                  raises (InvalidCriteria, CannotMeetCriteria);
+
+    ConsumerAdminSeq new_find_for_consumers (
+                       in CosLifeCycle::Criteria the_criteria)
+                                  raises (InvalidCriteria, CannotMeetCriteria);
+
+    ConsumerAdminSeq new_consumer_admins( );
+    SupplierAdminSeq new_supplier_admins( );
+
+    ConsumerAdminIdSeq consumer_admin_ids( );
+    SupplierAdminIdSeq supplier_admin_ids( );
+
+    ConsumerAdminIdSeq new_consumer_admin_ids( );
+    SupplierAdminIdSeq new_supplier_admin_ids( );
+  };
+
+  typedef sequence<DistributionChannel> DistributionChannelSeq;
+
+  typedef string ChannelID;
+  typedef sequence<ChannelID> ChannelIDSeq;
+
+  exception ChannelNotFound {};
+  exception ChannelAlreadyExist {};
+
+  interface DistributionChannelFactory : 
+                         NotificationChannelAdmin::NotificationChannelFactory {
+
+    DistributionChannel create_distribution_channel (
+           in unsigned long default_priority,
+           in unsigned long default_event_lifetime,
+           in ServiceManagement::OperationMode default_operation_mode )
+                                              raises (InvalidOperationMode);
+
+    DistributionChannel new_create_distribution_channel (
+                   in ChannelID channel_name,
+                   in unsigned long default_priority,
+                   in unsigned long default_event_lifetime,
+                   in ServiceManagement::OperationMode default_operation_mode )
+                            raises (ChannelAlreadyExist, InvalidOperationMode);
+
+    DistributionChannel get_distribution_channel( in ChannelID channel_name )
+                                                      raises (ChannelNotFound);
+
+    DistributionChannelSeq distribution_channels ();
+
+    ChannelIDSeq new_distribution_channels ();
+  };
+};
+
+#endif

@@ -1,0 +1,71 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// File          : NotificationServer.idl
+// Description   : TIDNotification server management
+//                 
+// Author/s      : Alvaro Rodriguez
+// Project       : 
+// Rel           : 01.00
+// Created       : 22/11/00
+// Revision Date : 22/11/00 
+// Rev. History  : 
+//
+// Copyright 2005 Telefonica, I+D. All Rights Reserved.
+//
+// The copyright of the software program(s) is property of Telefonica.
+// The program(s) may be used, modified and/or copied only with the 
+// express written consent of Telefonica or in acordance with the terms 
+// and conditions stipulated in the agreement/contract under which 
+// the program(s) have been supplied.
+//
+///////////////////////////////////////////////////////////////////////////
+
+
+#ifndef _NotificationService_idl_
+#define _NotificationService_idl_
+
+#include "NotificationChannelAdmin.idl"
+
+#pragma prefix "omg.org"
+
+module NotificationService {
+
+  enum ServiceState { cannot_run, can_run, running, shutdowned };
+
+  struct ServiceStatus {
+    ServiceState state;
+    string msgs;
+  };
+
+  enum TraceLevel { none, error, user, debug, deep_debug };
+
+  interface NotificationAdmin 
+  {
+    exception CannotProceed 
+    {
+      string why;
+    };
+
+//    void start () raises (CannotProceed);
+
+//    void stop () raises (CannotProceed);
+
+//    void resume () raises (CannotProceed);
+
+    void trace_on (in TraceLevel trace_level) raises (CannotProceed);
+
+    void trace_off () raises (CannotProceed);
+
+    NotificationChannelAdmin::NotificationChannelFactory channel_factory ()
+                                                        raises (CannotProceed);
+
+    NotificationChannelAdmin::NotificationChannelSeq list_channels ()
+                                                        raises (CannotProceed);
+
+    // Metodo que deben de tener todos los Admin's para finalizar el servicio
+    void shutdown_service () raises (CannotProceed);
+    void shutdown () raises (CannotProceed);
+  };
+};
+
+#endif // _NotificationService_idl_

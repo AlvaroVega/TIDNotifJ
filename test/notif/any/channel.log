@@ -1,0 +1,167 @@
+[0] ERROR Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 ORB initialization OK!
+TIDorb properties:
+	es.tid.TIDorbj.block_size=256
+	es.tid.TIDorbj.exhaustive_equal=false
+	es.tid.TIDorbj.typecode_cache_size=0
+
+	es.tid.TIDorbj.poa.max_threads=20
+	es.tid.TIDorbj.poa.min_threads=1
+	es.tid.TIDorbj.poa.max_queued_requests=1000
+	es.tid.TIDorbj.poa.starving_time=0
+	es.tid.TIDorbj.ami.max_threads=20
+	es.tid.TIDorbj.ami.min_threads=1
+	es.tid.TIDorbj.ami.max_queued_handled_requests=1000
+	es.tid.TIDorbj.ami.starving_time=0
+	es.tid.TIDorbj.max_time_in_shutdown=5000
+
+	es.tid.TIDorbj.trace.level=5
+	es.tid.TIDorbj.trace.file=channel.log
+	es.tid.TIDorbj.trace.file_size=10240
+	es.tid.TIDorbj.trace.num_files=1
+Default Policies:
+		IDL:omg.org/BiDirPolicy/BidirectionalPolicy:1.0=NORMAL
+		IDL:omg.org/RelativeRequestTimeoutPolicy:1.0=5000 ms.
+User Policies:
+[1] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 CommunicationManager.connect("corbaloc:iiop:1.2@127.0.0.1:2002/NotificationService")
+[2] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 CommunicationManager.initialize: = es.tid.TIDorbj.comm_layers: es.tid.TIDorbj.core.comm.iiop.IIOPCommunicationLayer
+[3] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 CommunicationManager.Initialize: loading es.tid.TIDorbj.core.comm.iiop.IIOPCommunicationLayer
+IIOPCommunicationLayer properties:
+	es.tid.TIDorbj.iiop.server_socket_backlog=10
+	es.tid.TIDorbj.iiop.address=null
+	es.tid.TIDorbj.iiop.tcp_nodelay=true
+	es.tid.TIDorbj.iiop.socket_timeout=0
+	es.tid.TIDorbj.iiop.comm_recover_time=1000
+	es.tid.TIDorbj.iiop.host=null
+	es.tid.TIDorbj.iiop.socket_connect_timeout=1000
+	es.tid.TIDorbj.iiop.reliable_oneway=false
+	es.tid.TIDorbj.iiop.server_socket_reconnect=0
+	es.tid.TIDorbj.iiop.GIOPVersion=1.2
+	es.tid.TIDorbj.iiop.port=0
+	es.tid.TIDorbj.iiop.socket_linger=-1
+	es.tid.TIDorbj.iiop.fragment_size=4096
+	es.tid.TIDorbj.iiop.socket_write_timeout=2000
+	es.tid.TIDorbj.iiop.max_connections=30
+	es.tid.TIDorbj.iiop.max_uncompleted_messages=25
+	es.tid.TIDorbj.iiop.max_comm_recovering_tries=3
+[4] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009  CommunicationManager initialized
+[5] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009     trying driver[className=es.tid.TIDorbj.core.comm.iiop.IIOPCommunicationLayer,[ IIOPCommunicationLayer ( iiop://rotary:0 ) ]]
+[6] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 connect returning driver[className=es.tid.TIDorbj.core.comm.iiop.IIOPCommunicationLayer,[ IIOPCommunicationLayer ( iiop://rotary:0 ) ]]
+[7] DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Opening client connection with ListenPoint(2002@127.0.0.1)
+[8] DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962] Opened!
+[9] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: Sending Request "_is_a "RequestId: 0
+[10] DUMP Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 GIOP message chunk sent - HEXDUMP 180 bytes
+47 49 4f 50 01 02 00 00  00 00 00 a8 00 00 00 00   GIOP............
+03 00 00 00 00 00 00 00  00 00 00 13 4e 6f 74 69   ............Noti
+66 69 63 61 74 69 6f 6e  53 65 72 76 69 63 65 00   ficationService.
+00 00 00 06 5f 69 73 5f  61 00 00 00 00 00 00 01   ...._is_a.......
+00 00 00 07 00 00 00 28  00 00 00 00 00 00 00 01   .......(........
+00 00 00 1c 00 00 00 18  00 00 00 00 00 00 00 00   ................
+01 de 78 3c f8 d9 60 60  00 00 00 00 00 00 00 00   ..x<..``........
+00 00 00 3a 49 44 4c 3a  6f 6d 67 2e 6f 72 67 2f   ...:IDL:omg.org/
+43 6f 73 4e 6f 74 69 66  79 43 68 61 6e 6e 65 6c   CosNotifyChannel
+41 64 6d 69 6e 2f 45 76  65 6e 74 43 68 61 6e 6e   Admin/EventChann
+65 6c 46 61 63 74 6f 72  79 3a 31 2e 30 00 00 00   elFactory:1.0...
+00 00 00 00                                        ....
+[11] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: Request (GIOPVersion(1.2)) [BIG_ENDIAN] [SIZE: 168] (RequestId: 0) has been sent!
+[12] DUMP Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 GIOP message chunk received - HEXDUMP 25 bytes
+47 49 4f 50 01 02 00 01  00 00 00 0d 00 00 00 00   GIOP............
+00 00 00 00 00 00 00 00  01                        .........
+[13] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: Reply (GIOPVersion(1.2)) [BIG_ENDIAN] [SIZE: 13] (RequestId: 0) (ReplyStatusType: NO_EXCEPTION) has been received!
+[14] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: sending LocationRequest RequestId: 1
+[15] DUMP Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 GIOP message chunk sent - HEXDUMP 43 bytes
+47 49 4f 50 01 02 00 03  00 00 00 1f 00 00 00 01   GIOP............
+00 00 00 00 00 00 00 13  4e 6f 74 69 66 69 63 61   ........Notifica
+74 69 6f 6e 53 65 72 76  69 63 65                  tionService
+[16] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: LocateRequest (GIOPVersion(1.2)) [BIG_ENDIAN] [SIZE: 31] (RequestId: 1) has been sent!
+[17] DUMP Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 GIOP message chunk received - HEXDUMP 20 bytes
+47 49 4f 50 01 02 00 04  00 00 00 08 00 00 00 01   GIOP............
+00 00 00 01                                        ....
+[18] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: LocateReply (GIOPVersion(1.2)) [BIG_ENDIAN] [SIZE: 8] (RequestId: 1) (LocateReplyStatusType: OBJECT_HERE) has been received!
+[19] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: Sending Request "get_event_channel "RequestId: 2
+[20] DUMP Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 GIOP message chunk sent - HEXDUMP 136 bytes
+47 49 4f 50 01 02 00 00  00 00 00 7c 00 00 00 02   GIOP.......|....
+03 00 00 00 00 00 00 00  00 00 00 13 4e 6f 74 69   ............Noti
+66 69 63 61 74 69 6f 6e  53 65 72 76 69 63 65 00   ficationService.
+00 00 00 12 67 65 74 5f  65 76 65 6e 74 5f 63 68   ....get_event_ch
+61 6e 6e 65 6c 00 00 00  00 00 00 01 00 00 00 07   annel...........
+00 00 00 28 00 00 00 00  00 00 00 01 00 00 00 1c   ...(............
+00 00 00 18 00 00 00 00  00 00 00 00 01 de 78 3c   ..............x<
+f8 de 42 60 00 00 00 00  00 00 00 00 00 00 00 00   ..B`............
+00 00 00 01 00 00 00 00                            ........
+[21] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: Request (GIOPVersion(1.2)) [BIG_ENDIAN] [SIZE: 124] (RequestId: 2) has been sent!
+[22] DUMP Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 GIOP message chunk received - HEXDUMP 82 bytes
+47 49 4f 50 01 02 00 01  00 00 00 46 00 00 00 02   GIOP.......F....
+00 00 00 01 00 00 00 00  00 00 00 36 49 44 4c 3a   ...........6IDL:
+6f 6d 67 2e 6f 72 67 2f  43 6f 73 4e 6f 74 69 66   omg.org/CosNotif
+79 43 68 61 6e 6e 65 6c  41 64 6d 69 6e 2f 43 68   yChannelAdmin/Ch
+61 6e 6e 65 6c 4e 6f 74  46 6f 75 6e 64 3a 31 2e   annelNotFound:1.
+30 00                                              0.
+[23] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: Reply (GIOPVersion(1.2)) [BIG_ENDIAN] [SIZE: 70] (RequestId: 2) (ReplyStatusType:USER_EXCEPTION) has been received!
+[24] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: Sending Request "create_channel "RequestId: 3
+[25] DUMP Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 GIOP message chunk sent - HEXDUMP 288 bytes
+47 49 4f 50 01 02 00 00  00 00 01 14 00 00 00 03   GIOP............
+03 00 00 00 00 00 00 00  00 00 00 13 4e 6f 74 69   ............Noti
+66 69 63 61 74 69 6f 6e  53 65 72 76 69 63 65 00   ficationService.
+00 00 00 0f 63 72 65 61  74 65 5f 63 68 61 6e 6e   ....create_chann
+65 6c 00 00 00 00 00 01  00 00 00 07 00 00 00 28   el.............(
+00 00 00 00 00 00 00 01  00 00 00 1c 00 00 00 18   ................
+00 00 00 00 00 00 00 00  01 de 78 3c f8 e0 b3 60   ..........x<...`
+00 00 00 00 00 00 00 00  00 00 00 01 00 00 00 0a   ................
+53 74 61 72 74 54 69 6d  65 00 00 00 00 00 00 0f   StartTime.......
+00 00 00 74 00 00 00 00  00 00 00 1e 49 44 4c 3a   ...t........IDL:
+6f 6d 67 2e 6f 72 67 2f  54 69 6d 65 42 61 73 65   omg.org/TimeBase
+2f 55 74 63 54 3a 31 2e  30 00 00 00 00 00 00 05   /UtcT:1.0.......
+55 74 63 54 00 00 00 00  00 00 00 04 00 00 00 05   UtcT............
+74 69 6d 65 00 00 00 00  00 00 00 18 00 00 00 08   time............
+69 6e 61 63 63 6c 6f 00  00 00 00 05 00 00 00 08   inacclo.........
+69 6e 61 63 63 68 69 00  00 00 00 04 00 00 00 04   inacchi.........
+74 64 66 00 00 00 00 02  01 de 78 3c f8 dd 58 00   tdf.......x<..X.
+00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00   ................
+[26] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: Request (GIOPVersion(1.2)) [BIG_ENDIAN] [SIZE: 276] (RequestId: 3) has been sent!
+[27] DUMP Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 GIOP message chunk received - HEXDUMP 200 bytes
+47 49 4f 50 01 02 00 01  00 00 00 bc 00 00 00 03   GIOP............
+00 00 00 00 00 00 00 00  00 00 00 3d 49 44 4c 3a   ...........=IDL:
+6f 6d 67 2e 6f 72 67 2f  4e 6f 74 69 66 69 63 61   omg.org/Notifica
+74 69 6f 6e 43 68 61 6e  6e 65 6c 41 64 6d 69 6e   tionChannelAdmin
+2f 4e 6f 74 69 66 69 63  61 74 69 6f 6e 43 68 61   /NotificationCha
+6e 6e 65 6c 3a 31 2e 30  00 00 00 00 00 00 00 01   nnel:1.0........
+00 00 00 00 00 00 00 5c  00 01 02 00 00 00 00 0a   .......\........
+31 32 37 2e 30 2e 31 2e  31 00 07 d2 00 00 00 2d   127.0.1.1......-
+00 00 00 00 00 00 00 01  00 00 00 14 54 49 44 47   ............TIDG
+6c 6f 62 61 6c 43 68 61  6e 6e 65 6c 50 4f 41 00   lobalChannelPOA.
+00 00 00 00 00 00 00 00  00 00 00 01 31 00 00 00   ............1...
+00 00 00 01 00 00 00 00  00 00 00 08 00 00 00 00   ................
+54 49 44 00 00 00 00 01                            TID.....
+[28] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962]: Reply (GIOPVersion(1.2)) [BIG_ENDIAN] [SIZE: 188] (RequestId: 3) (ReplyStatusType: NO_EXCEPTION) has been received!
+[29] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 CommunicationManager.connect("IOR:000000000000003d49444c3a6f6d672e6f72672f4e6f74696669636174696f6e4368616e6e656c41646d696e2f4e6f74696669636174696f6e4368616e6e656c3a312e300000000000000001000000000000005c000102000000000a3132372e302e312e310007d20000002d000000000000000100000014544944476c6f62616c4368616e6e656c504f4100000000000000000000000001310000000000000100000000000000080000000054494400")
+[30] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009     trying driver[className=es.tid.TIDorbj.core.comm.iiop.IIOPCommunicationLayer,[ IIOPCommunicationLayer ( iiop://rotary:0 ) ]]
+[31] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 connect returning driver[className=es.tid.TIDorbj.core.comm.iiop.IIOPCommunicationLayer,[ IIOPCommunicationLayer ( iiop://rotary:0 ) ]]
+[32] DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Opening client connection with ListenPoint(2002@127.0.1.1)
+[33] DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.1.1,port=2002,localport=37188] Opened!
+[34] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.1.1,port=2002,localport=37188]: Sending Request "_is_a "RequestId: 0
+[35] DUMP Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 GIOP message chunk sent - HEXDUMP 204 bytes
+47 49 4f 50 01 02 00 00  00 00 00 c0 00 00 00 00   GIOP............
+03 00 00 00 00 00 00 00  00 00 00 2d 00 00 00 00   ...........-....
+00 00 00 01 00 00 00 14  54 49 44 47 6c 6f 62 61   ........TIDGloba
+6c 43 68 61 6e 6e 65 6c  50 4f 41 00 00 00 00 00   lChannelPOA.....
+00 00 00 00 00 00 00 01  31 00 00 00 00 00 00 06   ........1.......
+5f 69 73 5f 61 00 00 00  00 00 00 01 00 00 00 07   _is_a...........
+00 00 00 28 00 00 00 00  00 00 00 01 00 00 00 1c   ...(............
+00 00 00 18 00 00 00 00  00 00 00 00 01 de 78 3c   ..............x<
+f9 0c f3 80 00 00 00 00  00 00 00 00 00 00 00 00   ................
+00 00 00 33 49 44 4c 3a  6f 6d 67 2e 6f 72 67 2f   ...3IDL:omg.org/
+43 6f 73 4e 6f 74 69 66  79 43 68 61 6e 6e 65 6c   CosNotifyChannel
+41 64 6d 69 6e 2f 45 76  65 6e 74 43 68 61 6e 6e   Admin/EventChann
+65 6c 3a 31 2e 30 00 00  00 00 00 00               el:1.0......
+[36] DUMP Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 GIOP message chunk received - HEXDUMP 25 bytes
+47 49 4f 50 01 02 00 01  00 00 00 0d 00 00 00 00   GIOP............
+00 00 00 00 00 00 00 00  01                        .........
+[37] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.1.1,port=2002,localport=37188]: Reply (GIOPVersion(1.2)) [BIG_ENDIAN] [SIZE: 13] (RequestId: 0) (ReplyStatusType: NO_EXCEPTION) has been received!
+[38] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.1.1,port=2002,localport=37188]: Request (GIOPVersion(1.2)) [BIG_ENDIAN] [SIZE: 192] (RequestId: 0) has been sent!
+[39] DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Destroying IIOPCommLayer
+[40] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962] client socket closed
+[41] DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.0.1,port=2002,localport=40962] closed by IIOPConnection Manager
+[42] DEEP_DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.1.1,port=2002,localport=37188] client socket closed
+[43] DEBUG Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Client IIOPConnection at Socket[addr=/127.0.1.1,port=2002,localport=37188] closed by IIOPConnection Manager
+[44] USER Fri Jul 24 11:30:08 CEST 2009 TIDorbj 6.3.4 (id="TIDorbJ") [] created at Fri Jul 24 11:30:08 CEST 2009 Closing ORB Session.
+LOG CLOSED

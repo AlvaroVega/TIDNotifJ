@@ -1,0 +1,33 @@
+#ifndef _TRANSFORMATIONINTERNALSADMIN_IDL_
+#define _TRANSFORMATIONINTERNALSADMIN_IDL_
+
+#include "TransformationAdmin.idl"
+
+#pragma prefix "omg.org"
+
+module TransformationInternalsAdmin {
+
+  exception DataError 
+  { 
+    string why; 
+  };
+
+  exception ConnectionError 
+  { 
+    string why; 
+  };
+
+  exception TransformationError 
+  { 
+    string why; 
+  };
+
+  interface InternalTransformingOperator : TransformationAdmin::TransformingOperator {
+    any transform_value (in any value) 
+                      raises (DataError, ConnectionError, TransformationError);
+
+    void destroy();
+  };
+};
+
+#endif

@@ -1,0 +1,318 @@
+[0] USER Thu Feb 26 12:40:07 CET 2009 TIDNotifJ 2.0.3 [2008.10.05.10.00]
+[1] DEBUG Thu Feb 26 12:40:07 CET 2009  * rootPOA [rootPOA] - POA Manager = POAManager 1
+[2] USER Thu Feb 26 12:40:07 CET 2009 * NEW POA: TIDNotifPOA@2002
+[3] DEBUG Thu Feb 26 12:40:07 CET 2009   [TIDNotifPOA@2002]
+[4] DEBUG Thu Feb 26 12:40:07 CET 2009   POA Manager = POAManager 2
+[5] DEBUG Thu Feb 26 12:40:07 CET 2009   Parent POA = rootPOA
+[6] DEBUG Thu Feb 26 12:40:07 CET 2009   Num. Threads = [1,20] -  Max. Queue Size = 1000
+[7] USER Thu Feb 26 12:40:07 CET 2009  * NEW NotificationAdminImpl: NotificationAdmin
+[8] DEBUG Thu Feb 26 12:40:07 CET 2009    POA = TIDNotifPOA@2002
+[9] DEBUG Thu Feb 26 12:40:07 CET 2009 PersistenceManager.init(): <file> [2002]
+[10] DEBUG Thu Feb 26 12:40:07 CET 2009   create_channel_factory()
+[11] USER Thu Feb 26 12:40:07 CET 2009 -> TIDParser.init(): NEW Interpreter.
+[12] USER Thu Feb 26 12:40:07 CET 2009  * NEW NotificationChannelFactoryImpl: NotificationChannelFactory
+[13] DEBUG Thu Feb 26 12:40:07 CET 2009    POA = TIDNotifPOA@2002
+[14] DEBUG Thu Feb 26 12:40:07 CET 2009  +>ServiceManager.loadAll()
+[15] USER Thu Feb 26 12:40:07 CET 2009  +>FILEPersistenceDB.load_channels(NotificationChannelData)
+[16] DEBUG Thu Feb 26 12:40:11 CET 2009 -> NotificationAdminImpl.channel_factory()
+[17] DEBUG Thu Feb 26 12:40:11 CET 2009  +>ServiceManager.channel_factory()
+[18] USER Thu Feb 26 12:40:11 CET 2009 -> NotificationChannelFactoryImpl.create_notification_channel(1,1)
+[19] DEBUG Thu Feb 26 12:40:11 CET 2009 -> ThePOAFactory.globalPOA(): TIDGlobalChannelPOA
+[20] DEBUG Thu Feb 26 12:40:12 CET 2009   config: 25, 5, 25000
+[21] USER Thu Feb 26 12:40:12 CET 2009 * NEW POA: TIDGlobalChannelPOA
+[22] DEBUG Thu Feb 26 12:40:12 CET 2009   [TIDGlobalChannelPOA]
+[23] DEBUG Thu Feb 26 12:40:12 CET 2009   POA Manager = POAManager 3
+[24] DEBUG Thu Feb 26 12:40:12 CET 2009   Parent POA = rootPOA
+[25] DEBUG Thu Feb 26 12:40:12 CET 2009   Num. Threads = [5,25] -  Max. Queue Size = 25000
+[26] DEBUG Thu Feb 26 12:40:12 CET 2009   ¡activate!
+[27] USER Thu Feb 26 12:40:12 CET 2009  # NotificationChannelImpl.register() -> 1
+[28] USER Thu Feb 26 12:40:12 CET 2009  * NEW NotificationChannelImpl: 1
+[29] DEBUG Thu Feb 26 12:40:12 CET 2009    POA = TIDGlobalChannelPOA
+[30] DEBUG Thu Feb 26 12:40:12 CET 2009   Priority= 1, Event Lifetime= 1, Operation Mode= NOTIFICATION
+[31] USER Thu Feb 26 12:40:12 CET 2009  +>FILEPersistenceDB.save(1) [null]
+[32] DEBUG Thu Feb 26 12:40:12 CET 2009 -> ThePOAFactory.globalPOA(): GlobalFilterPOA
+[33] ERROR Thu Feb 26 12:40:12 CET 2009 org.omg.CORBA.BAD_PARAM: max_queued_requests can not be decreased.  vmcid: 0x0  minor code: 0  completed: No
+	at es.tid.TIDorbj.core.poa.POAManagerConf.setMaxQueuedRequests(POAManagerConf.java:107)
+	at es.tid.TIDorbj.core.poa.POAManagerImpl.set_max_queued_requests(POAManagerImpl.java:144)
+	at es.tid.corba.TIDNotif.ThePOAFactory.setMaxQueuedRequests(ThePOAFactory.java:839)
+	at es.tid.corba.TIDNotif.ThePOAFactory.createGlobalPOA(ThePOAFactory.java:375)
+	at es.tid.corba.TIDNotif.FilterFactoryImpl.globalFilterPOA(FilterFactoryImpl.java:187)
+	at es.tid.corba.TIDNotif.FilterFactoryImpl.writeObject(FilterFactoryImpl.java:234)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at java.io.ObjectStreamClass.invokeWriteObject(ObjectStreamClass.java:917)
+	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1339)
+	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1290)
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1079)
+	at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1375)
+	at java.io.ObjectOutputStream.defaultWriteObject(ObjectOutputStream.java:391)
+	at es.tid.corba.TIDNotif.NotificationChannelData.writeObject(NotificationChannelData.java:173)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at java.io.ObjectStreamClass.invokeWriteObject(ObjectStreamClass.java:917)
+	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1339)
+	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1290)
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1079)
+	at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:302)
+	at es.tid.corba.TIDNotif.file.FILEPersistenceDB._save(FILEPersistenceDB.java:738)
+	at es.tid.corba.TIDNotif.file.FILEPersistenceDB.save(FILEPersistenceDB.java:219)
+	at es.tid.corba.TIDNotif.NotificationChannelFactoryImpl.create_channel(NotificationChannelFactoryImpl.java:677)
+	at org.omg.DistributionInternalsChannelAdmin.InternalDistributionChannelFactoryPOA.invoke(Unknown Source)
+	at es.tid.TIDorbj.core.poa.ExecThread.doInvoke(ExecThread.java:917)
+	at es.tid.TIDorbj.core.poa.ExecThread.execute(ExecThread.java:793)
+	at es.tid.TIDorbj.core.poa.ExecThread.execute(ExecThread.java:625)
+	at es.tid.TIDorbj.core.poa.ExecThread.processRequest(ExecThread.java:292)
+	at es.tid.TIDorbj.core.poa.ExecThread.run(ExecThread.java:211)
+
+[34] DEBUG Thu Feb 26 12:40:12 CET 2009   config: 0, 0, 0
+[35] USER Thu Feb 26 12:40:12 CET 2009 * NEW POA: GlobalFilterPOA
+[36] DEBUG Thu Feb 26 12:40:12 CET 2009   [GlobalFilterPOA]
+[37] DEBUG Thu Feb 26 12:40:12 CET 2009   POA Manager = POAManager 4
+[38] DEBUG Thu Feb 26 12:40:12 CET 2009   Parent POA = rootPOA
+[39] DEBUG Thu Feb 26 12:40:12 CET 2009   Num. Threads = [0,0] -  Max. Queue Size = 1000
+[40] DEBUG Thu Feb 26 12:40:12 CET 2009   ¡activate!
+[41] DEBUG Thu Feb 26 12:40:12 CET 2009 -> ThePOAFactory.globalPOA(): GlobalMappingFilterPOA
+[42] ERROR Thu Feb 26 12:40:12 CET 2009 org.omg.CORBA.BAD_PARAM: max_queued_requests can not be decreased.  vmcid: 0x0  minor code: 0  completed: No
+	at es.tid.TIDorbj.core.poa.POAManagerConf.setMaxQueuedRequests(POAManagerConf.java:107)
+	at es.tid.TIDorbj.core.poa.POAManagerImpl.set_max_queued_requests(POAManagerImpl.java:144)
+	at es.tid.corba.TIDNotif.ThePOAFactory.setMaxQueuedRequests(ThePOAFactory.java:839)
+	at es.tid.corba.TIDNotif.ThePOAFactory.createGlobalPOA(ThePOAFactory.java:375)
+	at es.tid.corba.TIDNotif.FilterFactoryImpl.globalMappingDiscriminatorPOA(FilterFactoryImpl.java:210)
+	at es.tid.corba.TIDNotif.FilterFactoryImpl.writeObject(FilterFactoryImpl.java:250)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at java.io.ObjectStreamClass.invokeWriteObject(ObjectStreamClass.java:917)
+	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1339)
+	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1290)
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1079)
+	at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1375)
+	at java.io.ObjectOutputStream.defaultWriteObject(ObjectOutputStream.java:391)
+	at es.tid.corba.TIDNotif.NotificationChannelData.writeObject(NotificationChannelData.java:173)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at java.io.ObjectStreamClass.invokeWriteObject(ObjectStreamClass.java:917)
+	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1339)
+	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1290)
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1079)
+	at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:302)
+	at es.tid.corba.TIDNotif.file.FILEPersistenceDB._save(FILEPersistenceDB.java:738)
+	at es.tid.corba.TIDNotif.file.FILEPersistenceDB.save(FILEPersistenceDB.java:219)
+	at es.tid.corba.TIDNotif.NotificationChannelFactoryImpl.create_channel(NotificationChannelFactoryImpl.java:677)
+	at org.omg.DistributionInternalsChannelAdmin.InternalDistributionChannelFactoryPOA.invoke(Unknown Source)
+	at es.tid.TIDorbj.core.poa.ExecThread.doInvoke(ExecThread.java:917)
+	at es.tid.TIDorbj.core.poa.ExecThread.execute(ExecThread.java:793)
+	at es.tid.TIDorbj.core.poa.ExecThread.execute(ExecThread.java:625)
+	at es.tid.TIDorbj.core.poa.ExecThread.processRequest(ExecThread.java:292)
+	at es.tid.TIDorbj.core.poa.ExecThread.run(ExecThread.java:211)
+
+[43] DEBUG Thu Feb 26 12:40:12 CET 2009   config: 0, 0, 0
+[44] USER Thu Feb 26 12:40:12 CET 2009 * NEW POA: GlobalMappingFilterPOA
+[45] DEBUG Thu Feb 26 12:40:12 CET 2009   [GlobalMappingFilterPOA]
+[46] DEBUG Thu Feb 26 12:40:12 CET 2009   POA Manager = POAManager 5
+[47] DEBUG Thu Feb 26 12:40:12 CET 2009   Parent POA = rootPOA
+[48] DEBUG Thu Feb 26 12:40:12 CET 2009   Num. Threads = [0,0] -  Max. Queue Size = 1000
+[49] DEBUG Thu Feb 26 12:40:12 CET 2009   ¡activate!
+[50] DEBUG Thu Feb 26 12:40:12 CET 2009 -> NotificationAdminImpl.channel_factory()
+[51] DEBUG Thu Feb 26 12:40:12 CET 2009  +>ServiceManager.channel_factory()
+[52] DEBUG Thu Feb 26 12:40:12 CET 2009 -> NotificationAdminImpl.channel_factory()
+[53] DEBUG Thu Feb 26 12:40:12 CET 2009  +>ServiceManager.channel_factory()
+[54] USER Thu Feb 26 12:40:12 CET 2009 -> NotificationChannelImpl.for_consumers(): 1
+[55] USER Thu Feb 26 12:40:12 CET 2009 -> NotificationChannelImpl.for_suppliers(): 1
+[56] DEEP_DEBUG Thu Feb 26 12:40:12 CET 2009 -> ThePOAFactory.exclusivePOA(): TIDConsumerPOA@2
+[57] DEBUG Thu Feb 26 12:40:12 CET 2009   config: 40, 4, 40000
+[58] USER Thu Feb 26 12:40:12 CET 2009 * NEW POA: TIDConsumerPOA@2
+[59] DEBUG Thu Feb 26 12:40:12 CET 2009   [TIDConsumerPOA@2]
+[60] DEBUG Thu Feb 26 12:40:12 CET 2009   POA Manager = POAManager 6
+[61] DEBUG Thu Feb 26 12:40:12 CET 2009   Parent POA = rootPOA
+[62] DEBUG Thu Feb 26 12:40:12 CET 2009   Num. Threads = [4,40] -  Max. Queue Size = 40000
+[63] DEBUG Thu Feb 26 12:40:12 CET 2009   ¡activate!
+[64] DEEP_DEBUG Thu Feb 26 12:40:12 CET 2009 -> ThePOAFactory.exclusivePOA(): TIDSupplierPOA@3
+[65] DEBUG Thu Feb 26 12:40:12 CET 2009   config: 20, 2, 20000
+[66] USER Thu Feb 26 12:40:12 CET 2009 * NEW POA: TIDSupplierPOA@3
+[67] DEBUG Thu Feb 26 12:40:12 CET 2009   [TIDSupplierPOA@3]
+[68] DEBUG Thu Feb 26 12:40:12 CET 2009   POA Manager = POAManager 7
+[69] DEBUG Thu Feb 26 12:40:12 CET 2009   Parent POA = rootPOA
+[70] DEBUG Thu Feb 26 12:40:12 CET 2009   Num. Threads = [2,20] -  Max. Queue Size = 20000
+[71] DEBUG Thu Feb 26 12:40:12 CET 2009   ¡activate!
+[72] DEEP_DEBUG Thu Feb 26 12:40:13 CET 2009  # ConsumerAdminImpl.register() -> 2
+[73] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.save(2) [2]
+[74] USER Thu Feb 26 12:40:13 CET 2009  # SupplierAdminImpl.register() -> 3
+[75] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.save(3) [3]
+[76] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.update(1) [null]
+[77] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.update(1) [null]
+[78] USER Thu Feb 26 12:40:13 CET 2009 -> SupplierAdminImpl.obtain_push_consumer(): 3
+[79] USER Thu Feb 26 12:40:13 CET 2009 -> ConsumerAdminImpl.obtain_push_supplier() 2
+[80] USER Thu Feb 26 12:40:13 CET 2009 -> SupplierAdminImpl.obtain_named_push_consumer(): 3
+[81] DEEP_DEBUG Thu Feb 26 12:40:13 CET 2009 -> ThePOAFactory.exclusivePOA(): ProxyPushConsumerPOA@3
+[82] USER Thu Feb 26 12:40:13 CET 2009 * NEW POA: ProxyPushConsumerPOA@3
+[83] DEBUG Thu Feb 26 12:40:13 CET 2009   [ProxyPushConsumerPOA@3]
+[84] DEBUG Thu Feb 26 12:40:13 CET 2009   POA Manager = POAManager 7
+[85] DEBUG Thu Feb 26 12:40:13 CET 2009   Parent POA = rootPOA
+[86] DEBUG Thu Feb 26 12:40:13 CET 2009   Num. Threads = [2,20] -  Max. Queue Size = 20000
+[87] USER Thu Feb 26 12:40:13 CET 2009  # ProxyPushConsumerImpl.register() -> 4
+[88] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.save(4) [4]
+[89] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.update(3) [3]
+[90] USER Thu Feb 26 12:40:13 CET 2009 -> ConsumerAdminImpl.obtain_named_push_supplier(5) for 2
+[91] DEEP_DEBUG Thu Feb 26 12:40:13 CET 2009 -> ThePOAFactory.exclusivePOA(): ProxyPushSupplierPOA@2
+[92] USER Thu Feb 26 12:40:13 CET 2009 * NEW POA: ProxyPushSupplierPOA@2
+[93] DEBUG Thu Feb 26 12:40:13 CET 2009   [ProxyPushSupplierPOA@2]
+[94] DEBUG Thu Feb 26 12:40:13 CET 2009   POA Manager = POAManager 6
+[95] DEBUG Thu Feb 26 12:40:13 CET 2009   Parent POA = rootPOA
+[96] DEBUG Thu Feb 26 12:40:13 CET 2009   Num. Threads = [4,40] -  Max. Queue Size = 40000
+[97] USER Thu Feb 26 12:40:13 CET 2009  # ProxyPushSupplierImpl.register() -> 5
+[98] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.save(5) [5]
+[99] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.update(2) [2]
+[100] USER Thu Feb 26 12:40:13 CET 2009 -> ProxyPushConsumerImpl.connect_push_supplier(supplier)
+[101] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.update(4) [4]
+[102] USER Thu Feb 26 12:40:13 CET 2009 -> FilterFactoryImpl.createFilter( EXTENDED_TCL )
+[103] USER Thu Feb 26 12:40:13 CET 2009  # DiscriminatorImpl.register() -> 6
+[104] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.save(null) [6]
+[105] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.update(null) [6]
+[106] USER Thu Feb 26 12:40:13 CET 2009 -> DiscriminatorImpl.add_constraint( constraint_exp )
+[107] DEBUG Thu Feb 26 12:40:13 CET 2009 -> TIDParser.parse(( ( $type_name == 'type_name' ) and ( $domain_name == 'domain_name' ) ) and TRUE)
+[108] USER Thu Feb 26 12:40:13 CET 2009 * Constraint: {TRUE} - Id = 1
+[109] DEEP_DEBUG Thu Feb 26 12:40:13 CET 2009  * Arbol asociado: 
+[110] DEBUG Thu Feb 26 12:40:13 CET 2009    Constraint
+[111] DEBUG Thu Feb 26 12:40:13 CET 2009     BinaryExpr: AND
+[112] DEBUG Thu Feb 26 12:40:13 CET 2009      BinaryExpr: AND
+[113] DEBUG Thu Feb 26 12:40:13 CET 2009       RelationalExpr: ==
+[114] DEBUG Thu Feb 26 12:40:13 CET 2009        Runtime Variable: type_name
+[115] DEBUG Thu Feb 26 12:40:13 CET 2009        String: type_name
+[116] DEBUG Thu Feb 26 12:40:13 CET 2009       RelationalExpr: ==
+[117] DEBUG Thu Feb 26 12:40:13 CET 2009        Runtime Variable: domain_name
+[118] DEBUG Thu Feb 26 12:40:13 CET 2009        String: domain_name
+[119] DEBUG Thu Feb 26 12:40:13 CET 2009      Boolean: TRUE
+[120] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.update(null) [6]
+[121] USER Thu Feb 26 12:40:13 CET 2009 -> ProxyPushSupplierImpl.connect_push_consumer(5)
+[122] USER Thu Feb 26 12:40:13 CET 2009  +>FILEPersistenceDB.update(5) [5]
+[123] DEEP_DEBUG Thu Feb 26 12:40:18 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-19)
+[124] USER Thu Feb 26 12:40:18 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[125] DEBUG Thu Feb 26 12:40:18 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[126] DEEP_DEBUG Thu Feb 26 12:40:24 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-17)
+[127] USER Thu Feb 26 12:40:24 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[128] DEBUG Thu Feb 26 12:40:24 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[129] DEEP_DEBUG Thu Feb 26 12:40:30 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-19)
+[130] USER Thu Feb 26 12:40:30 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[131] DEBUG Thu Feb 26 12:40:30 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[132] DEBUG Thu Feb 26 12:50:15 CET 2009 -> NotificationAdminImpl.channel_factory()
+[133] DEBUG Thu Feb 26 12:50:15 CET 2009  +>ServiceManager.channel_factory()
+[134] USER Thu Feb 26 12:50:15 CET 2009 -> NotificationChannelFactoryImpl.create_notification_channel(1,1)
+[135] USER Thu Feb 26 12:50:15 CET 2009  # NotificationChannelImpl.register() -> 7
+[136] USER Thu Feb 26 12:50:15 CET 2009  * NEW NotificationChannelImpl: 7
+[137] DEBUG Thu Feb 26 12:50:15 CET 2009    POA = TIDGlobalChannelPOA
+[138] DEBUG Thu Feb 26 12:50:15 CET 2009   Priority= 1, Event Lifetime= 1, Operation Mode= NOTIFICATION
+[139] USER Thu Feb 26 12:50:15 CET 2009  +>FILEPersistenceDB.save(7) [6]
+[140] DEBUG Thu Feb 26 12:50:16 CET 2009 -> NotificationAdminImpl.channel_factory()
+[141] DEBUG Thu Feb 26 12:50:16 CET 2009  +>ServiceManager.channel_factory()
+[142] DEBUG Thu Feb 26 12:50:16 CET 2009 -> NotificationAdminImpl.channel_factory()
+[143] DEBUG Thu Feb 26 12:50:16 CET 2009  +>ServiceManager.channel_factory()
+[144] USER Thu Feb 26 12:50:16 CET 2009 -> NotificationChannelImpl.for_consumers(): 1
+[145] USER Thu Feb 26 12:50:16 CET 2009 -> NotificationChannelImpl.for_suppliers(): 1
+[146] USER Thu Feb 26 12:50:16 CET 2009 -> ConsumerAdminImpl.obtain_push_supplier() 2
+[147] USER Thu Feb 26 12:50:16 CET 2009 -> SupplierAdminImpl.obtain_push_consumer(): 3
+[148] USER Thu Feb 26 12:50:16 CET 2009 -> ConsumerAdminImpl.obtain_named_push_supplier(8) for 2
+[149] USER Thu Feb 26 12:50:16 CET 2009  # ProxyPushSupplierImpl.register() -> 8
+[150] USER Thu Feb 26 12:50:16 CET 2009  +>FILEPersistenceDB.save(8) [8]
+[151] USER Thu Feb 26 12:50:16 CET 2009  +>FILEPersistenceDB.update(2) [2]
+[152] USER Thu Feb 26 12:50:16 CET 2009 -> SupplierAdminImpl.obtain_named_push_consumer(): 3
+[153] USER Thu Feb 26 12:50:16 CET 2009  # ProxyPushConsumerImpl.register() -> 9
+[154] USER Thu Feb 26 12:50:16 CET 2009  +>FILEPersistenceDB.save(9) [9]
+[155] USER Thu Feb 26 12:50:16 CET 2009  +>FILEPersistenceDB.update(3) [3]
+[156] USER Thu Feb 26 12:50:16 CET 2009 -> FilterFactoryImpl.createFilter( EXTENDED_TCL )
+[157] USER Thu Feb 26 12:50:16 CET 2009 -> ProxyPushConsumerImpl.connect_push_supplier(supplier)
+[158] USER Thu Feb 26 12:50:16 CET 2009  +>FILEPersistenceDB.update(9) [9]
+[159] USER Thu Feb 26 12:50:16 CET 2009  # DiscriminatorImpl.register() -> 10
+[160] USER Thu Feb 26 12:50:16 CET 2009  +>FILEPersistenceDB.save(null) [10]
+[161] USER Thu Feb 26 12:50:16 CET 2009  +>FILEPersistenceDB.update(null) [10]
+[162] USER Thu Feb 26 12:50:16 CET 2009 -> DiscriminatorImpl.add_constraint( constraint_exp )
+[163] DEBUG Thu Feb 26 12:50:16 CET 2009 -> TIDParser.parse(( ( $type_name == 'type_name' ) and ( $domain_name == 'domain_name' ) ) and TRUE)
+[164] USER Thu Feb 26 12:50:16 CET 2009 * Constraint: {TRUE} - Id = 2
+[165] DEEP_DEBUG Thu Feb 26 12:50:16 CET 2009  * Arbol asociado: 
+[166] DEBUG Thu Feb 26 12:50:16 CET 2009    Constraint
+[167] DEBUG Thu Feb 26 12:50:16 CET 2009     BinaryExpr: AND
+[168] DEBUG Thu Feb 26 12:50:16 CET 2009      BinaryExpr: AND
+[169] DEBUG Thu Feb 26 12:50:16 CET 2009       RelationalExpr: ==
+[170] DEBUG Thu Feb 26 12:50:16 CET 2009        Runtime Variable: type_name
+[171] DEBUG Thu Feb 26 12:50:16 CET 2009        String: type_name
+[172] DEBUG Thu Feb 26 12:50:16 CET 2009       RelationalExpr: ==
+[173] DEBUG Thu Feb 26 12:50:16 CET 2009        Runtime Variable: domain_name
+[174] DEBUG Thu Feb 26 12:50:16 CET 2009        String: domain_name
+[175] DEBUG Thu Feb 26 12:50:16 CET 2009      Boolean: TRUE
+[176] USER Thu Feb 26 12:50:16 CET 2009  +>FILEPersistenceDB.update(null) [10]
+[177] USER Thu Feb 26 12:50:16 CET 2009 -> ProxyPushSupplierImpl.connect_push_consumer(8)
+[178] USER Thu Feb 26 12:50:16 CET 2009  +>FILEPersistenceDB.update(8) [8]
+[179] DEEP_DEBUG Thu Feb 26 12:50:21 CET 2009  +>ProxyPushSupplierImpl.push_event() [8] (Thread-19)
+[180] DEEP_DEBUG Thu Feb 26 12:50:21 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-16)
+[181] USER Thu Feb 26 12:50:21 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[182] DEBUG Thu Feb 26 12:50:21 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[183] USER Thu Feb 26 12:50:21 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[184] DEBUG Thu Feb 26 12:50:21 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[185] DEEP_DEBUG Thu Feb 26 12:50:27 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-18)
+[186] USER Thu Feb 26 12:50:27 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[187] DEBUG Thu Feb 26 12:50:27 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[188] DEEP_DEBUG Thu Feb 26 12:50:27 CET 2009  +>ProxyPushSupplierImpl.push_event() [8] (Thread-16)
+[189] USER Thu Feb 26 12:50:27 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[190] DEBUG Thu Feb 26 12:50:27 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[191] DEEP_DEBUG Thu Feb 26 12:50:33 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-17)
+[192] DEEP_DEBUG Thu Feb 26 12:50:33 CET 2009  +>ProxyPushSupplierImpl.push_event() [8] (Thread-18)
+[193] USER Thu Feb 26 12:50:33 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[194] DEBUG Thu Feb 26 12:50:33 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[195] USER Thu Feb 26 12:50:33 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[196] DEBUG Thu Feb 26 12:50:33 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[197] DEEP_DEBUG Thu Feb 26 12:50:39 CET 2009  +>ProxyPushSupplierImpl.push_event() [8] (Thread-17)
+[198] USER Thu Feb 26 12:50:39 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[199] DEBUG Thu Feb 26 12:50:39 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[200] DEEP_DEBUG Thu Feb 26 12:50:39 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-19)
+[201] USER Thu Feb 26 12:50:39 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[202] DEBUG Thu Feb 26 12:50:39 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[203] DEEP_DEBUG Thu Feb 26 12:50:45 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-17)
+[204] USER Thu Feb 26 12:50:45 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[205] DEBUG Thu Feb 26 12:50:45 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[206] DEEP_DEBUG Thu Feb 26 12:50:45 CET 2009  +>ProxyPushSupplierImpl.push_event() [8] (Thread-16)
+[207] USER Thu Feb 26 12:50:45 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[208] DEBUG Thu Feb 26 12:50:45 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[209] DEEP_DEBUG Thu Feb 26 12:50:51 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-18)
+[210] USER Thu Feb 26 12:50:51 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[211] DEBUG Thu Feb 26 12:50:51 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[212] DEEP_DEBUG Thu Feb 26 12:50:51 CET 2009  +>ProxyPushSupplierImpl.push_event() [8] (Thread-16)
+[213] USER Thu Feb 26 12:50:51 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[214] DEBUG Thu Feb 26 12:50:51 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[215] DEEP_DEBUG Thu Feb 26 12:50:57 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-19)
+[216] USER Thu Feb 26 12:50:57 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[217] DEBUG Thu Feb 26 12:50:57 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[218] DEEP_DEBUG Thu Feb 26 12:50:57 CET 2009  +>ProxyPushSupplierImpl.push_event() [8] (Thread-16)
+[219] USER Thu Feb 26 12:50:57 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[220] DEBUG Thu Feb 26 12:50:57 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[221] DEEP_DEBUG Thu Feb 26 12:51:03 CET 2009  +>ProxyPushSupplierImpl.push_event() [8] (Thread-17)
+[222] DEEP_DEBUG Thu Feb 26 12:51:03 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-19)
+[223] USER Thu Feb 26 12:51:03 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[224] DEBUG Thu Feb 26 12:51:03 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[225] USER Thu Feb 26 12:51:03 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[226] DEBUG Thu Feb 26 12:51:03 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[227] DEEP_DEBUG Thu Feb 26 12:51:09 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-18)
+[228] DEEP_DEBUG Thu Feb 26 12:51:09 CET 2009  +>ProxyPushSupplierImpl.push_event() [8] (Thread-17)
+[229] USER Thu Feb 26 12:51:09 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[230] DEBUG Thu Feb 26 12:51:09 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[231] USER Thu Feb 26 12:51:09 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[232] DEBUG Thu Feb 26 12:51:09 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[233] DEEP_DEBUG Thu Feb 26 12:51:15 CET 2009  +>ProxyPushSupplierImpl.push_event() [5] (Thread-16)
+[234] USER Thu Feb 26 12:51:15 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[235] DEBUG Thu Feb 26 12:51:15 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[236] DEEP_DEBUG Thu Feb 26 12:51:15 CET 2009  +>ProxyPushSupplierImpl.push_event() [8] (Thread-18)
+[237] USER Thu Feb 26 12:51:15 CET 2009 TIDInOperator.evaluate(): NON IMPLEMENTED!
+[238] DEBUG Thu Feb 26 12:51:15 CET 2009 TIDRelationalExpr: Operand ERROR.5
+[239] USER Thu Feb 26 12:51:16 CET 2009 -> ProxyPushConsumerImpl.disconnect_push_consumer(): 9 [9]
+[240] USER Thu Feb 26 12:51:16 CET 2009  +>SupplierAdminImpl.removeProxyPushConsumer(9): [3]
+[241] USER Thu Feb 26 12:51:16 CET 2009  +>FILEPersistenceDB.update(3) [3]
+[242] USER Thu Feb 26 12:51:16 CET 2009  # ProxyPushConsumerImpl.unregister() -> 9
+[243] USER Thu Feb 26 12:51:16 CET 2009  +>FILEPersistenceDB.delete(9) [9]
+[244] DEBUG Thu Feb 26 12:51:16 CET 2009  *** destroyDiscriminator() ***
+[245] DEBUG Thu Feb 26 12:51:16 CET 2009  +>ProxyPushConsumerImpl.destroyDiscriminator(): 9 [9]

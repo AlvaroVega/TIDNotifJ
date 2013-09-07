@@ -1,0 +1,54 @@
+#include <CosNotifyComm.idl>
+
+module Overload
+{
+
+  // Simple struct type to be encapsulated as event data.
+  struct Event
+  {
+    boolean	bool_val;
+    long long_val;
+  };
+
+
+  // Statistics collection type.
+  struct Stats
+  {
+    long requests_received;
+    long requests_discarded;
+    long requests_accepted;
+    double error_rate;
+  };
+
+  // Healing sensor interface.
+  interface HealingSensor
+  {
+
+    // Reset the statistics counting.
+    void resetStatsCounter();
+
+    // Obtain stats from last reset to now.
+    Stats getStats();
+
+    // Obtain statistics for last seconds.
+    Stats getLastSecondsStats(in unsigned long seconds);
+
+  };
+
+  interface HealingActuator
+  {
+  };
+
+  // Custom push consumer.
+  interface HealingPushConsumer : CosNotifyComm::PushConsumer,
+                                  HealingSensor,
+                                  HealingActuator
+  {
+  };
+
+  interface NotificationAdminHealer : HealingSensor, HealingActuator
+  {
+
+  };
+
+};

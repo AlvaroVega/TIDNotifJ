@@ -1,0 +1,210 @@
+Modo de ejecucion.
+
+Normal:
+  run.ksh
+
+Con trazas:
+  run.ksh -TIDNotif.trace.level <n>
+
+Con trazas e informacion de tiempos:
+  run.ksh -TIDNotif.trace.level <n> -TIDNotif.debug.time true
+
+Siendo <n> el nivel de trazas = 0 (NONE) ... 4 (DEEP_DEBUG)
+
+Parada
+  stop.ksh
+
+Otras propiedades configurables:
+
+****************************************************************************
+  // Propiedades 
+****************************************************************************
+  
+es.tid.TIDorbj.iiop.orb_port
+Puerto de escucha del ORB. Indica al ORB que intente abrir el puerto para 
+utilizarlo como puerto servidor. Este puerto sera el que figure en las IOR's
+de los objetos creados en el ORB.
+Valor valido: valor de puerto valido para el sistema.
+Valor por defecto: 2002
+Tipo: INTEGER. 
+Rango 1025, 99999 (sin lmmite).
+
+TIDNotif.orb.port
+Puerto de escucha del ORB. Solo a nivel informativo para el Servicio.
+Valor valido: valor de puerto valido para el sistema.
+Valor por defecto: 2002
+Tipo: INTEGER. 
+Rango 1025, 99999 (sin lmmite).
+
+TIDNotif.ior.tofile
+Volcar IOR del objeto agente del servicio a fichero. Si es false, sacara la 
+referencia por consola.
+
+Valor por defecto: true
+Tipo: BOOLEAN.
+
+TIDNotif.ior.path
+Path de acceso al fichero con la IOR del objeto agente del servicio.
+Valor por defecto: "./" (directorio desde donde se arranca el server)
+Tipo: STRING.
+Valores permitidos: nombre de path valido.
+
+TIDNotif.ior.filename
+Nombre del fichero donde guardara la IOR del objeto agente del servicio.
+Valor por defecto: "admin.ior"
+
+Tipo: STRING.
+
+TIDNotif.ior.urlmode
+Indica si la referencia (IOR) del objeto agente del servicio se vuela en modo 
+URL o no.
+
+Valor por defecto: false
+Tipo: BOOLEAN.
+
+TIDNotif.channel.poa
+Tipo de configuracisn a nivel de POA y POAManager (pool de threads) para un 
+canal.
+
+Valor por defecto: 1 (GLOBAL)
+Tipo: INTEGER. 
+Rango [0, 1]
+
+TIDNotif.suplier.poa   
+Tipo de configuracisn a nivel de POA y POAManager (pool de threads) para un 
+SupplierAdmin.
+
+Valor por defecto: 2 (LOCAL)
+Tipo: INTEGER. 
+Rango [0, 2]
+
+TIDNotif.consumer.poa       
+Tipo de configuracisn a nivel de POA y POAManager (pool de threads) para un 
+ConsumerAdmin.
+
+Valor por defecto: 2 (EXCLUSIVE)
+Tipo: INTEGER. 
+Rango [0, 2]
+
+TIDNotif.supplier.queuesize
+Nzmero de eventos (peticiones) encoladas en un POAManager para los 
+SupplierAdmin's asociados.
+
+Valor por defecto: 25000
+Tipo: INTEGER. 
+Rango 0, 99999 (sin lmmite).
+
+TIDNotif.supplier.maxthreads
+Nzmero maximo de threads que estaran atendiendo peticiones en un POAManager 
+para los SupplierAdmin's, -1 significa que se utilizan los valores definidos 
+en TIDorbj.
+
+Valor por defecto: 20
+Tipo: INTEGER. 
+Rango -1, 99999 (sin lmmite).
+
+TIDNotif.supplier.minthreads
+Nzmero mmnimo de threads que estaran atendiendo peticiones en un POAManager para los SupplierAdmin's, -1 significa que se utilizan los valores definidos en TIDorbj.
+Valor por defecto: -1
+Tipo: INTEGER. 
+Rango -1, 99999 (sin lmmite).
+
+TIDNotif.consumer.queuesize
+Nzmero de eventos (peticiones) encoladas en un POAManager para los 
+ConsumerAdmin's asociados.
+
+Valor por defecto: 75000
+Tipo: INTEGER. 
+Rango 0, 99999 (sin lmmite).
+
+TIDNotif.consumer.maxthreads
+Nzmero maximo de threads que estaran atendiendo peticiones en un POAManager 
+para los ConsumerAdmin's, -1 significa que se utilizan los valores definidos 
+en TIDorbj.
+
+Valor por defecto: 40
+Tipo: INTEGER. 
+Rango -1, 99999 (sin lmmite).
+
+TIDNotif.consumer.minthreads
+Nzmero mmnimo de threads que estaran atendiendo peticiones en un POAManager 
+para los ConsumerAdmin's, -1 significa que se utilizan los valores definidos 
+en TIDorbj.
+
+Valor por defecto: -1
+Tipo: INTEGER. 
+Rango -1, 99999 (sin lmmite).
+
+TIDNotif.internal.queuesize  
+Nzmero de eventos (peticiones) encoladas en un POAManager para los Channel's 
+asociados.
+
+Valor por defecto: 25000
+Tipo: INTEGER. 
+Rango 0, 99999 (sin lmmite).
+
+TIDNotif.internal.maxthreads
+Nzmero maximo de threads que estaran atendiendo peticiones en un POAManager 
+para los Channel's, -1 significa que se utilizan los valores definidos en 
+TIDorbj.
+
+Valor por defecto: 20
+Tipo: INTEGER. 
+Rango -1, 99999 (sin lmmite).
+
+TIDNotif.internal.minthreads
+Nzmero mmnimo de threads que estaran atendiendo peticiones en un POAManager 
+para los Channel's, -1 significa que se utilizan los valores definidos en 
+TIDorbj.
+
+Valor por defecto: -1
+Tipo: INTEGER. 
+Rango -1, 99999 (sin lmmite).
+Propiedades de TRAZAS
+
+TIDNotif.trace.level
+Determina el nivel de trazas de depuracisn y errores generadas.
+
+Valor por defecto: 0
+TIPO: INTEGER.
+Rango: [0, 4] 
+           (0 = ninguna/1=errores/2=usuario/3=depuracisn/4=depuracisn profunda)
+
+TIDNotif.trace.date
+Aqadir informacisn de fecha y hora en las trazas.
+
+Valor por defecto: true
+TIPO: BOOLEAN.
+
+TIDNotif.trace.appname
+Aqadir el nombre del msdulo en cada lmnea de traza.
+
+Valor por defecto: "TIDNotif"
+TIPO: STRING.
+
+TIDNotif.trace.tofile
+Las trazas pueden ser son mostradas directamente por la salida de errores de 
+la aplicacisn o se puede dirigir hacia un fichero. 
+
+Valor por defecto: true
+TIPO: BOOLEAN.
+
+TIDNotif.trace.path
+Path de acceso al fichero con las trazas.
+
+Valor por defecto: "./" (directorio desde donde se arranca el server)
+Tipo: STRING.
+Valores permitidos: nombre de path valido. 
+
+TIDNotif.trace.filename
+Nombre del fichero donde se guardaran las trazas.
+
+Valor por defecto: "tidnotif.out"
+Tipo: STRING.
+Valores permitidos: nombre de fichero valido. 
+
+TIDNotif.constraint.return
+Resultado por defecto en las evaluaciones de los filtros que devuelvan error.
+
+Valor por defecto: true
+TIPO: BOOLEAN.

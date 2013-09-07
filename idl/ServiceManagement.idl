@@ -1,0 +1,51 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// File          : ServiceManagement.idl
+// Description   : 
+//                 
+// Author/s      : 
+// Project       : 
+// Rel           : 01.00
+// Created       : 15/11/00
+// Revision Date : 15/11/97
+// Rev. History  : 
+//
+// Copyright 2000 Telefonica, I+D. All Rights Reserved.
+//
+// The copyright of the software program(s) is property of Telefonica.
+// The program(s) may be used, modified and/or copied only with the 
+// express written consent of Telefonica or in acordance with the terms 
+// and conditions stipulated in the agreement/contract under which 
+// the program(s) have been supplied.
+//
+///////////////////////////////////////////////////////////////////////////
+
+
+#ifndef _ServiceManagement_IDL_
+#define _ServiceManagement_IDL_
+
+#pragma prefix "omg.org"
+
+module ServiceManagement
+{
+    enum OperationalState    { disabled, enabled };
+    enum UsageState	     { idle, active, busy };
+    enum AdministrativeState { locked, unlocked, shutting_down };
+
+    //
+    //             |  Sincrono      | Asincrono     |
+    // ------------+----------------+---------------+---------------
+    //  Consumo    |  Distribution  | xxxxxxxxxxxx  |
+    // ------------+----------------+---------------+---------------
+    //  No Consumo |  with default  | Notification  |
+    // ------------+----------------+---------------+---------------
+    //             |  envio normal  | envio one way |
+    //
+
+    //enum DistributionMode {notification, distribution, checked_notification};
+    enum OperationMode { notification, distribution, checked_notification };
+    //enum  { syncrono, asyncrono };
+};
+
+#endif
+

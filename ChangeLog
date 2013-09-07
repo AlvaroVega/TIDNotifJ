@@ -1,0 +1,328 @@
+2009-03-12 Alvaro Vega Garcia  <avega at tid dot es>
+
+	* TIDNotifJ version 2.0.4 released.
+	
+	* Fix bug [#933] Structured Events: QoS values at optional header field
+	are ignored
+	* Fix bug [#426] NotificationChannelImpl.set_qos doesn't overwritten 
+	default qos policies
+	
+2008-10-27 Alvaro Vega Garcia  <avega at tid dot es>
+
+	* TIDNotifJ version 2.0.3 released.
+
+	* Fix bug [#829] create_filter crash notification service when is 
+	launched without persistence
+	* Feature [#679] Pull model implemented: reopened to adpat 
+	ProxyPushConsumerImpl
+
+	
+2008-04-07 Alvaro Vega Garcia  <avega at tid dot es>
+
+	* TIDNotifJ version 2.0.2 released.
+	
+	* Fix bug [#814] Repeated events obtained using PULL model 
+	(ProxyPullSupplierImpl)
+	* Feature [#679] Pull model implemented
+
+
+2008-03-25 Alvaro Vega Garcia  <avega at tid dot es>
+
+	* TIDNotifJ version 2.0.1 released.
+
+	* Support [#410] Remove MORFEO_DEPDENCENCIES from build.xml
+	
+	* Fix bug [#379] Unable to connect NotificationSevice through a 
+	corbaloc
+	* Fix bug [#378] TIDNotifJ doesn't compile with Sun JDK 1.5+
+
+	
+2006-04-21 Alvaro Arranz Garcia <aarranz at pegaso.ls.fi.upm.es>
+
+	* TIDNotifJ version 2.0.0 released.
+
+	* Released under GNU/GPL terms
+	* Aligned with version 1.1 OMG Notification Service Specification
+	* Implemented quality of the service (QoS) management
+	
+
+26/03/2004 
+	* TIDNotifJ version 1.3.5 released
+	
+	- Compatibilidad con JDK 1.4
+
+03/10/2003 
+	* TIDNotifJ version 1.3.4 released
+	
+	- Correcciones ON_NO_RESPONSE.
+	- Implementacion de un mecanismo de eliminacion de objetos creados pero
+	  "supuestamente" abandonados al encontrarse en el estado "Disconnected"
+	  un determinado periodo de tiempo.
+
+	-TIDNotif.consumer.max_disconnected_time
+
+	 Parametro con el que indicamos el tiempo (en segundos) que se permite a 
+	 un objeto ProxyPushSupplier que este en estado "Disconnected", 
+	 sobrepasado dicho tiempo se elimina.
+	     Valores (0, ...)
+	     Por defecto: 0 (sin limite de tiempo)
+
+	- Correccion bug bucle infinito (CONCURRENT MODIFICATION EXCEPTION)
+
+21/05/2003 
+	* TIDNotifJ version 1.3.3 released
+	
+	- Trazas circulares.
+	- Excepciones en arranque por narrow a clientes que no estan 
+	  ejecutandose.
+
+01/04/2003 
+	* TIDNotifJ version 1.3.2 released
+	- Implementacion de un mecanismo de bloqueo / eliminacion de objetos
+          "supuestamente" abandonados mediante un par de parametros 
+	  configurables:
+
+        -TIDNotif.consumer.on_no_response
+
+	Sirve para indicar que accion queremos que realice el servicio cuando 
+	un bjeto ProxyPushSupplier alcanza el numero determinado de excepciones
+	"NO_RESPONSE" (error por timeout) intentando enviar eventos al cliente 
+	receptor de los mismos.
+	   Valores:  0 (none) / 1 (block) / 2 (destroy)
+	   Por defecto: 0 (no hacer nada)
+
+	-TIDNotif.consumer.max_no_response
+
+	Parametro con el que indicamos el numero de errores consecutivos que se
+	tienen que producir en un objeto ProxyPushSupplier para que se active 
+	la ccion definida mediante el parametro anterior.
+	   Valores (-1, ...)
+	   Por defecto: -1 (sin limite de errores)
+
+21/03/2003 
+	* TIDNotifJ version 1.3.1 released
+	
+	- Cambios realtivos a es.tid.corba.TIDConstraint:
+	  + Acceso al campo "_repos_id" y "_type_id" dentro de miembros de tipo
+	    Any encadenados, es decir, un Any dentro de otro Any.
+	- Problema en la re-conexion a clientes pushSuppliers y pushConsumers 
+	  al rearrancar el servicio.
+
+	* IMPORTANTE: 
+	Se ha eliminado el parser de expresiones booleanas que estaba dentro 
+	del ervicio de Notificacion en "es.tid.corba.TIDConstraint.*" y se ha
+	trasladado a la libreria TIDtoolsJ siendo su nuevo classpath :
+	  "es.tid.corba.parser.*"
+
+	Por lo que ahora el servicio necesita la libreria TIDtoolsJ 1.3.2 
+	o superior.
+    
+        NOTA.- Quien use las clases "es.tid.corba.TIDConstraint.*" para parsear
+	y evaluar  expresiones booleanas debera de cambiar su codigo y  empezar 
+	a usar las clases "es.tid.corba.parser.*". 
+	Dentro del directorio "info" del paquete TIDtoolsJ hay un ejemplo de 
+	utilizacion del parser.
+
+11/03/2003 
+	* TIDNotifJ version 1.3.0.1 released
+	
+        - Cambios realtivos a es.tid.corba.TIDConstraint:
+	    + Acceso al campo "_repos_id" dentro de miembros de tipo Any 
+	      encadenados, es decir, un Any dentro de otro Any.
+	    + Ampliacion del operador "in" para que actue dentro de secuencias
+	      de estructuras del tipo:
+
+	         typedef struct TNP {
+	                string type;
+			string name;
+	         } TipoNamePair;
+
+	         typedef sequence<TypeNamePair> Target;
+
+	      Donde las entradas de esta secuencia pueden tener valores 
+	      repetidos.
+
+	      Ejemplo: Tenemos una estructura con un miembro "destinatario" de 
+	      tipo "Target". Una expresion valida seria:
+
+	          "'MADRID' in $.destinatario(DAGA)"
+
+	      Devolvera true si existe alguna entrada en la secuencia cuyo 
+	      campo "type"  tiene el valor 'DAGA' y  cuyo campo  "name" tiene el 
+	      valor "MADRID'. En caso contrario devolvera false.
+
+	      Como norma general esta expresion es aplicable a cualquier 
+	      secuencia de estructuras cuyos dos primeros campos sean de tipo 
+	      string, con el primero (el 0) se comparara el valor de lo puesto 
+	      entre parantesis y con el segundo (el 1) se comparara el string 
+	      dado para buscar. En el caso en el que el valor de "type" 
+	      contuviera espacios en blanco se puede poner el valor entre 
+	      parantesis con comillas simples.
+	           Ej: "'MADRID' in $.destinatario('DAGA LOCAL')"
+
+	- Cocas solucionadas:
+	  E-F-148516 Inclusion del RepositoryId en el arbol devuielto por el 
+	  parser
+	  Notas de la Solucion:
+             Inclusion del metodo:
+	        String repositoryId() throws java.lang.NullPointerException
+             En la clase:
+	        es.tid.util.parser.SimpleNode
+	     Devuelve el valor del repositoryId, en el caso que venga definido
+	     dentro de la expresion booleana, en los nodos del tipo:
+	        es.tid.util.parser.NodeType.TIDStructAnyValue (10)
+
+17/02/2003
+	* TIDNotifJ version 1.3.0 released
+	
+	- E-F-145787: Filtro de Enumeraciones con >, <, >=, <=
+	- Modificacion del parser (TIDConstraint) introduciendo una nueva 
+	  funcion:
+
+	    int datecmp( String date1, String  date2, String format) 
+
+          devuelve:
+
+	      -1: si date1 < date2
+	       0: si date1 == date2
+	       1: si date1 > date2
+
+	  Sintaxis del Formato de la fecha (analogo al SimpleDateFormat de 
+	  java):
+     
+          Para especificar el formato de la fecha de los campos date1 y date2 
+	  usamos un tercer parametro string donde se describe el patron 
+	  utilizado. 
+	  Dicho patron es una secuencia de caracteres ascii reservados, cuyo 
+	  significado es:
+
+	  Simbolo  Significado             Presentacion        Ejemplo
+	  -------  -----------             ------------        -------
+	  G        era designator          (Text)              AD
+	  y        year                    (Number)            1996
+	  M        month in year           (Text & Number)     July & 07
+	  d        day in month            (Number)            10
+	  h        hour in am/pm (1~12)    (Number)            12
+	  H        hour in day (0~23)      (Number)            0
+	  m        minute in hour          (Number)            30
+	  s        second in minute        (Number)            55
+	  S        millisecond             (Number)            978
+	  E        day in week             (Text)              Tuesday
+	  D        day in year             (Number)            189
+	  F        day of week in month    (Number)            2 (2nd Wed in July)
+	  w        week in year            (Number)            27
+	  W        week in month           (Number)            2
+	  a        am/pm marker            (Text)              PM
+	  k        hour in day (1~24)      (Number)            24
+	  K        hour in am/pm (0~11)    (Number)            0
+	  z        time zone               (Text)              Pacific Standard Time
+	  '        escape for text         (Delimiter)
+	  ''       single quote            (Literal)           '
+      
+          Ejemplo (utilizando el Locale US): 
+
+	  Format Pattern                         Result
+	  --------------                         -------
+	  "yyyy.MM.dd G 'at' hh:mm:ss z"  ->>  1996.07.10 AD at 15:08:56 PDT
+	  "EEE, MMM d, ''yy"              ->>  Wed, July 10, '96
+	  "h:mm a"                        ->>  12:08 PM
+	  "hh 'o''clock' a, zzzz"         ->>  12 o'clock PM, Pacific Daylight Time
+	  "K:mm a, z"                     ->>  0:00 PM, PST
+	  "yyyyy.MMMMM.dd GGG hh:mm aaa"  ->>  1996.July.10 AD 12:08 PM
+      
+05/02/2003
+	* TIDNotifJ version 1.3.0 released
+	
+	- E-F-145608: Error al crear SupplierAdmin de segundo nivel
+	- E-F-145929: Problema con los discriminators del servicio TIDDistribJ
+	- E-F-145515: Probl. persist. al reinicio serv. Distrib y Adapt en ese orden
+
+28/01/2003
+	* TIDNotifJ version 1.3.0 released
+	
+	- E-F-145004: Problema Herr. Trans y Distrib con vers. TIDNotifJ_1.3.0
+	- Correccion en supplier_admin_ids(): devolver lista correcta.
+
+27/11/2002
+	* TIDNotifJ version 1.3.0 released
+	
+	- Correccion ficheros setup_TIDNotifJ_UNIX y TIDNotifJ.pkginfo.
+
+26/07/2002
+	* TIDNotifJ version 1.3.0 released
+	
+	- *** Modificacion IDL's de los Servicios TIDNotif y TIDDistrib ***
+	- E-F-127352: Modificar los ficheros setup_TIDNotifJ[.bat]
+	- E-F-125773: Baja de un solo SupplierAdmin en canales Transf./Distrib.
+	- Reestructuracion de la arquitectura de POA's del servicio, pasando a 
+	  funcionar en modo "default servant".
+	- Persistencia a fichero del servicio. Configurada activa por defecto.
+
+	* Entrega  (01/08/2002)
+	- Modificaciones relacionadas con el rendimiento (01/08/2002)
+
+	* Entrega  (08/10/2002)
+	- E-F-132117 Error en el filtrado de eventos que contienen miembros any
+	- Modificacion del parser (TIDConstraint) introduciendo un nuevo nodo
+	  TIDIdentifier para que los valores de los tipos enumerados se puedan
+	  comparar sin necesidad de ponerlos entre comillas simples ('valor'),
+	  ahora podemos construir constrains como:
+	     $.severity == minor
+	     $.severity > warning
+
+08/05/2002
+	* TIDNotifJ version 1.2.2 released
+	
+	- *** Modificacion IDL's de los Servicios TIDNotif y TIDDistrib ***
+	- Modificacion del interfaz NotificationChannelAdmin::SupplierAdmin y
+	  NotificationChannelAdmin::ConsumerAdmin para poder crear objetos
+	  Proxy's con nombre, buscarlos y obtener la lista de nombres
+	  existente.
+	- Modificacion del interfaz NotificationChannelAdmin::ProxyPushSupplier 
+	  y NotificationChannslAdmin::ProxyPushConsumer para poder obtener la
+	  referencia del PushSupplier y del PushConsumer cliente conectado.
+	- Modificacion de las tools para dar soporte a las nuevas operaciones
+	  introducidas.
+	- En distribucion, los errores en la evaluacion de un filtro sobre un 
+	  evento devolveran false por defecto, es decir, no se propaga el 
+	  evento (lo contrario que en notificacion).
+	      Parametro: TIDNotif.constraint.return.
+	- Añadido un nuevo extended_criteria: "RepositoryId"
+
+01/04/2002
+	* TIDNotifJ version 1.2.1 released
+	
+	- Implementacion de un mecanismo de bloqueo / eliminacion de objetos
+	  "supuestamente" abandonados mediante un par de parametros 
+	  configurables:
+
+	TIDNotif.consumer.on_comm_failure
+
+	Sirve para indicar que accion queremos que realice el servicio cuando 
+	un bjeto ProxyPushSupplier alcanza el numero determinado de excepciones
+	"COMM_FAILURE" (error de comunicacion) intentando enviar eventos al
+	cliente receptor de los mismos.
+	   Valores:  0 (none) / 1 (block) / 2 (destroy)
+ 	   Por defecto: 0 (no hacer nada)
+
+        TIDNotif.consumer.max_comm_failures
+	Parametro con el que indicamos el numero de errores consecutivos que se
+	tienen que producir en un objeto ProxyPushSupplier para que se active 
+	la accion definida mediante el parametro anterior.
+	   Valores (-1, ...)
+	   Por defecto: -1 (sin limite de errores)
+
+	- Modificaciones en las trazas para incorporar mas informacion en 
+	  ellas.
+
+	- Modificaciones en las herramientas de ambos servicios.
+
+	- Correcciones en el servicio de distribucion en la destruccion de 
+	  objetos, en la modificacion del atributo "order" de objetos 
+	  ConsumerAdmin.
+
+	- Introduccion del un "extended_criteria" de lectura/escritura en el
+	  ConsumerAdmin para la inclusion del criterio "Daga".
+
+	- Introduccion del un "extended_criteria" de lectura/escritura en el
+	  SupplierAdmin para la inclusion del criterio "Entrada".

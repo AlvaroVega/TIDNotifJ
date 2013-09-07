@@ -1,0 +1,20 @@
+This release of TIDNotifJ follows:
+- OMG Notification Service Specification, Version 1.1
+- Joint submission to Notification Service RFP v3.0 January 1998 by
+  Telefonica I+D and Hewlett-Packard
+
+
+TIDNotifJ implements both "PUSH"  and "PULL" models. 
+Supports anys and structured events.
+Allows persistence in DabaBase and files.
+Allows different scalable configurations, relaying on TIDorbJ POAManagers.
+Allows the following QoS properties at Channels, Admins and StructuredEvents:
+ - QueueOrder { Any Fifo Priority Deadline }
+ - StartTime and StartTimeSupported
+ - StopTime and StopTimeSupported
+ - Timeout
+ - EventReliability BestEffort
+ - ConnectionReliability { BestEffort, Persistent }
+    
+Allows event filering 
+

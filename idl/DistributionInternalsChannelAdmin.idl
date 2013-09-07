@@ -1,0 +1,166 @@
+//File: DistributionInternalsChannelAdmin.idl
+
+#ifndef _DistributionInternalsChannelAdmin_dil_
+#define _DistributionInternalsChannelAdmin_dil_
+
+#include <CosLifeCycle.idl>
+#include <ServiceManagement.idl>
+#include <IndexedDistributionChannelAdmin.idl>
+
+#pragma prefix "omg.org"
+
+module DistributionInternalsChannelAdmin 
+{
+  interface InternalProxyPushConsumer: DistributionChannelAdmin::ProxyPushConsumer,
+                                       CosNotifyChannelAdmin::StructuredProxyPushConsumer {
+    oneway void ipush(in any data);
+    void destroyFromAdmin();
+
+    // Persistencia
+    void loadData();
+  };
+
+  interface InternalProxyPullConsumer: NotificationChannelAdmin::ProxyPullConsumer,
+                                       CosNotifyChannelAdmin::StructuredProxyPullConsumer {
+    oneway void ipush(in any data);
+    void destroyFromAdmin();
+
+    // Persistencia
+    void loadData();
+  };
+
+  exception ConnectionError {};
+  exception NotMatch {};
+  exception LockedState {};
+
+  interface InternalProxyPushSupplier: DistributionChannelAdmin::ProxyPushSupplier,
+                                       CosNotifyChannelAdmin::StructuredProxyPushSupplier {
+    oneway void push_event(in any data);
+    void destroyFromAdmin();
+    void distrib_event(in any data) 
+                               raises (LockedState, NotMatch, ConnectionError);
+    // Persistencia
+    void loadData();
+  };
+
+  interface InternalProxyPullSupplier: NotificationChannelAdmin::ProxyPullSupplier,
+                                       CosNotifyChannelAdmin::StructuredProxyPullSupplier {
+    oneway void push_event(in any data);
+    void destroyFromAdmin();
+
+    // Persistencia
+    void loadData();
+  };
+
+  typedef string AdminId;
+  typedef string ProxyId;
+
+  typedef long Level;
+
+  interface InternalSupplierAdmin: DistributionChannelAdmin::SupplierAdmin {
+    void push_event(in any data);
+    void set_level(in Level new_level);
+    void incLevel();
+    void decLevel();
+    AdminId getAdminId();
+    void setSupplierAdminChild( in InternalSupplierAdmin child );
+    void setSupplierAdminParent( in InternalSupplierAdmin child );
+    boolean meetCriteria(in CosLifeCycle::Criteria the_criteria)
+                            raises (NotificationChannelAdmin::InvalidCriteria);
+    string removeProxyPushConsumer( in ProxyId id );
+    string removeProxyPullConsumer( in ProxyId id );
+    void destroyFromChannel();
+    void destroyFromAdmin();
+    oneway void destroySupplierAdmin();
+
+    // Persistencia
+    void loadData();
+  };
+
+  typedef long Order;
+
+  exception AlreadyDefinedOrder {};
+  exception OrderNotFound {};
+  exception DataError {};
+  exception NotDelivered {};
+
+  interface InternalConsumerAdmin: IndexedDistributionChannelAdmin::ConsumerAdmin {
+    oneway void dispatch_event(in any data);
+    void distrib_event(in any data) 
+                                  raises (LockedState, NotMatch, NotDelivered);
+    AdminId getAdminId();
+
+    void move_positioned_consumer_admin( in Order old_position,
+                                         in Order new_position,
+                                         in AdminId id )
+                        raises (AlreadyDefinedOrder, DataError, OrderNotFound);
+
+    void move_positioned_push_supplier( in Order old_position,
+                                        in Order new_position,
+                                        in ProxyId id )
+                        raises (AlreadyDefinedOrder, DataError, OrderNotFound);
+
+    //void move_positioned_pull_supplier( in Order old_position,
+    //                                    in Order new_position,
+    //                                    in ProxyId id )
+    //                  raises (AlreadyDefinedOrder, DataError, OrderNotFound);
+
+    boolean meetCriteria(in CosLifeCycle::Criteria the_criteria)
+                            raises (NotificationChannelAdmin::InvalidCriteria);
+    string removeProxyPushSupplier( in ProxyId id );
+    string removeProxyPullSupplier( in ProxyId id );
+    void removeConsumerAdmin( in AdminId id );
+    void destroyFromChannel();
+    void destroyFromAdmin();
+    oneway void destroyConsumerAdmin();
+
+    // Persistencia
+    void loadData();
+  };
+
+  typedef string ChannelId;
+
+  interface InternalDistributionChannel: 
+      DistributionChannelAdmin::DistributionChannel,
+      CosNotifyFilter::FilterFactory {
+    //ChannelId getChannelId();
+    oneway void dispatch_event(in any data);
+    void removeSupplierAdmin( in AdminId id );
+    void removeConsumerAdmin( in AdminId id );
+    void removeNewSupplierAdmin( in AdminId id );
+    void removeNewConsumerAdmin( in AdminId id );
+    void swapSupplierAdmin( in AdminId id );
+
+    InternalConsumerAdmin new_positioned_for_consumers(
+                          //in ServiceManagement::OperationMode operation_mode,
+                            in CosLifeCycle::Criteria the_criteria,
+                            in InternalConsumerAdmin consumer_admin,
+                            in AdminId consumer_id,
+                            in Order order,
+                            in Order new_order )
+                            raises (NotificationChannelAdmin::InvalidCriteria);
+
+    InternalSupplierAdmin new_transformed_for_suppliers(
+                          //in ServiceManagement::OperationMode operation_mode,
+                            in CosLifeCycle::Criteria the_criteria,
+                            in InternalSupplierAdmin child,
+                            in InternalSupplierAdmin parent, 
+                            in AdminId supplier_id,
+                            in Level level )
+                            raises (NotificationChannelAdmin::InvalidCriteria);
+
+    oneway void destroyChannel();
+
+    // Persistencia
+    void loadData();
+  };
+
+  interface InternalDistributionChannelFactory: DistributionChannelAdmin::DistributionChannelFactory {
+    //Object getGlobalChannelPOA();
+    //Object getGlobalSupplierPOA();
+    //Object getGlobalConsumerPOA();
+    void removeNotificationChannel( in ChannelId id );
+    void removeDistributionChannel( in ChannelId id );
+  };
+};
+#endif // _DistributionInternalsChannelAdmin_dil_

@@ -1,0 +1,14 @@
+Ejecucion:
+
+run.ksh <num_suppliers> <num_consumers> <num_events>
+
+  num_suppliers: numero de clientes suppliers a crear
+  num_consumers: numero de clientes consumers a crear
+  num_events:    numero de eventos enviados por cada cliente
+
+Por defecto:
+
+  num_suppliers: 1
+  num_consumers: 1
+  num_events:    100
+

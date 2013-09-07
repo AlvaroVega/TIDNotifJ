@@ -1,0 +1,451 @@
+******************************************************************************
+*                                                                            *
+* Libreria:    TIDNotifTools.jar                                             *
+*                                                                            *
+* Descripcion: Utilizades TIDNotif                                           *
+* Paquete:     es.tid.corba.TIDNotif.tools                                   *
+* Clases:      Agent                                                         *
+*              Factory                                                       *
+*              Channel                                                       *
+*              SupplierAdmin                                                 *
+*              ConsumerAdmin                                                 *
+*              Discriminator                                                 *
+*              ProxyPushSupplier                                             *
+*              ProxyPushConsumer                                             *
+*              ProxyPullSupplier                                             *
+*              ProxyPullConsumer                                             *
+*                                                                            *
+* Scripts:     Agent.sh                                                      *
+*              Factory.sh                                                    *
+*              Channel.sh                                                    *
+*              SupplierAdmin.sh                                              *
+*              ConsumerAdmin.sh                                              *
+*              Discriminator.sh                                              *
+*              ProxyPushSupplier.sh                                          *
+*              ProxyPushConsumer.sh                                          *
+*              ProxyPullSupplier.sh                                          *
+*              ProxyPullConsumer.sh                                          *
+*                                                                            * 
+******************************************************************************
+
+  -----------
+* Agent Class
+  -----------
+
+  + Obtener la referencia del objeto ChannelFactory en formato IOR o URL.
+
+    Agent.sh resolve ChannelFactory [-m (ior | url)] < agent.ior
+
+  + Obtener la lista de canales en formato IOR (por defecto)
+    o URL.
+
+    Agent.sh list [-m (ior | url)] < agent.ior
+
+  + Parar el servicio.
+
+    Agent.sh shutdown < agent.ior
+
+  Los siguientes se mantienen por compatibilidad con version anterior:
+
+  + Crear el canal para el Servicio EventProcessor utilizado en la aplicacion 
+    TWEB con el nombre asociado "EventProcessorChannel", devolviendo su 
+    referencia en formato IOR o URL (por defecto).
+
+    Agent.sh start -fi agent.ior -fo channel.url [-m (ior | url)] 
+
+  + Destruir el canal para el Servicio EventProcessor utilizado en la 
+    aplicacion TWEB (nombre = EventProcessorChannel").
+
+    Agent.sh stop -fi agent.ior
+
+
+  -------------
+* Factory Class
+  -------------
+
+  + Crear un canal. Si se le da un nombre este quedara asociado a su referencia,
+    devolviendo su referencia en formato IOR (por defecto) o URL.
+
+    Factory.sh create [name] [-m (ior | url)] < factory.ior
+
+  + Busca un canal. Si se le da un nombre este quedara asociado a su referencia,
+    devolviendo su referencia en formato IOR (por defecto) o URL.
+
+    Factory.sh find name [-m (ior | url)] < factory.ior
+
+  + Obtener la lista de referencias de los canales existentes en formato IOR 
+    (por defecto) o URL.
+
+    Factory.sh list [-m (ior | url)] < factory.ior
+
+  + Obtener la lista de nombres de los canales existentes junto a su fecha  y 
+    hora de creacion.
+
+    Factory.sh nlist < factory.ior
+
+  + Destruir el canal con el nombre asociado.
+
+    Factory.sh destroy name < factory.ior
+
+
+  -------------
+* Channel Class
+  -------------
+
+  + Crear un SupplierAdmin. Si se le da un nombre este se utilizara como 
+    criterio  "Id"  asociandolo tambien a su referencia,  devolviendo su 
+    referencia en formato IOR (por defecto) o URL.
+
+    Channel.sh create_supplier [name] [-m (ior | url)] < channel.ior
+
+  + Crear un ConsumerAdmin. Si se le da un nombre este se utilizara como 
+    criterio  "Id"  asociandolo tambien a su referencia,  devolviendo su 
+    referencia en formato IOR (por defecto) o URL.
+
+    Channel.sh create_consumer [name] [-m (ior | url)] < channel.ior
+
+  + Busca un SupplierAdmin con "Id" igual a nombre, devolviendo su referencia 
+    en formato IOR (por defecto) o URL.
+
+    Channel.sh find_supplier name [-m (ior | url)] < channel.ior
+
+  + Busca un ConsumerAdmin con "Id" igual a nombre, devolviendo su referencia 
+    en formato IOR (por defecto) o URL.
+
+    Channel.sh find_consumer name [-m (ior | url)] < channel.ior
+
+  + Obtener la lista de referencias de los SupplierAdmin existentes en el
+    canal en formato IOR (por defecto) o URL.
+
+    Channel.sh list_suppliers [-m (ior | url)] < channel.ior
+
+  + Obtener la lista de referencias de los ConsumerAdmin existentes en el
+    canal en formato IOR (por defecto) o URL.
+
+    Channel.sh list_consumers [-m (ior | url)] < channel.ior
+
+  + Obtener el valor del atributo OperationalState.
+
+    Channel.sh get "OperationalState" < channel.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    Channel.sh get "AdministrativeState" < channel.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    Channel.sh set "AdministrativeState" <new_state> < channel.ior
+
+  + Destruir el canal.
+
+    Channel.sh destroy < channel.ior
+
+
+  -------------------
+* SupplierAdmin Class
+  -------------------
+
+  + Crear un ProxyPushConsumer. Si se le da un nombre este se asociara a su 
+    referencia CORBA, devolviendola en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.sh create_push_consumer [name] [-m (ior | url)] 
+                                                           < supplier_admin.ior
+
+  + Crear un ProxyPullConsumer. Si se le da un nombre este se asociara a su 
+    referencia CORBA, devolviendola en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.sh create_pull_consumer [name] [-m (ior | url)] 
+                                                           < supplier_admin.ior
+
+  + Busca un ProxyPushConsumer por nombre, devolviendo su referencia en 
+    formato IOR (por defecto) o URL.
+
+    SupplierAdmin.sh find_push_consumer name [-m (ior | url)]
+                                                           < supplier_admin.ior
+
+  + Busca un ProxyPullConsumer por nombre, devolviendo su referencia en 
+    formato IOR (por defecto) o URL.
+
+    SupplierAdmin.sh find_pull_consumer name [-m (ior | url)]
+                                                           < supplier_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPushConsumer existentes en 
+    el SupplierAdmin en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.sh push_consumers [-m (ior | url)] < supplier_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPullConsumer existentes en 
+    el SupplierAdmin en formato IOR (por defecto) o URL.
+
+    SupplierAdmin.sh pull_consumers [-m (ior | url)] < supplier_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPushConsumer existentes en el 
+    SupplierAdmin.
+
+    SupplierAdmin.sh nlist_push_consumers < supplier_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPullConsumer existentes en el 
+    SupplierAdmin.
+
+    SupplierAdmin.sh nlist_pull_consumers < supplier_admin.ior
+
+  + Obtener el valor del atributo OperationalState.
+
+    SupplierAdmin.sh get OperationalState < supplier_admin.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    SupplierAdmin.sh get AdministrativeState < supplier_admin.ior
+
+  + Obtener el valor del criterio "Id" del objeto AssociatedCriteria.
+
+    SupplierAdmin.sh get AssociatedCriteria Id < supplier_admin.ior
+
+  + Obtener referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    SupplierAdmin.sh get Discriminator [-m (ior | url)] < supplier_admin.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    SupplierAdmin.sh set AdministrativeState <new_state> < supplier_admin.ior
+
+  + Destruir el SupplierAdmin.
+
+    SupplierAdmin.sh destroy < supplier_admin.ior
+
+
+  -------------------
+* ConsumerAdmin Class
+  -------------------
+
+  + Crear un ProxyPushSupplier. Si se le da un nombre este se asociara a su 
+    referencia CORBA, devolviendola en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.sh create_push_supplier [name] [-m (ior | url)] 
+                                                           < consumer_admin.ior
+
+  + Crear un ProxyPullSupplier. Si se le da un nombre este se asociara a su 
+    referencia CORBA, devolviendola en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.sh create_pull_supplier [name] [-m (ior | url)] 
+                                                           < consumer_admin.ior
+
+  + Busca un ProxyPushSupplier por nombre, devolviendo su referencia en 
+    formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.sh find_push_supplier name [-m (ior | url)]
+                                                           < consumer_admin.ior
+
+  + Busca un ProxyPullSupplier por nombre, devolviendo su referencia en 
+    formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.sh find_pull_supplier name [-m (ior | url)] 
+                                                           < consumer_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPushSupplier existentes en 
+    el ConsumerAdmin en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.sh push_suppliers [-m (ior | url)] < consumer_admin.ior
+
+  + Obtener la lista de referencias de los ProxyPullSupplier existentes en 
+    el ConsumerAdmin en formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.sh pull_suppliers [-m (ior | url)] < consumer_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPushSupplier existentes en el 
+    ConsumerAdmin.
+
+    ConsumerAdmin.sh nlist_push_suppliers < consumer_admin.ior
+
+  + Obtener la lista de nombres de los ProxyPullSupplier existentes en el 
+    ConsumerAdmin.
+
+    ConsumerAdmin.sh nlist_pull_suppliers < consumer_admin.ior
+
+  + Obtener el valor del atributo OperationalState.
+
+    ConsumerAdmin.sh get OperationalState < consumer_admin.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ConsumerAdmin.sh get AdministrativeState < consumer_admin.ior
+
+  + Obtener el valor del criterio "Id" del objeto AssociatedCriteria.
+
+    ConsumerAdmin.sh get AssociatedCriteria Id < consumer_admin.ior
+
+  + Obtener referencia del objeto Discriminator para ese ConsumerAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ConsumerAdmin.sh get Discriminator [-m (ior | url)] < consumer_admin.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ConsumerAdmin.sh set AdministrativeState <new_state> < consumer_admin.ior
+
+  + Destruir el ConsumerAdmin.
+
+    ConsumerAdmin.sh destroy < consumer_admin.ior
+
+
+  -------------------
+* Discriminator Class
+  -------------------
+
+  + Aniadir una expresion booleana al Discriminator, devolviendo su Id (se
+    trata de un int).
+
+    Discriminator.sh add_constraint "expresion" < discriminator.ior
+
+  + Obtener la expresion booleana asociada al Id dado.
+
+    Discriminator.sh get_constraint Id < discriminator.ior
+
+  + Eliminar la expresion booleana asociada al Id dado.
+
+    Discriminator.sh remove_constraint Id < discriminator.ior
+
+  + Reemplazar la expresion booleana asociada al Id dado.
+
+    Discriminator.sh replace_constraint Id "expresion" < discriminator.ior
+
+  + Obtenemos la lista de expresiones existentes en dicho discriminator junto
+    a su Id asociado.
+
+    Discriminator.sh list_constraints < discriminator.ior
+
+
+  -----------------------
+* ProxyPushSupplier Class
+  -----------------------
+
+  + Obtener el valor del atributo OperationalState.
+
+    ProxyPushSupplier.sh get OperationalState < proxy_push_supplier.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ProxyPushSupplier.sh get AdministrativeState < proxy_push_supplier.ior
+
+  + Obtener la referencia del objeto PushConsumer que esta conectado con el
+    en formato IOR (por defecto) o URL.
+
+    ProxyPushSupplier.sh get PushConsumer [-m (ior|url)] 
+                                                     < proxy_push_supplier.ior
+
+  + Obtener la referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ProxyPushSupplier.sh get Discriminator < proxy_push_supplier.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ProxyPushSupplier.sh set AdministrativeState <new_state> 
+                                                       < proxy_push_supplr.ior
+
+  + Destruir el ProxyPushSupplier.
+
+    ProxyPushSupplier.sh disconnect < proxy_push_supplier.ior
+
+
+  -----------------------
+* ProxyPushConsumer Class
+  -----------------------
+
+  + Obtener el valor del atributo OperationalState.
+
+    ProxyPushConsumer.sh get OperationalState < proxy_push_consumer.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ProxyPushConsumer.sh get AdministrativeState < proxy_push_consumer.ior
+
+  + Obtener la referencia del objeto PushSupplier que esta conectado con el
+    en formato IOR (por defecto) o URL.
+
+    ProxyPushConsumer.sh get PushSupplier [-m (ior|url)] 
+                                                     < proxy_push_consumer.ior
+
+  + Obtener la referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ProxyPushConsumer.sh get Discriminator [-m (ior|url)] 
+                                                     < proxy_push_consumer.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ProxyPushConsumer.sh set AdministrativeState <new_state> 
+                                                     < proxy_push_consumer.ior
+
+  + Destruir el ProxyPushConsumer.
+
+    ProxyPushConsumer.sh disconnect < proxy_push_consumer.ior
+
+
+  -----------------------
+* ProxyPullSupplier Class
+  -----------------------
+
+  + Obtener el valor del atributo OperationalState.
+
+    ProxyPullSupplier.sh get OperationalState < proxy_pull_supplier.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ProxyPullSupplier.sh get AdministrativeState < proxy_pull_supplier.ior
+
+  + Obtener la referencia del objeto PullConsumer que esta conectado con el
+    en formato IOR (por defecto) o URL.
+
+    ProxyPullSupplier.sh get PullConsumer [-m (ior|url)] 
+                                                     < proxy_pull_supplier.ior
+
+  + Obtener la referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ProxyPullSupplier.sh get Discriminator < proxy_pull_supplier.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ProxyPullSupplier.sh set AdministrativeState <new_state> 
+                                                     < proxy_pull_supplier.ior
+
+  + Destruir el ProxyPullSupplier.
+
+    ProxyPullSupplier.sh disconnect < proxy_pull_supplier.ior
+
+
+  -----------------------
+* ProxyPullConsumer Class
+  -----------------------
+
+  + Obtener el valor del atributo OperationalState.
+
+    ProxyPullConsumer.sh get OperationalState < proxy_pull_consumer.ior
+
+  + Obtener el valor del atributo AdministrativeState.
+
+    ProxyPullConsumer.sh get AdministrativeState < proxy_pull_consumer.ior
+
+  + Obtener la referencia del objeto PullSupplier que esta conectado con el
+    en formato IOR (por defecto) o URL.
+
+    ProxyPullConsumer.sh get PullSupplier [-m (ior|url)] 
+                                                     < proxy_pull_consumer.ior
+
+  + Obtener la referencia del objeto Discriminator para ese SupplierAdmin en 
+    formato IOR (por defecto) o URL.
+
+    ProxyPullConsumer.sh get Discriminator [-m (ior|url)]
+                                                     < proxy_pull_consumer.ior
+
+  + Cambiar el valor del atributo AdministrativeState.
+
+    ProxyPullConsumer.sh set AdministrativeState <new_state> 
+                                                     < proxy_pull_consumer.ior
+
+  + Destruir el ProxyPullConsumer.
+
+    ProxyPullConsumer.sh disconnect < proxy_pull_consumer.ior
+

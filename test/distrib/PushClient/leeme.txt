@@ -1,0 +1,15 @@
+Ejecucion:
+
+run.ksh <num_consumers> <num_events> [<ior_file>]
+
+  num_consumers: numero de clientes consumers a crear
+  num_events:    numero de eventos esperados por cada cliente
+  ior_file:      fichero con la ior del agente admin
+                 (si no se le da este parametro leere la referencia de la
+                  entrada estandar)
+
+Por defecto:
+
+  num_consumers: 1
+  num_events:    100
+

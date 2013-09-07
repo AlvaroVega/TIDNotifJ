@@ -1,0 +1,73 @@
+#include <CosLifeCycle.idl>
+
+#pragma prefix "corba.tid.es"
+
+module EventData {
+
+  typedef long AlarmId;
+  typedef string SourceId;
+  typedef long ProbableCause;
+  typedef long RepairAction;
+  typedef long TimeStamp;
+
+  typedef sequence<RepairAction> ProposedRepairActions;
+
+  //typedef CosLifeCycle::Criteria Criteria;
+
+  enum PerceivedSeverity 
+  {
+    indeterminate,
+    critical,
+    major,
+    minor,
+    warning,
+    cleared
+  };
+
+  struct PossibleInfo 
+  {
+    SourceId source_id;
+    long due_date;
+  };
+
+  enum AlarmDataType 
+  {
+    AD_Number,
+    AD_String,
+    AD_Enum,
+    AD_Struct,
+    AD_Sequence,
+    AD_Unknown
+  };
+
+  union AlarmData switch (AlarmDataType)
+  {
+    case AD_String: SourceId source_id;
+    case AD_Enum: PerceivedSeverity severity;
+    case AD_Struct: PossibleInfo info;
+    case AD_Sequence: ProposedRepairActions actions;
+    case AD_Unknown: any more_info;
+    default: long alarm_id;
+  };
+
+  struct Alarm 
+  {
+    TimeStamp time_stamp;
+    ProbableCause cause;
+    PerceivedSeverity severity;
+    ProposedRepairActions actions;
+    CosLifeCycle::Criteria properties;
+    PossibleInfo info;
+    any more_info;
+    AlarmData alarm_data;
+  };
+
+  struct MediumAlarm 
+  {
+    AlarmId alarm_id;
+    SourceId source_id;
+    PerceivedSeverity severity;
+    CosLifeCycle::Criteria properties;
+  };
+
+};

@@ -1,0 +1,226 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// File          : NotificationChannelAdmin.idl
+// Description   : 
+//                 
+// Author/s      : 
+// Project       : 
+// Rel           : 01.00
+// Created       : 10/07/97
+// Revision Date : 15/11/00
+// Rev. History  : 
+//
+// Copyright 1997,1998,1999,2000 Telefonica, I+D. All Rights Reserved.
+//
+// The copyright of the software program(s) is property of Telefonica.
+// The program(s) may be used, modified and/or copied only with the 
+// express written consent of Telefonica or in acordance with the terms 
+// and conditions stipulated in the agreement/contract under which 
+// the program(s) have been supplied.
+//
+///////////////////////////////////////////////////////////////////////////
+
+
+#ifndef _NotificationChannelAdmin_IDL_
+#define _NotificationChannelAdmin_IDL_
+
+#include <CosLifeCycle.idl>
+#include <CosEventComm.idl>
+#include <CosEventChannelAdmin.idl>
+#include <CosNotifyFilter.idl>
+#include <CosNotifyChannelAdmin.idl>
+#include <ServiceManagement.idl>
+
+#pragma prefix "omg.org"
+
+module NotificationChannelAdmin {
+
+  //interface ProxyPushConsumer: CosEventChannelAdmin::ProxyPushConsumer {
+  interface ProxyPushConsumer: CosNotifyChannelAdmin::ProxyPushConsumer/*,
+  							   CosEventChannelAdmin::ProxyPushConsumer*/ {
+
+    readonly attribute ServiceManagement::OperationalState operational_state;
+    attribute ServiceManagement::AdministrativeState administrative_state;
+    attribute CosNotifyFilter::Filter forwarding_discriminator;
+
+    CosEventComm::PushSupplier getPushSupplier() 
+                                         raises ( CosEventComm::Disconnected );
+  };
+
+
+  //interface ProxyPullConsumer: CosEventChannelAdmin::ProxyPullConsumer {
+  interface ProxyPullConsumer: CosNotifyChannelAdmin::ProxyPullConsumer/*,
+							   CosEventChannelAdmin::ProxyPullConsumer*/ {
+
+    readonly attribute ServiceManagement::OperationalState operational_state;
+    attribute ServiceManagement::AdministrativeState administrative_state;
+    attribute CosNotifyFilter::Filter forwarding_discriminator;
+
+    CosEventComm::PullSupplier getPullSupplier() 
+                                         raises ( CosEventComm::Disconnected );
+                                         
+  };
+
+  //Already in CosNotifyChannelAdmin::ProxyPushSupplier
+  //interface ProxyPushSupplier: CosEventChannelAdmin::ProxyPushSupplier {
+  interface ProxyPushSupplier: CosNotifyChannelAdmin::ProxyPushSupplier {
+
+    readonly attribute ServiceManagement::OperationalState operational_state;
+    attribute ServiceManagement::AdministrativeState administrative_state;
+    attribute CosNotifyFilter::Filter forwarding_discriminator;
+
+    CosEventComm::PushConsumer getPushConsumer() 
+                                         raises ( CosEventComm::Disconnected );
+  };
+
+
+  //Already in CosNotifyChannelAdmin::ProxyPullSupplier
+  //interface ProxyPullSupplier: CosEventChannelAdmin::ProxyPullSupplier {
+  interface ProxyPullSupplier: CosNotifyChannelAdmin::ProxyPullSupplier {
+
+    readonly attribute ServiceManagement::OperationalState operational_state;
+    attribute ServiceManagement::AdministrativeState administrative_state;
+    attribute CosNotifyFilter::Filter forwarding_discriminator;
+
+    CosEventComm::PullConsumer getPullConsumer() 
+                                         raises ( CosEventComm::Disconnected );
+  };
+
+  typedef sequence<ProxyPullConsumer> ProxyPullConsumerSeq;
+  typedef sequence<ProxyPullSupplier> ProxyPullSupplierSeq;
+  typedef sequence<ProxyPushConsumer> ProxyPushConsumerSeq;
+  typedef sequence<ProxyPushSupplier> ProxyPushSupplierSeq;
+
+  //typedef CosLifeCycle::Criteria Criteria;
+
+  typedef string ProxyId;
+  typedef sequence<ProxyId> ProxyIdSeq;
+
+  exception ProxyAlreadyExist {};
+  exception ProxyNotFound {};
+
+  //already in parent's
+  //interface SupplierAdmin: CosEventChannelAdmin::SupplierAdmin,
+	interface SupplierAdmin: CosNotifyChannelAdmin::SupplierAdmin {
+
+    readonly attribute ServiceManagement::OperationalState operational_state;
+    attribute ServiceManagement::AdministrativeState administrative_state;
+    readonly attribute CosLifeCycle::Criteria associated_criteria;
+    attribute CosNotifyFilter::Filter forwarding_discriminator;
+
+    ProxyPushConsumer obtain_named_push_consumer( in ProxyId name )
+                                                  raises ( ProxyAlreadyExist );
+    ProxyPullConsumer obtain_named_pull_consumer( in ProxyId name )
+                                                  raises ( ProxyAlreadyExist );
+
+    ProxyPushConsumer find_push_consumer( in ProxyId name )
+                                                      raises ( ProxyNotFound );
+    ProxyPullConsumer find_pull_consumer( in ProxyId name )
+                                                      raises ( ProxyNotFound );
+
+	// "obtain_" prepended because of collisions with omg's service
+    ProxyPullConsumerSeq obtain_pull_consumers ();
+    ProxyPushConsumerSeq obtain_push_consumers ();
+
+    ProxyIdSeq pull_consumer_ids ();
+    ProxyIdSeq push_consumer_ids ();
+
+	// Already present in CosNotifyChannelAdmin::SupplierAdmin
+	// void destroy ();
+  };
+
+  //already in parent's
+  //interface ConsumerAdmin: CosEventChannelAdmin::ConsumerAdmin,
+  interface ConsumerAdmin: CosNotifyChannelAdmin::ConsumerAdmin {
+
+    readonly attribute ServiceManagement::OperationalState operational_state;
+    attribute ServiceManagement::AdministrativeState administrative_state;
+    readonly attribute CosLifeCycle::Criteria associated_criteria;
+    attribute CosNotifyFilter::Filter forwarding_discriminator;
+    attribute CosNotifyFilter::MappingFilter priority_discriminator;
+    attribute CosNotifyFilter::MappingFilter lifetime_discriminator;
+
+    ProxyPushSupplier obtain_named_push_supplier( in ProxyId name )
+                                                  raises ( ProxyAlreadyExist );
+    ProxyPullSupplier obtain_named_pull_supplier( in ProxyId name )
+                                                  raises ( ProxyAlreadyExist );
+
+    ProxyPushSupplier find_push_supplier( in ProxyId name )
+                                                      raises ( ProxyNotFound );
+    ProxyPullSupplier find_pull_supplier( in ProxyId name )
+                                                      raises ( ProxyNotFound );
+
+	// "obtain_" prepended because of collisions with omg's service
+    ProxyPullSupplierSeq obtain_pull_suppliers ();
+    ProxyPushSupplierSeq obtain_push_suppliers ();
+
+    ProxyIdSeq pull_supplier_ids ();
+    ProxyIdSeq push_supplier_ids ();
+    
+	//Already present in parent interface
+    //void destroy ();
+  };
+
+  typedef sequence<ConsumerAdmin> ConsumerAdminSeq;
+  typedef sequence<SupplierAdmin> SupplierAdminSeq;
+
+  exception InvalidCriteria { CosLifeCycle::Criteria invalid_criteria; };
+  exception CannotMeetCriteria { CosLifeCycle::Criteria unmet_criteria; };
+
+  //interface NotificationChannel: CosEventChannelAdmin::EventChannel {
+  interface NotificationChannel: CosNotifyChannelAdmin::EventChannel {
+
+    readonly attribute ServiceManagement::OperationalState operational_state;
+    attribute ServiceManagement::AdministrativeState administrative_state;
+
+	//from parent
+    //ConsumerAdmin new_for_consumers (in CosLifeCycle::Criteria the_criteria)
+    //                                                  raises (InvalidCriteria);
+
+	//from parent
+    //SupplierAdmin new_for_suppliers (in CosLifeCycle::Criteria the_criteria)
+    //                                                  raises (InvalidCriteria);
+
+    ConsumerAdminSeq find_for_consumers (in CosLifeCycle::Criteria the_criteria)
+                                  raises (InvalidCriteria, CannotMeetCriteria);
+
+    SupplierAdminSeq find_for_suppliers (in CosLifeCycle::Criteria the_criteria)
+                                  raises (InvalidCriteria, CannotMeetCriteria);
+
+    ConsumerAdminSeq consumer_admins ();
+    SupplierAdminSeq supplier_admins ();
+
+    attribute unsigned long default_priority;
+    attribute unsigned long default_event_lifetime;
+  };
+
+  typedef sequence<NotificationChannel> NotificationChannelSeq;
+
+  typedef string ChannelID;
+  typedef sequence<ChannelID> ChannelIDSeq;
+
+  exception ChannelAlreadyExist {};
+  exception ChannelNotFound {};
+
+  interface NotificationChannelFactory : CosNotifyChannelAdmin::EventChannelFactory{
+
+    NotificationChannel create_notification_channel (
+                             in unsigned long default_priority,
+                             in unsigned long default_event_lifetime );
+
+    NotificationChannel new_create_notification_channel (
+                                      in ChannelID channel_name,
+                                      in unsigned long default_priority,
+                                      in unsigned long default_event_lifetime )
+                                                  raises (ChannelAlreadyExist);
+
+    NotificationChannel get_notification_channel( in ChannelID channel_name )
+                                                      raises (ChannelNotFound);
+
+    NotificationChannelSeq channels ();
+
+    ChannelIDSeq new_channels ();
+  };
+};
+
+#endif

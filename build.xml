@@ -1,0 +1,984 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ MORFEO Project
+ http://www.morfeo-project.org
+
+ Component: TIDNotifJ
+ Programming Language: Java
+
+ File: $Source$
+ Version: $Revision: 137 $
+ Date: $Date: 2011-05-05 10:15:00 +0200 (Thu, 05 May 2011) $
+ Last modified by: $Author: avega $
+
+ (C) Copyright 2005 Telefónica Investigación y Desarrollo
+     S.A.Unipersonal (Telefónica I+D)
+
+ Info about members and contributors of the MORFEO project
+ is available at:
+
+   http://www.morfeo-project.org/TIDNotifJ/CREDITS
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+ If you want to use this software an plan to distribute a
+ proprietary application in any way, and you are not licensing and
+ distributing your source code under GPL, you probably need to
+ purchase a commercial license of the product.  More info about
+ licensing options is available at:
+
+   http://www.morfeo-project.org/TIDNotifJ/Licensing
+   
+-->
+
+<project name="TIDNotif" basedir="." default="all">
+  
+  <!--==========================
+      Miscelaneous configuration
+      ==========================-->
+  <property name="tidnotifj.debug"    value="false"  />
+  <property name="tidnotifj.encoding" value="iso8859-15" />
+  
+
+  <!--Configure TIDIdlc path -->
+  <property name="tidorbj.home" location="../TIDorbJ"/>
+  <property name="tididlc.home" location="../TIDIdlc"/>
+  <import file="${tididlc.home}/build/properties.xml"/>
+  <import file="${tididlc.home}/build/tasks.xml"/>
+  
+
+  <!--========================
+      idl java code generation
+      ========================-->
+  <property name="omg.event.idl.dir"  	    location="OMG/Event"        />
+  <property name="omg.naming.idl.dir"  	    location="OMG/Naming"       />
+  <property name="omg.lifecycle.idl.dir"    location="OMG/LifeCycle"    />
+  <property name="omg.notification.idl.dir" location="OMG/Notification" />
+
+  <property name="tidnotifj.idl.dir"        location="idl"       />
+  
+  <!-- Various IDL files must be compiled independently -->
+<!--   <path id="tidnotifj.idl.files_id" > -->
+<!--     <fileset dir="${tidnotifj.idl.dir}" > -->
+<!--       <include name="**/*.idl" /> -->
+<!--     </fileset> -->
+<!--   </path> -->
+<!--   <property name="tidnotifj.idl.files" refid="tidnotifj.idl.files_id"/> -->
+
+  <property name="tidnotifj.idl.java.dir"  	  location="idl/.java"    />	
+  <property name="tidnotifj.idl.java.output.dir"  location="idl/.classes" />	
+  <property name="tidnotifj.idl.java.output.lib"  location="lib" 	        />	
+  <property name="tidnotifj.idl.java.output.file" value="TIDNotifIdl.jar"       />	
+  <property name="tidnotifj.idl.lib"              value="${tidnotifj.idl.java.output.lib}/${tidnotifj.idl.java.output.file}" />
+  <property name="tidnotifj.doc.dir" location="./doc"/>
+  <property name="tidnotifj.doc.api.dir" location="${tidnotifj.doc.dir}"/>
+  
+  <!--====================
+      java code generation 
+      ====================-->
+  <property name="tidnotifj.java.dir"		location="source" />
+  
+  <property name="tidnotifj.java.output.dir"	location=".classes"    />
+  <property name="tidnotifj.java.output.lib"	location="lib"	      />
+  <property name="tidnotifj.java.output.file"	value="TIDNotif.jar"  />
+  <property name="tidnotifj.bin.dir"            value="bin"  />
+  <property name="tidnotifj.install.dir"        value="dist" />
+  <property name="tidnotifj.lib"                value="${tidnotifj.java.output.lib}/${tidnotifj.java.output.file}" />
+  <property name="tidnotifj.OMG.dir"            value="OMG"  />
+
+
+  <!--==========================
+      tools java code generation 
+      ==========================-->
+  <property name="tidnotifj.tools.dir"		location="tools" />
+  
+  <property name="tidnotifj.tools.output.dir"	location="tools/.classes"    />
+  <property name="tidnotifj.tools.output.lib"	location="lib"	      />
+  <property name="tidnotifj.tools.output.file"	value="TIDNotifJTools.jar"  />
+  <property name="tidnotifj.tools.lib"          value="${tidnotifj.tools.output.lib}/${tidnotifj.tools.output.file}" />
+
+
+  <!--=========================
+      dist java code generation 
+      =========================-->
+  <property name="tidnotifj.dist.java.output.file"  value="TIDNotifJ.jar"  />
+  <property name="tidnotifj.dist.lib"               value="${tidnotifj.java.output.lib}/${tidnotifj.dist.java.output.file}" />
+
+
+
+  <target name="all" depends="init">
+    <!--=============== 
+        Idl compilation
+        ===============-->
+<!--     <ant target="all" dir="idl" inheritrefs="true" inheritall="true"/>  -->
+   <antcall target="idl"  inheritrefs="true" inheritall="true"/>
+   <antcall target="idl2" inheritrefs="true" inheritall="true"/>
+    
+    <!--==============================================
+        global for all java files generated from idl's
+        ==============================================-->
+    <javac srcdir="${tidnotifj.idl.java.dir}"
+           destdir="${tidnotifj.idl.java.output.dir}" 
+           debug="${tidnotifj.debug}" encoding="${tidnotifj.encoding}" 
+           >
+      <classpath>
+        <pathelement location="${tidorbj.home}/dist/lib/tidorbj.jar"/>
+      </classpath>
+    </javac>
+
+    <jar basedir ="${tidnotifj.idl.java.output.dir}" 
+         destfile="${tidnotifj.idl.lib}"
+         />
+    
+    <!--================
+        java compilation
+        ================-->
+    <javac srcdir="${tidnotifj.java.dir}"
+           destdir="${tidnotifj.java.output.dir}" 
+           debug="${tidnotifj.debug}" encoding="${tidnotifj.encoding}" 
+           >
+      <classpath>
+        <pathelement location="${tidorbj.home}/dist/lib/tidorbj.jar"/>
+        <pathelement location="${tidnotifj.idl.java.output.lib}/${tidnotifj.idl.java.output.file}" />
+      </classpath>
+    </javac>
+
+    <jar basedir ="${tidnotifj.java.output.dir}" 
+         destfile="${tidnotifj.lib}"
+         />
+
+    <!--================
+        TIDNotifJ tools compilation
+        ================-->
+    <javac srcdir="${tidnotifj.tools.dir}"
+           destdir="${tidnotifj.tools.output.dir}"
+           debug="${tidnotifj.debug}" encoding="${tidnotifj.encoding}"
+           >
+      <classpath>
+        <pathelement location="${tidorbj.home}/dist/lib/tidorbj.jar"/>
+        <pathelement location="${tidnotifj.idl.java.output.lib}/${tidnotifj.idl.java.output.file}" />
+        <pathelement location="${tidnotifj.java.output.lib}/${tidnotifj.java.output.file}" />
+      </classpath>
+      <exclude name="**/Discriminator.java" />
+      <exclude name="**/Operator.java" />
+      <exclude name="**/Channel.java" />
+    </javac>
+
+    <jar basedir ="${tidnotifj.tools.dir}"
+         destfile="${tidnotifj.tools.lib}"
+         />
+
+
+  </target>
+
+
+  <!--=======
+      install
+      =======-->
+  <target name="install" depends="all">
+    <delete dir="${tidnotifj.install.dir}"/>
+    <mkdir dir="${tidnotifj.install.dir}"/>
+    <mkdir dir="${tidnotifj.install.dir}/bin"/>
+    <mkdir dir="${tidnotifj.install.dir}/lib"/>
+    <mkdir dir="${tidnotifj.install.dir}/OMG"/>
+    <mkdir dir="${tidnotifj.install.dir}/doc"/>
+    <mkdir dir="${tidnotifj.install.dir}/doc/api"/>
+
+<!--     <mkdir dir="${tidnotifj.install.dir}/lib/shared"/> -->
+    <copy todir="${tidnotifj.install.dir}/bin">
+      <fileset dir="${tidnotifj.bin.dir}">
+      </fileset>
+    </copy>
+    <copy todir="${tidnotifj.install.dir}/OMG">
+      <fileset dir="${tidnotifj.OMG.dir}">
+      </fileset>
+    </copy>
+    <chmod dir="${tidnotifj.install.dir}/bin" perm="a+x" includes="*"/>
+<!--     <copy file="${tidnotifj.lib}" todir="${tidnotifj.install.dir}/lib"/> -->
+<!--     <copy file="${tidnotifj.idl.lib}" todir="${tidnotifj.install.dir}/lib"/> -->
+<!--     <jar  destfile="${tidnotifj.install.dir}/lib/start.jar"  -->
+<!--           manifest="source/META-INF/start/MANIFEST.MF"/> -->
+<!--     <jar  destfile="${tidnotifj.install.dir}/lib/Shutdown.jar"  -->
+<!--           manifest="source/META-INF/shutdown/MANIFEST.MF"/> -->
+<!--     <jar  destfile="${tidnotifj.install.dir}/lib/stop.jar"  -->
+<!--           manifest="source/META-INF/stop/MANIFEST.MF"/> -->
+<!--     <copy file="${tidorbj.class.path}" todir="${tidnotifj.install.dir}/lib/shared"/> -->
+    <copy file="COPYING" todir="${tidnotifj.install.dir}"/>
+    <copy file="ChangeLog" todir="${tidnotifj.install.dir}"/>
+    <copy file="VERSION" todir="${tidnotifj.install.dir}"/>
+    <copy file="OMG_SPEC" todir="${tidnotifj.install.dir}"/>
+    <copy file="BUGS" todir="${tidnotifj.install.dir}"/>
+    <copy file="INSTALL" todir="${tidnotifj.install.dir}"/>
+    <copy file="AUTHORS" todir="${tidnotifj.install.dir}"/>
+
+    <antcall target="lib"  inheritrefs="true" inheritall="true"/>
+    <copy file="${tidnotifj.dist.lib}" todir="${tidnotifj.install.dir}/lib"/>
+    <copy file="${tidnotifj.tools.lib}" todir="${tidnotifj.install.dir}/lib"/>
+
+    <antcall target="doc" inheritrefs="true" inheritall="true"/>
+  </target>
+
+
+  <target name="upToDate">
+    <uptodate property="tidnotifj.lib.uptodate" targetfile="${tidnotifj.lib}">
+      <srcfiles dir="${tidnotifj.java.output.lib}">
+        <include name="*.jar"/>
+        <exclude name="${tidnotifj.lib}"/>
+      </srcfiles>							
+    </uptodate>
+  </target>
+
+
+  <!--===================
+      library distribuion
+      ===================-->
+<!--   <target name="lib" depends="upToDate" unless="tidnotifj.lib.uptodate">     -->
+  <target name="lib" depends="all">
+    <sequential>
+      <mkdir dir=".class"/>	
+      <unjar  dest=".class" src="${tidnotifj.idl.java.output.lib}/${tidnotifj.idl.java.output.file}"/>
+      <unjar  dest=".class" src="${tidnotifj.java.output.lib}/${tidnotifj.java.output.file}"/>
+      <jar  basedir=".class" destfile="${tidnotifj.dist.lib}" />
+      <delete dir=".class"/>
+    </sequential>
+  </target>
+
+
+
+<!--  TODO: Improve the following spaghetti code -->
+
+
+  <target name="idl" > <!-- depends="init"> -->
+
+      <sequential>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "DistributionChannelAdmin.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+          <include dir="${omg.lifecycle.idl.dir}"    />
+          <include dir="${omg.naming.idl.dir}"       />
+          <include dir="${omg.event.idl.dir}"        />
+          <include dir="${omg.notification.idl.dir}" />
+          <packageto module="CosEventComm"          package="org.omg" />
+          <packageto module="CosEventChannelAdmin"  package="org.omg" />
+          <packageto module="CosNaming"             package="org.omg" />
+          <packageto module="CosLifeCycle"    	    package="org.omg" />
+          <packageto module="CosNotification"       package="org.omg" />
+          <packageto module="CosNotifyFilter"       package="org.omg" />
+          <packageto module="CosNotifyComm"         package="org.omg" />
+          <packageto module="CosNotifyChannelAdmin" package="org.omg" />
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="DistributionChannelAdmin"
+                     package="org.omg" />
+<!--           <packageto module ="DistributionInternalsChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="NotificationChannelAdmin"
+                     package="org.omg" />
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="ServiceManagement"
+                     package="org.omg" />
+<!--           <packageto module ="IndexAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexedDistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationInternalsAdmin" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="TransformationAdmin"
+                     package="org.omg" />
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "DistributionInternalsChannelAdmin.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+          <include dir="${omg.lifecycle.idl.dir}"    />
+          <include dir="${omg.naming.idl.dir}"       />
+          <include dir="${omg.event.idl.dir}"        />
+          <include dir="${omg.notification.idl.dir}" />
+          <packageto module="CosEventComm"          package="org.omg" />
+          <packageto module="CosEventChannelAdmin"  package="org.omg" />
+          <packageto module="CosNaming"             package="org.omg" />
+          <packageto module="CosLifeCycle"    	 package="org.omg" />
+<!--           <packageto module="CosNotification"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyFilter"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyComm"         package="org.omg" /> -->
+<!--           <packageto module="CosNotifyChannelAdmin" package="org.omg" /> -->
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="DistributionChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="DistributionInternalsChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="NotificationChannelAdmin"
+                     package="org.omg" />
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="ServiceManagement" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="IndexAdmin"
+                     package="org.omg" />
+          <packageto module ="IndexedDistributionChannelAdmin"
+                     package="org.omg" />
+<!--           <packageto module ="TransformationInternalsAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "EventData.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+          <include dir="${omg.lifecycle.idl.dir}"    />
+          <include dir="${omg.naming.idl.dir}"       />
+<!--           <packageto module="CosEventComm"          package="org.omg" /> -->
+<!--           <packageto module="CosEventChannelAdmin"  package="org.omg" /> -->
+<!--           <packageto module="CosNaming"             package="org.omg" /> -->
+          <packageto module="CosLifeCycle"	         package="org.omg" />
+<!--           <packageto module="CosNotification"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyFilter"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyComm"         package="org.omg" /> -->
+<!--           <packageto module="CosNotifyChannelAdmin" package="org.omg" /> -->
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionInternalsChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="ServiceManagement" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexedDistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationInternalsAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+<!--         <idl2java srcdir  = "${tidnotifj.idl.dir}" -->
+<!--                   source  = "ConstraintAdmin.idl" -->
+<!--                   destdir = "${tidnotifj.idl.java.dir}" -->
+<!--                   package = "es.tid.corba" > -->
+<!--           <include dir="${tidnotifj.idl.dir}"        /> -->
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--         </idl2java> -->
+
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "ExceptionHandlerAdmin.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+<!--           <packageto module="CosEventComm"          package="org.omg" /> -->
+<!--           <packageto module="CosEventChannelAdmin"  package="org.omg" /> -->
+<!--           <packageto module="CosNaming"             package="org.omg" /> -->
+<!--           <packageto module="CosLifeCycle"    	 package="org.omg" /> -->
+<!--           <packageto module="CosNotification"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyFilter"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyComm"         package="org.omg" /> -->
+<!--           <packageto module="CosNotifyChannelAdmin" package="org.omg" /> -->
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionInternalsChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="ServiceManagement" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexedDistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationInternalsAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "IndexAdmin.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+<!--           <packageto module="CosEventComm"          package="org.omg" /> -->
+<!--           <packageto module="CosEventChannelAdmin"  package="org.omg" /> -->
+<!--           <packageto module="CosNaming"             package="org.omg" /> -->
+<!--           <packageto module="CosLifeCycle"          package="org.omg" /> -->
+<!--           <packageto module="CosNotification"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyFilter"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyComm"         package="org.omg" /> -->
+<!--           <packageto module="CosNotifyChannelAdmin" package="org.omg" /> -->
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionInternalsChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="ServiceManagement" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexedDistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationInternalsAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "IndexedDistributionChannelAdmin.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+          <include dir="${omg.lifecycle.idl.dir}"    />
+          <include dir="${omg.naming.idl.dir}"       />
+          <include dir="${omg.event.idl.dir}"        />
+          <include dir="${omg.notification.idl.dir}" />
+          <packageto module="CosEventComm"          package="org.omg" />
+          <packageto module="CosEventChannelAdmin"  package="org.omg" />
+          <packageto module="CosNaming"             package="org.omg" />
+          <packageto module="CosLifeCycle"    	    package="org.omg" />
+          <packageto module="CosNotification"       package="org.omg" />
+          <packageto module="CosNotifyFilter"       package="org.omg" />
+          <packageto module="CosNotifyComm"         package="org.omg" />
+          <packageto module="CosNotifyChannelAdmin" package="org.omg" />
+          <packageto module ="ConstraintAdmin"
+                     package="org.omg" />
+          <packageto module ="DistributionChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="DistributionInternalsChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="NotificationChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="NotificationService"
+                     package="org.omg" />
+          <packageto module ="ServiceManagement"
+                     package="org.omg" />
+          <packageto module ="IndexAdmin"
+                     package="org.omg" />
+          <packageto module ="IndexedDistributionChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="TransformationInternalsAdmin"
+                     package="org.omg" />
+          <packageto module ="TransformationAdmin"
+                     package="org.omg" />
+          <packageto module ="TIDDistribAdmin"
+                     package="es.tid.corba" />
+          <packageto module ="TIDNotifAdmin"
+                     package="es.tid.corba" />
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "NotificationChannelAdmin.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+          <include dir="${omg.lifecycle.idl.dir}"    />
+          <include dir="${omg.naming.idl.dir}"       />
+          <include dir="${omg.event.idl.dir}"        />
+          <include dir="${omg.notification.idl.dir}" />
+          <packageto module="CosEventComm"          package="org.omg" />
+          <packageto module="CosEventChannelAdmin"  package="org.omg" />
+          <packageto module="CosNaming"             package="org.omg" />
+          <packageto module="CosLifeCycle"    	    package="org.omg" />
+          <packageto module="CosNotification"       package="org.omg" />
+          <packageto module="CosNotifyFilter"       package="org.omg" />
+          <packageto module="CosNotifyComm"         package="org.omg" />
+          <packageto module="CosNotifyChannelAdmin" package="org.omg" />
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionInternalsChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="ServiceManagement"
+                     package="org.omg" />
+<!--           <packageto module ="IndexAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexedDistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationInternalsAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "NotificationService.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+          <include dir="${omg.lifecycle.idl.dir}"    />
+          <include dir="${omg.naming.idl.dir}"       />
+          <include dir="${omg.event.idl.dir}"        />
+          <include dir="${omg.notification.idl.dir}" />
+<!--           <packageto module="CosEventComm"          package="org.omg" /> -->
+<!--           <packageto module="CosEventChannelAdmin"  package="org.omg" /> -->
+<!--           <packageto module="CosNaming"             package="org.omg" /> -->
+<!--           <packageto module="CosLifeCycle"    	    package="org.omg" /> -->
+<!--           <packageto module="CosNotification"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyFilter"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyComm"         package="org.omg" /> -->
+<!--           <packageto module="CosNotifyChannelAdmin" package="org.omg" /> -->
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionInternalsChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="NotificationChannelAdmin"
+                     package="org.omg" />
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="ServiceManagement" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexedDistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationInternalsAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "ServiceManagement.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+<!--           <packageto module="CosEventComm"          package="org.omg" /> -->
+<!--           <packageto module="CosEventChannelAdmin"  package="org.omg" /> -->
+<!--           <packageto module="CosNaming"             package="org.omg" /> -->
+<!--           <packageto module="CosLifeCycle"    	    package="org.omg" /> -->
+<!--           <packageto module="CosNotification"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyFilter"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyComm"         package="org.omg" /> -->
+<!--           <packageto module="CosNotifyChannelAdmin" package="org.omg" /> -->
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionInternalsChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="ServiceManagement"
+                     package="org.omg" />
+<!--           <packageto module ="IndexAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexedDistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationInternalsAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "TIDDistribAdmin.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+          <include dir="${omg.lifecycle.idl.dir}"    />
+          <include dir="${omg.naming.idl.dir}"       />
+          <include dir="${omg.event.idl.dir}"        />
+          <include dir="${omg.notification.idl.dir}" />
+          <packageto module="CosEventComm"          package="org.omg" />
+          <packageto module="CosEventChannelAdmin"  package="org.omg" />
+          <packageto module="CosNaming"             package="org.omg" />
+          <packageto module="CosLifeCycle"    	    package="org.omg" />
+          <packageto module="CosNotification"       package="org.omg" />
+          <packageto module="CosNotifyFilter"       package="org.omg" />
+          <packageto module="CosNotifyComm"         package="org.omg" />
+          <packageto module="CosNotifyChannelAdmin" package="org.omg" />
+          <packageto module ="ConstraintAdmin"
+                     package="org.omg" />
+          <packageto module ="DistributionChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="DistributionInternalsChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="NotificationChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="NotificationService"
+                     package="org.omg" />
+          <packageto module ="ServiceManagement"
+                     package="org.omg" />
+          <packageto module ="IndexAdmin"
+                     package="org.omg" />
+          <packageto module ="IndexedDistributionChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="TransformationInternalsAdmin"
+                     package="org.omg" />
+          <packageto module ="TransformationAdmin"
+                     package="org.omg" />
+          <packageto module ="TIDDistribAdmin"
+                     package="es.tid.corba" />
+          <packageto module ="TIDNotifAdmin"
+                     package="es.tid.corba" />
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "TIDNotifAdmin.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+          <include dir="${omg.lifecycle.idl.dir}"    />
+          <include dir="${omg.naming.idl.dir}"       />
+          <include dir="${omg.event.idl.dir}"        />
+          <include dir="${omg.notification.idl.dir}" />
+          <packageto module="CosEventComm"          package="org.omg" />
+          <packageto module="CosEventChannelAdmin"  package="org.omg" />
+          <packageto module="CosNaming"             package="org.omg" />
+          <packageto module="CosLifeCycle"    	    package="org.omg" />
+          <packageto module="CosNotification"       package="org.omg" />
+          <packageto module="CosNotifyFilter"       package="org.omg" />
+          <packageto module="CosNotifyComm"         package="org.omg" />
+          <packageto module="CosNotifyChannelAdmin" package="org.omg" />
+          <packageto module ="ConstraintAdmin"
+                     package="org.omg" />
+          <packageto module ="DistributionChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="DistributionInternalsChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="NotificationChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="NotificationService"
+                     package="org.omg" />
+          <packageto module ="ServiceManagement"
+                     package="org.omg" />
+          <packageto module ="IndexAdmin"
+                     package="org.omg" />
+          <packageto module ="IndexedDistributionChannelAdmin"
+                     package="org.omg" />
+          <packageto module ="TransformationInternalsAdmin"
+                     package="org.omg" />
+          <packageto module ="TransformationAdmin"
+                     package="org.omg" />
+          <packageto module ="TIDDistribAdmin"
+                     package="es.tid.corba" />
+          <packageto module ="TIDNotifAdmin"
+                     package="es.tid.corba" />
+        </idl2java>
+
+      </sequential>
+ </target>
+
+<target name="idl2" > <!-- depends="init"> -->
+      <sequential>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "TransformationAdmin.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+          <include dir="${omg.lifecycle.idl.dir}"    />
+          <include dir="${omg.event.idl.dir}"        />
+          <include dir="${omg.notification.idl.dir}" />
+          <include dir="${omg.naming.idl.dir}"       />
+          <packageto module="CosEventComm"          package="org.omg" />
+<!--           <packageto module="CosEventChannelAdmin"  package="org.omg" /> -->
+<!--           <packageto module="CosNaming"             package="org.omg" /> -->
+          <packageto module="CosLifeCycle"    	    package="org.omg" />
+          <packageto module="CosNotification"       package="org.omg" />
+          <packageto module="CosNotifyFilter"       package="org.omg" />
+          <packageto module="CosNotifyComm"         package="org.omg" />
+<!--           <packageto module="CosNotifyChannelAdmin" package="org.omg" /> -->
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionInternalsChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="ServiceManagement" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexedDistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationInternalsAdmin" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="TransformationAdmin"
+                     package="org.omg" />
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "TransformationInternalsAdmin.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+          <include dir="${omg.lifecycle.idl.dir}"    />
+          <include dir="${omg.naming.idl.dir}"       />
+          <include dir="${omg.event.idl.dir}"        />
+          <include dir="${omg.notification.idl.dir}" />
+<!--           <packageto module="CosEventComm"          package="org.omg" /> -->
+<!--           <packageto module="CosEventChannelAdmin"  package="org.omg" /> -->
+<!--           <packageto module="CosNaming"             package="org.omg" /> -->
+<!--           <packageto module="CosLifeCycle"    	 package="org.omg" /> -->
+<!--           <packageto module="CosNotification"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyFilter"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyComm"         package="org.omg" /> -->
+<!--           <packageto module="CosNotifyChannelAdmin" package="org.omg" /> -->
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionInternalsChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="ServiceManagement" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexedDistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+          <packageto module ="TransformationInternalsAdmin"
+                     package="org.omg" />
+<!--           <packageto module ="TransformationAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+        <idl2java srcdir  = "${tidnotifj.idl.dir}"
+                  source  = "Transformer.idl"
+                  destdir = "${tidnotifj.idl.java.dir}"
+                  package = "es.tid.corba" >
+          <include dir="${tidnotifj.idl.dir}"        />
+<!--           <packageto module="CosEventComm"          package="org.omg" /> -->
+<!--           <packageto module="CosEventChannelAdmin"  package="org.omg" /> -->
+<!--           <packageto module="CosNaming"             package="org.omg" /> -->
+<!--           <packageto module="CosLifeCycle"    	 package="org.omg" /> -->
+<!--           <packageto module="CosNotification"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyFilter"       package="org.omg" /> -->
+<!--           <packageto module="CosNotifyComm"         package="org.omg" /> -->
+<!--           <packageto module="CosNotifyChannelAdmin" package="org.omg" /> -->
+<!--           <packageto module ="ConstraintAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="DistributionInternalsChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="NotificationService" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="ServiceManagement" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="IndexedDistributionChannelAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationInternalsAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TransformationAdmin" -->
+<!--                      package="org.omg" /> -->
+<!--           <packageto module ="TIDDistribAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+<!--           <packageto module ="TIDNotifAdmin" -->
+<!--                      package="es.tid.corba" /> -->
+        </idl2java>
+
+      </sequential>
+
+ </target>
+
+
+<!--   <target name="idl2java"> -->
+
+<!--     <idl2java srcdir ="${tidnotifj.idl.dir}" -->
+<!--               source ="${tidnotifj.idl2java.file}" -->
+<!--               destdir="${tidnotifj.idl.java.dir}" -->
+<!--               package="es.tid.corba" -->
+<!--               > -->
+
+<!--       <include dir="${tidnotifj.idl.dir}"        /> -->
+<!--       <include dir="${omg.event.idl.dir}"        /> -->
+<!--       <include dir="${omg.naming.idl.dir}"       /> -->
+<!--       <include dir="${omg.lifecycle.idl.dir}"    /> -->
+<!--       <include dir="${omg.notification.idl.dir}" /> -->
+      
+      
+      <!-- OMG Standard -->
+<!--       <packageto module="CosEventComm"          package="org.omg" /> -->
+<!--       <packageto module="CosEventChannelAdmin"  package="org.omg" /> -->
+<!--       <packageto module="CosNaming"             package="org.omg" /> -->
+<!--       <packageto module="CosLifeCycle"    	     package="org.omg" /> -->
+<!--       <packageto module="CosNotification"       package="org.omg" /> -->
+<!--       <packageto module="CosNotifyFilter"       package="org.omg" /> -->
+<!--       <packageto module="CosNotifyComm"         package="org.omg" /> -->
+<!--       <packageto module="CosNotifyChannelAdmin" package="org.omg" /> -->
+      
+      <!--
+          Currently used by TIDNotif, 
+          some of them are similar and originated from current standard ones,
+          and other are just extensions to it.
+      -->
+      
+      <!-- derived from standard proposal -->
+<!--       <packageto module ="ConstraintAdmin"  -->
+<!--                  package="org.omg" /> -->
+<!--       <packageto module ="DistributionChannelAdmin"  -->
+<!--                  package="org.omg" /> -->
+<!--       <packageto module ="DistributionInternalsChannelAdmin"  -->
+<!--                  package="org.omg" /> -->
+<!--       <packageto module ="NotificationChannelAdmin"  -->
+<!--                  package="org.omg" /> -->
+<!--       <packageto module ="NotificationService" -->
+<!--                  package="org.omg" /> -->
+      
+      <!-- extensions not present in standard -->
+<!--       <packageto module ="ServiceManagement"  -->
+<!--                  package="org.omg" /> -->
+<!--       <packageto module ="IndexAdmin"  -->
+<!--                  package="org.omg" /> -->
+<!--       <packageto module ="IndexedDistributionChannelAdmin"  -->
+<!--                  package="org.omg" /> -->
+      
+      <!-- Transformation service: org.omg? -->
+<!--       <packageto module ="TransformationInternalsAdmin"  -->
+<!--                  package="org.omg" /> -->
+<!--       <packageto module ="TransformationAdmin" 		  -->
+<!--                  package="org.omg" /> -->
+      <!-- TID propietary: es.tid.corba -->
+<!--       <packageto module ="TIDDistribAdmin"  -->
+<!--                  package="es.tid.corba" /> -->
+<!--       <packageto module ="TIDNotifAdmin" 	 -->
+<!--                  package="es.tid.corba" /> -->
+<!--     </idl2java> -->
+<!--   </target> -->
+
+
+
+
+
+  <target name="debug">
+    <property name="tidnotifj.debug" value="true"/>
+    <antcall target="all" inheritall="true" inheritrefs="true">
+      <param name="tidnotifj.debug" value="true"/>
+    </antcall>
+  </target>
+
+  <target name="init" >
+    <echo message="Creating required directories" />
+    
+    <mkdir dir="${tidnotifj.idl.java.dir}"        />	
+    <mkdir dir="${tidnotifj.idl.java.output.dir}" />	
+    <mkdir dir="${tidnotifj.idl.java.output.lib}" />	
+    <mkdir dir="${tidnotifj.java.output.dir}"     />
+    <mkdir dir="${tidnotifj.java.output.lib}"     />
+    <mkdir dir="${tidnotifj.tools.output.dir}"     />
+    <mkdir dir="${tidnotifj.tools.output.lib}"     />
+    <mkdir dir="${tidnotifj.doc.dir}"/>
+  </target>
+
+  <target name="doc">     
+    <mkdir dir="${tidnotifj.doc.api.dir}"/>
+    <javadoc access="public" header="TIDNotifJ API" destdir="${tidnotifj.install.dir}/doc/api">
+      <fileset dir="idl">
+        <include name="**/.java/**/*.java"/>
+      </fileset>
+    </javadoc>
+  </target>
+
+
+  <target name="clean" >
+    <echo message="Removing output directories"   />
+    
+    <delete dir="${tidnotifj.idl.java.dir}"        />	
+    <delete dir="${tidnotifj.idl.java.output.dir}" />	
+    <delete dir="${tidnotifj.idl.java.output.lib}" />	
+    <delete dir="${tidnotifj.java.output.dir}"     />
+    <delete dir="${tidnotifj.java.output.lib}"     />
+    <delete dir="${tidnotifj.tools.output.dir}"     />
+    <delete dir="${tidnotifj.tools.output.lib}"     />
+    <delete dir="${tidnotifj.install.dir}"         />
+
+  </target>
+
+</project>
